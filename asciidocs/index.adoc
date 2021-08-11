@@ -1,21 +1,20 @@
-= My Project
-firstname lastname
-1.0.0, yyyy-mm-dd: Some notes
+= Startseite
+Benjamin Ecker, Lukas Hain
+1.0.0, 2021-08-11: Some notes
 ifndef::imagesdir[:imagesdir: images]
-//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+
 :sourcedir: ../src/main/java
 :icons: font
 :sectnums:    // Nummerierung der Überschriften / section numbering
 :toc: left
 
-//Need this blank line after ifdef, don't know why...
 ifdef::backend-html5[]
 
-// print the toc here (not at the default position)
-//toc::[]
+== Projektbeschreibung
+LeoTurnier ist ein Turnierverwaltungssystem für die HTL Leonding welches das Verwalten von Turnieren
+in verschiedenen Sportarten und Turniermodi vereinfachen soll.
 
-== Header 1
+=== Dokumente
 
-
-=== Header 2
-
+link:./project-proposal.adoc[Projektauftrag] +
+link:./system_specification.adoc[Pflichtenheft] +

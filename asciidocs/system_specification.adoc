@@ -1,0 +1,136 @@
+= LeoTurnier - Turnierverwaltung
+Ecker Benjamin, Hain Lukas
+
+== Pflichtenheft
+
+=== 1. Ausgangsituation
+
+Die HTL Leonding ist eine Höhere Technische Lehranstalt. Derzeit wird sie von ca. 1000 Schülern besucht, welche in eine der 4 Zweige:
+
+* Informatik
+* Medientechnik
+* Elektronik
+* Medizintechnik
+
+unterrichtet werden.
+
+=== 2. Ist-Zustand
+
+Derzeit werden an unserer Schule verschiedene Turniere gehalten, welche auf Papier festgehalten werden.
+
+=== 3. Problemstellung
+
+Das Verwalten eines Turniers auf Papier ist sehr mühsam, unübersichtlich und nimmt viel Zeit in Anspruch. Es gibt derzeit keine Applikation, die dieses Verfahren vereinfachen könnte.
+
+=== 4 Aufgabenstellung
+
+Es wird eine Applikation erstellt, die das Planen, Verwalten und Durchführen von Turnieren für den Benutzer/Verwalter vereinfacht, unabhängig von der tatsächlichen Sportart und dem Turniermodus.
+
+=== 4.1 Funktionelle Anforderungen
+
+* Erstellen eines Turniers
+** Turniermodus
+*** KO-Runden
+*** Gruppenmodus
+*** Playoffs
+*** Rundensystem
+*** Bundesligamodus
+* Durchführen eines Turniers
+** Eintragen eines Ergebnisses
+** Planen der darauffolgenden Spiele, basierend auf den Ergebnissen
+* Beobachten des Turnierverlaufs
+
+=== 4.2 Nicht-Funktionelle Anforderungen
+
+* Sicherheit
+* Einfache Nutzbarkeit
+* Effizienz
+
+=== 4.3 Klassendiagramm
+
+[plantuml,classdiagram, png]
+----
+@startuml
+class Match {
+    LocalDateTime date
+    Tournament tournament
+    Competetor competetor1
+    Competetor competetor2
+    int score1
+    int score2
+}
+class Competetor {
+    String name
+    int totalScore
+}
+class Tournament {
+    String name
+    LocalDate startDate
+    LocalDate endDate
+    SportType sportType
+    TournamentMode tournamentMode
+    List<Competetor> competetors
+
+}
+class User {
+    UserType type
+    String name
+}
+enum UserType
+enum SportType
+enum TournamentMode
+
+Tournament -down-> TournamentMode
+Tournament -up-> SportType
+Tournament "1" <-- "*" Match
+Tournament "1" -up-> "*" Competetor
+Match --> Competetor
+Match --> Competetor
+User --> UserType
+@enduml
+----
+
+=== 4.4 Use-Case-Diagramm
+
+[plantuml,usecasediagramm, png]
+----
+@startuml
+skinparam actorStyle awesome
+left to right direction
+:Admin:
+:Turnierorganisator:
+:Turnierdurchführer:
+:Turnierzuschauer:
+rectangle LeoTurnier {
+    (Turnierorganisator bestimmen)
+    rectangle {
+        (Turnier erstellen)
+        (Turniermodus wählen)
+        (Turnierdurchführer bestimmen)
+    }
+    rectangle {
+        (Ergebnis eintragen)
+        (Darauffolgende Matches planen)
+    }
+    (Turnierverlauf beobachten)
+}
+Admin -- (Turnierorganisator bestimmen)
+Admin -up->> Turnierorganisator
+Turnierorganisator -- (Turnier erstellen)
+(Turnier erstellen) ..> (Turniermodus wählen)
+Turnierorganisator -- (Turnierdurchführer bestimmen)
+Turnierorganisator -up->> Turnierdurchführer
+Turnierdurchführer -- (Ergebnis eintragen)
+Turnierdurchführer -- (Darauffolgende Matches planen)
+Turnierdurchführer -up->> Turnierzuschauer
+Turnierzuschauer -- (Turnierverlauf beobachten)
+@enduml
+----
+
+=== 5. Ziel
+
+Vereinfachung der Turnierplanung-, verwaltung und durchführung
+
+=== 6. Ergebnis
+
+Application, die das Planen, Verwalten und Durchführen von Turnieren vereinfacht.
