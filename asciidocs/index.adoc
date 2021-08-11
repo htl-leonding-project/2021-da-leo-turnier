@@ -16,5 +16,5 @@ in verschiedenen Sportarten und Turniermodi vereinfachen soll.
 
 === Dokumente
 
-link:./project-proposal.adoc[Projektauftrag] +
-link:./system_specification.adoc[Pflichtenheft] +
+link:./project-proposal.html[Projektauftrag] +
+link:./system_specification.html[Pflichtenheft] +
