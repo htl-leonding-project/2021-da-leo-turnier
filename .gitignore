@@ -34,3 +34,12 @@ nb-configuration.xml
 # patch
 *.orig
 *.rej
+
+# AsciiDocs
+build-docs-html/
+build-docs-pdf/
+build-docs-revealjs/
+asciidocs/revealjs/
+revealjs.zip
+gh-pages/
+.env
