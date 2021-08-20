@@ -109,7 +109,7 @@ Match "*" --> "1" Competitor
 Match "*" --> "1" Competitor
 Player --|> Competitor
 Team --|> Competitor
-Team "0..1" -right-> Player
+Team "0..1" -right-> "*" Player
 User --> UserType
 @enduml
 ----
