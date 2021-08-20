@@ -1,0 +1,50 @@
+= Projekt Antrag - LeoTurnier
+Ecker Benjamin, Hain Lukas
+
+== LeoTurnier-Turnierverwaltung
+
+=== Schule
+Höhere technische Bundeslehranstalt Leonding
+
+=== Abteilung
+Höhere Abteilung für Informatik
+
+=== AV
+Hauptverantwortlich: Peter Bauer
+
+=== Betreuer/innen
+Hauptverantwortlich: Franz Gruber-Leitner
+
+=== Projektteam
+* Benjamin Ecker (Hauptverantwortlich)
+** Web-Frontend für Turnierverwaltung
+
+* Hain Lukas
+** Backend für Turnierverwaltung
+
+=== Projektpartner
+Thomas W. Stütz: t.stuetz@htl-leonding.ac.at
+
+=== Untersuchungsanliegen
+Derzeit werden an unserer Schule Turniere lediglich auf Papier festgehalten, was relativ umständlich und mit viel mehr Aufwand verbunden, als nötig. Mit dieser App wollen wir dieses altmodische Verfahren ersetzen und die Gestaltung und Verwaltung von Turnieren unserer Schule vereinfachen.
+
+=== Zielsetzung
+Das Ziel unserer Diplomarbeit ist es, die Planung, Verwaltung und Durchführung von Turnieren an unserer Schule zu digitalisieren und für den Benutzer/Verwalter weitgehend zu vereinfachen, unabhängig von der tatsächlichen Sportart und dem Turniermodus. Die zu realisierende Applikation soll die Planung und auch die Durchführung dieser Turniere unterstützen.
+
+=== Geplantes Ergebnis der Prüfungskandidatin/des Prüfungskandidaten
+Das Ergebnis dieser Arbeit ist einerseits ein Angular Frontend, mit dem der Benutzer ein Turnier verwalten und dieses auch jederzeit manuell verändern kann, sollte es zu irgendwelchen Ausnahmen, wie zum Beispiel der Ausfall eines Teams, kommen. Bei der Durchführung der Turniere soll es für den Turnierorganisator möglich sein, die aktuellen Ergebnisse einzutragen. Die Applikation soll dann automatisch das aktuelle Turniergeschehen abbilden.
+
+Die Logik und die Speicherung der Ergebnisse erfolgt in einem Backend, welches den aktuellen Zustand des Turniers bzw. die Turnierorganisation (Modus) in eine relationale Datenbank speichert und die Sieger eines Spiels oder einer Gruppe nach einer vorher festgelegten Logik ermittelt.
+
+=== Meilensteine
+Systemarchitektur ist spezifiziert und dokumentiert
+Technologien für Entwicklung und Datenspeicherung sind festgelegt
+GUI und Datenmodell für die Turnierorganisation ist entworfen und angelegt
+GUI und Datenmodell für die Turnierdurchführung ist entworfen und angelegt
+System ist vollständig in der Diplomarbeit dokumentiert
+
+=== Logischer Ablauf
+Generisches Datenmodell für möglichst viele Turniermodi. (KO-Runden, Gruppenmodus, Playoffs, Rundensystem, Bundesligamodus)
+GUI für die verschiedenen Turniermodi
+User-Rollen (Turnieradmin, Turnierdurchführer, Turnierteilnehmer, Turnierzuschauer, Turnierserveradmin – bestimmt Turnierorganisator)
+Docker Container für Server und Datenbank

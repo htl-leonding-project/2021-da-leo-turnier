@@ -1,0 +1,20 @@
+= Startseite
+Benjamin Ecker, Lukas Hain
+1.0.0, 2021-08-11: Some notes
+ifndef::imagesdir[:imagesdir: images]
+
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+ifdef::backend-html5[]
+
+== Projektbeschreibung
+LeoTurnier ist ein Turnierverwaltungssystem für die HTL Leonding welches das Verwalten von Turnieren
+in verschiedenen Sportarten und Turniermodi vereinfachen soll.
+
+=== Dokumente
+
+link:./project-proposal.html[Projektauftrag] +
+link:./system_specification.html[Pflichtenheft] +
