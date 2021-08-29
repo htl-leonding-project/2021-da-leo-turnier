@@ -54,9 +54,8 @@ Es wird eine Applikation erstellt, die das Planen, Verwalten und Durchführen vo
 class Match {
     Long id
     LocalDateTime date
-    Tournament tournament
-    Competetor competetor1
-    Competetor competetor2
+    Competitor competitor1
+    Competitor competitor2
     int score1
     int score2
 }
@@ -84,7 +83,8 @@ class Tournament {
 }
 class Phase {
     Long id
-    Int phaseNumber
+    Tournament tournament
+    int phaseNumber
 }
 class Node {
     Long id
@@ -96,13 +96,19 @@ class User {
     String name
 }
 enum UserType
-class SportType
-class TournamentMode
+class SportType {
+    Long id
+    String name
+}
+class TournamentMode {
+    Lond id
+    String name
+}
 
 Tournament "*" -left-> "1" TournamentMode
 Tournament "*" -up-> "1" SportType
 Tournament "1" <-down- "*" Phase
-Tournament "*" -up-> "*" Competitor
+Tournament "*" <-up-> "*" Competitor
 Phase "1" <-down- "*" Node
 Node "1" -right-> "1" Match
 Match "*" --> "1" Competitor
