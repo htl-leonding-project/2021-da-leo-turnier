@@ -1,9 +1,10 @@
-package at.htl.entity;
+package at.htl.LeoTurnier.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "M_MATCH")
 public class Match {
 
     @Id

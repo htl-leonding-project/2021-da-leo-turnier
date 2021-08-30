@@ -1,8 +1,9 @@
-package at.htl.entity;
+package at.htl.LeoTurnier.entity;
 
 import javax.persistence.*;
 
 @Entity
+@Table(name = "TM_TOURNAMENT_MODE")
 public class TournamentMode {
 
     @Id

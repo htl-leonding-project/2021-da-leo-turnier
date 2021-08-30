@@ -1,10 +1,11 @@
-package at.htl.entity;
+package at.htl.LeoTurnier.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "T_TOURNAMENT")
 public class Tournament {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

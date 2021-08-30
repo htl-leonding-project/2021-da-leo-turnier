@@ -1,8 +1,9 @@
-package at.htl.entity;
+package at.htl.LeoTurnier.entity;
 
 import javax.persistence.*;
 
 @Entity
+@Table(name = "N_NODE")
 public class Node {
 
     @Id

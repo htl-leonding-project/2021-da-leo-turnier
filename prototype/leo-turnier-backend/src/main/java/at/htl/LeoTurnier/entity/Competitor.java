@@ -1,9 +1,10 @@
-package at.htl.entity;
+package at.htl.LeoTurnier.entity;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "C_COMPETITOR")
 public class Competitor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
