@@ -15,7 +15,7 @@ public class Phase {
     @JoinColumn(name = "P_T_ID")
     Tournament tournament;
 
-    @Column(name = "P_ID")
+    @Column(name = "P_PHASE_NUMBER")
     int phaseNumber;
 
     public Long getId() {

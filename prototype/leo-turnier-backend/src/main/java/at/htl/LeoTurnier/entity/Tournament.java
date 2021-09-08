@@ -29,7 +29,7 @@ public class Tournament {
     @JoinColumn(name = "T_TM_ID")
     TournamentMode tournamentMode;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "COMPETITOR_TOURNAMENT",
         joinColumns = { @JoinColumn(name = "CT_T_ID")},
         inverseJoinColumns = { @JoinColumn(name = "CT_C_ID")})

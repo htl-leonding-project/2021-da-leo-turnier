@@ -17,7 +17,7 @@ public class Competitor {
     @Column(name = "C_TOTAL_SCORE")
     int totalScore;
 
-    @ManyToMany(mappedBy = "competitors", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(mappedBy = "competitors", cascade = CascadeType.ALL)
     List<Tournament> tournaments;
 
     public void setId(Long id) {
