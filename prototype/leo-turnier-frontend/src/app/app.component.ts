@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'leo-turnier-frontend';
+  constructor(private router: Router) {
+  }
+
+  loginBtnClick(): void {
+    this.router.navigateByUrl('/login');
+  }
+
+  onMenuSelected(page: string): void{
+    this.router.navigateByUrl('/' + page);
+  }
 }
