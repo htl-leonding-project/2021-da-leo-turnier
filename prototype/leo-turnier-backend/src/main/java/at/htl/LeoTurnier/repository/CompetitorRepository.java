@@ -39,4 +39,5 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
         getEntityManager().createNativeQuery("ALTER TABLE C_COMPETITOR AUTO_INCREMENT = 1");
         return deleteAll();
     }
+
 }
