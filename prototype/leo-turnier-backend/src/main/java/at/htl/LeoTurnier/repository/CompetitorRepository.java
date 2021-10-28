@@ -1,6 +1,6 @@
 package at.htl.LeoTurnier.repository;
 
-import at.htl.LeoTurnier.entity.Tournament;
+import at.htl.LeoTurnier.entity.Competitor;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -8,25 +8,25 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
-public class TournamentRepository implements PanacheRepository<Tournament> {
+public class CompetitorRepository implements PanacheRepository<Competitor> {
 
     @Transactional
-    public Tournament add(Tournament tournament) {
-        persist(tournament);
-        return tournament;
+    public Competitor add(Competitor competitor) {
+        persist(competitor);
+        return competitor;
     }
 
     @Transactional
-    public Tournament modify(Tournament tournament) {
-        getEntityManager().merge(tournament);
-        return tournament;
+    public Competitor modify(Competitor competitor) {
+        getEntityManager().merge(competitor);
+        return competitor;
     }
 
-    public Tournament getById(Long id) {
+    public Competitor getById(Long id) {
         return find("id", id).firstResult();
     }
 
-    public List<Tournament> getAll() {
+    public List<Competitor> getAll() {
         return listAll();
     }
 
@@ -36,7 +36,7 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
     }
 
     public long clear() {
-        getEntityManager().createNativeQuery("ALTER TABLE T_TOURNAMENT AUTO_INCREMENT = 1");
+        getEntityManager().createNativeQuery("ALTER TABLE C_COMPETITOR AUTO_INCREMENT = 1");
         return deleteAll();
     }
 }
