@@ -5,7 +5,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "C_COMPETITOR")
-public class Competitor {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "C_COMPETITOR_TYPE")
+public abstract class Competitor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "C_ID")
@@ -19,6 +21,14 @@ public class Competitor {
 
     @ManyToMany(mappedBy = "competitors", cascade = CascadeType.ALL)
     List<Tournament> tournaments;
+
+    public Competitor() {
+        this("");
+    }
+
+    public Competitor(String name) {
+        this.name = name;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -42,5 +52,13 @@ public class Competitor {
 
     public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
+    }
+
+    public List<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(List<Tournament> tournaments) {
+        this.tournaments = tournaments;
     }
 }

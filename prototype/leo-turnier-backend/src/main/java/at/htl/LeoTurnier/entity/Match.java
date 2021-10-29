@@ -15,7 +15,7 @@ public class Match {
     @Column(name = "M_DATE")
     LocalDateTime date;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "M_C_ID_1")
     Competitor competitor1;
 

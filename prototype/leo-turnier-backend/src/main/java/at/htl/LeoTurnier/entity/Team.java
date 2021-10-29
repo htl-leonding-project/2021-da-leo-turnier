@@ -1,18 +1,34 @@
 package at.htl.LeoTurnier.entity;
 
-import javax.persistence.Column;
+import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("TEAM")
 public class Team extends Competitor {
 
-    @Column(name = "C_PLAYERS")
-    List<String> players;
+    @OneToMany(mappedBy = "team")
+    List<Player> players;
 
-    public List<String> getPlayers() {
+    public Team() {
+        this("");
+    }
+
+    public Team(String name) {
+        this(name, new LinkedList<Player>());
+    }
+
+    public Team(String name, List<Player> players) {
+        super(name);
+        this.players = players;
+    }
+
+    public List<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<String> players) {
+    public void setPlayers(List<Player> players) {
         this.players = players;
     }
 }

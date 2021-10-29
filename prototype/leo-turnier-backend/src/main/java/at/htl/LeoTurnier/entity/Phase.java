@@ -11,7 +11,7 @@ public class Phase {
     @Column(name = "P_ID")
     Long id;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "P_T_ID")
     Tournament tournament;
 

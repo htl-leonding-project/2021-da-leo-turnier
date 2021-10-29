@@ -21,16 +21,16 @@ public class Tournament {
     @Column(name = "T_END_DATE")
     LocalDate endDate;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "T_ST_ID")
     SportType sportType;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "T_TM_ID")
     TournamentMode tournamentMode;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "COMPETITOR_TOURNAMENT",
+    @JoinTable(name = "CT_COMPETITOR_TOURNAMENT",
         joinColumns = { @JoinColumn(name = "CT_T_ID")},
         inverseJoinColumns = { @JoinColumn(name = "CT_C_ID")})
     List<Competitor> competitors;
