@@ -21,24 +21,24 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
             throw new IllegalArgumentException("Competitor already exists.");
         }
         if (competitor.getClass() == Player.class) {
-            Player player = (Player) competitor;
-            if (player.getTeam() != null) {
-                Team team = (Team) getById((player.getTeam().getId()));
-                if (team == null) {
+            Player player = (Player) competitor;    // save Competitor in Player variable to avoid casting
+            if (player.getTeam() != null) { // as long as Player has a Team
+                Team team = (Team) getById((player.getTeam().getId())); // search for a Team with the Players Teams Id in the database
+                if (team == null) {     // if the Team does not exist in the database, persist it...
                     persist(player.getTeam());
-                    team = (Team) getById((player.getTeam().getId()));
+                    team = (Team) getById((player.getTeam().getId()));  // get the actual Team Object from the database
                 }
-                player.setTeam(team);
+                player.setTeam(team);   // avoid passing detached entity to persist
             }
         } else if (competitor.getClass() == Team.class) {
-            Team team = (Team) competitor;
-            team.getPlayers().forEach(p -> {
-                Player player = (Player) getById(p.getId());
-                if (player == null) {
+            Team team = (Team) competitor;  // save Competitor in Team variable to avoid casting
+            team.getPlayers().forEach(p -> {    // for each Player in the Team
+                Player player = (Player) getById(p.getId());    // get the actual Team Object from the database
+                if (player == null) {   // if the Player does not exist in the database, persist it...
                     persist(p);
                     player = (Player) getById(p.getId());
                 }
-                player.setTeam(team);
+                player.setTeam(team);   // avoid passing detached entity to persist
             });
         }
         persist(competitor);
@@ -57,25 +57,25 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
         toModify.setTournaments(competitor.getTournaments());
         toModify.setName(competitor.getName());
         toModify.setTotalScore(competitor.getTotalScore());
-        if (competitor.getClass() == Player.class && toModify.getClass() == Player.class) {
-            Player playerToModify = (Player) toModify;
-            Player playerNew = (Player) competitor;
+        if (competitor.getClass() == Player.class && toModify.getClass() == Player.class) { // if both the passed Competitor and the Competitor to modify are Players
+            Player playerToModify = (Player) toModify;  // save old Competitor in Player variable to avoid casting
+            Player playerNew = (Player) competitor; // save new passed Competitor in Player variable to avoid casting
             playerToModify.setBirthdate(playerNew.getBirthdate());
-            Team team = (Team) getById(playerNew.getTeam().getId());
-            if (team == null) {
+            Team team = (Team) getById(playerNew.getTeam().getId());    // search for a Team with the Players Teams Id in the database
+            if (team == null) { // if the Team does not exist in the database, persist it...
                 persist(playerNew.getTeam());
                 team = (Team) getById((playerNew.getTeam().getId()));
             }
             playerToModify.setTeam(team);
-        } else if (competitor.getClass() == Team.class && toModify.getClass() == Team.class) {
-            Team teamToModify = (Team) toModify;
-            Team teamNew = (Team) competitor;
-            teamToModify.getPlayers().forEach(p -> {
+        } else if (competitor.getClass() == Team.class && toModify.getClass() == Team.class) {  // if both the passed Competitor and the Competitor to modify are Players
+            Team teamToModify = (Team) toModify;    // save old Competitor in Team variable to avoid casting
+            Team teamNew = (Team) competitor;   // save new Competitor in Team variable to avoid casting
+            teamToModify.getPlayers().forEach(p -> {    // remove all the Players from the old Team
                 ((Player) getById(p.getId())).setTeam(null);
             });
             if (teamNew.getPlayers() != null) {
                 teamToModify.setPlayers(teamNew.getPlayers());
-                teamToModify.getPlayers().forEach(p -> {
+                teamToModify.getPlayers().forEach(p -> {    // persist all not existing Players, add all Players, that belong in this Team, to this Team
                     Player player = (Player) getById(p.getId());
                     if (player == null) {
                         persist(p);
@@ -97,21 +97,22 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public Competitor delete(Long id) {
         Competitor competitor = getById(id);
         if (competitor == null) {
             throw new IllegalArgumentException("Competitor with Id " + id + " does not exist.");
         }
         if (competitor.getClass() == Player.class) {
             Player player = (Player) competitor;
-            player.getTeam().getPlayers().remove(player);
+            player.getTeam().getPlayers().remove(player);   // remove Player from his Team
         } else if (competitor.getClass() == Team.class) {
             Team team = (Team) competitor;
-            team.getPlayers().forEach(p -> {
+            team.getPlayers().forEach(p -> {    // set Team of all Players from this Team to null
                 p.setTeam(null);
             });
         }
         delete("id", id);
+        return competitor;
     }
 
     @Transactional

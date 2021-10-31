@@ -568,7 +568,7 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        repository.delete(defaultPlayer1.getId());
+        Competitor player = repository.delete(defaultPlayer1.getId());
 
         // assert
         TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
@@ -585,6 +585,9 @@ class CompetitorRepositoryTest {
                 .isEqualTo(Team.class);
         assertThat(getTeams.getResultList().get(0).getPlayers().size())
                 .isEqualTo(0);
+
+        assertThat(player.getName())
+                .isEqualTo(defaultPlayer1.getName());
     }
 
     @Test
@@ -594,7 +597,7 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        repository.delete(defaultTeam1.getId());
+        Competitor team = repository.delete(defaultTeam1.getId());
 
         // assert
         TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
@@ -611,6 +614,9 @@ class CompetitorRepositoryTest {
 
         assertThat(getTeams.getResultList().size())
                 .isEqualTo(0);
+
+        assertThat(team.getName())
+                .isEqualTo(defaultTeam1.getName());
     }
 
     @Test
@@ -620,12 +626,14 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        repository.clear();
+        long deleted = repository.clear();
 
         // assert
         TypedQuery<Competitor> getCompetitors = entityManager.createQuery("select c from Competitor c", Competitor.class);
 
         assertThat(getCompetitors.getResultList().size())
                 .isEqualTo(0);
+        assertThat(deleted)
+                .isEqualTo(2);
     }
 }
