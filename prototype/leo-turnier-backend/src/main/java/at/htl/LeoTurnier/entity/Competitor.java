@@ -1,6 +1,7 @@
 package at.htl.LeoTurnier.entity;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -18,9 +19,6 @@ public abstract class Competitor {
 
     @Column(name = "C_TOTAL_SCORE")
     int totalScore;
-
-    @ManyToMany(mappedBy = "competitors", cascade = CascadeType.ALL)
-    List<Tournament> tournaments;
 
     public Competitor() {
         this("");
@@ -52,13 +50,5 @@ public abstract class Competitor {
 
     public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
-    }
-
-    public List<Tournament> getTournaments() {
-        return tournaments;
-    }
-
-    public void setTournaments(List<Tournament> tournaments) {
-        this.tournaments = tournaments;
     }
 }

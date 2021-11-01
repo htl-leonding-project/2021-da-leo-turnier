@@ -10,15 +10,12 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
+@Transactional
 public class CompetitorRepository implements PanacheRepository<Competitor> {
 
-    @Transactional
     public Competitor add(Competitor competitor) {
-        if (competitor == null) {
-            throw new IllegalArgumentException("Competitor is null.");
-        }
-        if (getById(competitor.getId()) != null) {
-            throw new IllegalArgumentException("Competitor already exists.");
+        if (competitor == null || getById(competitor.getId()) != null) {
+            return null;
         }
         if (competitor.getClass() == Player.class) {
             Player player = (Player) competitor;    // save Competitor in Player variable to avoid casting
@@ -45,16 +42,11 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
         return competitor;
     }
 
-    @Transactional
     public Competitor modify(long id, Competitor competitor) {
         Competitor toModify = getById(id);
-        if (toModify == null) {
-            throw new IllegalArgumentException("Competitor with Id " + id + " does not exist.");
+        if (competitor == null || toModify == null) {
+            return null;
         }
-        if (competitor == null) {
-            throw new IllegalArgumentException("Competitor is null.");
-        }
-        toModify.setTournaments(competitor.getTournaments());
         toModify.setName(competitor.getName());
         toModify.setTotalScore(competitor.getTotalScore());
         if (competitor.getClass() == Player.class && toModify.getClass() == Player.class) { // if both the passed Competitor and the Competitor to modify are Players
@@ -96,11 +88,10 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
         return listAll();
     }
 
-    @Transactional
     public Competitor delete(Long id) {
         Competitor competitor = getById(id);
         if (competitor == null) {
-            throw new IllegalArgumentException("Competitor with Id " + id + " does not exist.");
+            return null;
         }
         if (competitor.getClass() == Player.class) {
             Player player = (Player) competitor;
@@ -115,9 +106,7 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
         return competitor;
     }
 
-    @Transactional
     public long clear() {
         return deleteAll();
     }
-
 }

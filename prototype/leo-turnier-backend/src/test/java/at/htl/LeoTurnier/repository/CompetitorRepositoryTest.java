@@ -3,22 +3,13 @@ package at.htl.LeoTurnier.repository;
 import at.htl.LeoTurnier.entity.Competitor;
 import at.htl.LeoTurnier.entity.Player;
 import at.htl.LeoTurnier.entity.Team;
-import io.agroal.api.AgroalDataSource;
-import io.quarkus.agroal.DataSource;
 import io.quarkus.test.junit.QuarkusTest;
-import org.assertj.db.type.Table;
 import org.junit.jupiter.api.*;
-import org.postgresql.core.NativeQuery;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import java.lang.reflect.Array;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,11 +20,8 @@ class CompetitorRepositoryTest {
     @Inject
     CompetitorRepository repository;
 
-    @Inject
-    EntityManager entityManager;
-
-    private final Team defaultTeam1 = new Team("DA");
-    private final Player defaultPlayer1 = new Player("Venia", defaultTeam1);
+    private final Team defaultTeam1 = new Team("DK");
+    private final Player defaultPlayer1 = new Player("Canyon", defaultTeam1);
 
     private void insertTestData() {
         repository.add(defaultPlayer1);
@@ -51,18 +39,15 @@ class CompetitorRepositoryTest {
 
     @Test
     @Order(1010)
-    void TestAdd01_PassNull_ShouldThrowIllegalArgumentException() {
+    void TestAdd01_PassNull_ShouldReturnNull() {
         // arrange
-        String message = "";
+
         // act
-        try {
-            repository.add(null);
-        } catch (IllegalArgumentException e) {
-            message = e.getMessage();
-        }
+        Competitor res = repository.add(null);
+
         // assert
-        assertThat(message)
-                .isEqualTo("Competitor is null.");
+        assertThat(res)
+                .isEqualTo(null);
     }
 
     @Test
@@ -76,7 +61,7 @@ class CompetitorRepositoryTest {
         repository.add(player1);
 
         // assert
-        TypedQuery<Competitor> getCompetitors = entityManager.createQuery("select c from Competitor c", Competitor.class);
+        TypedQuery<Competitor> getCompetitors = repository.getEntityManager().createQuery("select c from Competitor c", Competitor.class);
 
         assertThat(getCompetitors.getResultList().size())
                 .isEqualTo(1);
@@ -97,7 +82,7 @@ class CompetitorRepositoryTest {
         repository.add(team1);
 
         // assert
-        TypedQuery<Competitor> getCompetitors = entityManager.createQuery("select c from Competitor c", Competitor.class);
+        TypedQuery<Competitor> getCompetitors = repository.getEntityManager().createQuery("select c from Competitor c", Competitor.class);
 
         assertThat(getCompetitors.getResultList().size())
                 .isEqualTo(1);
@@ -122,8 +107,8 @@ class CompetitorRepositoryTest {
         repository.add(team1);
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(1);
@@ -160,8 +145,8 @@ class CompetitorRepositoryTest {
         repository.add(player1);
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(1);
@@ -195,8 +180,8 @@ class CompetitorRepositoryTest {
         repository.add(player1);
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(1);
@@ -231,8 +216,8 @@ class CompetitorRepositoryTest {
         repository.add(team1);
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(1);
@@ -256,65 +241,48 @@ class CompetitorRepositoryTest {
 
     @Test
     @Order(1080)
-    void TestAdd08_AddExistingCompetitor_ShouldThrowIllegalArgumentException() {
+    void TestAdd08_AddExistingCompetitor_ShouldReturnNull() {
         // arrange
-        String message = "";
-
         String namePlayer1 = "Faker";
         Player player1 = new Player(namePlayer1);
 
         // act
         repository.add(player1);
-        try {
-            repository.add(player1);
-        } catch (IllegalArgumentException e) {
-            message = e.getMessage();
-        }
+        Competitor res = repository.add(player1);
 
         // assert
-        assertThat(message)
-                .isEqualTo("Competitor already exists.");
+        assertThat(res)
+                .isEqualTo(null);
     }
 
     @Test
     @Order(2010)
-    void TestModify01_ModifyToNull_ShouldThrowIllegalArgumentException() {
+    void TestModify01_ModifyToNull_ShouldReturnNull() {
         insertTestData();
         // arrange
-        String message = "";
 
         // act
-        try {
-            repository.modify(defaultPlayer1.getId(), null);
-        } catch (IllegalArgumentException e) {
-            message = e.getMessage();
-        }
+        Competitor res = repository.modify(defaultPlayer1.getId(), null);
 
         // assert
-        assertThat(message)
-                .isEqualTo("Competitor is null.");
+        assertThat(res)
+                .isEqualTo(null);
     }
 
     @Test
     @Order(2020)
-    void TestModify02_ModifyNotExistingCompetitor_ShouldThrowIllegalArgumentException() {
+    void TestModify02_ModifyNotExistingCompetitor_ShouldReturnNull() {
         insertTestData();
         // arrange
-        String message = "";
-
         String namePlayer1 = "Faker";
         Player player1 = new Player(namePlayer1);
 
         // act
-        try {
-            repository.modify(-1, player1);
-        } catch (IllegalArgumentException e) {
-            message = e.getMessage();
-        }
+        Competitor res = repository.modify(-1, player1);
 
         // assert
-        assertThat(message)
-                .isEqualTo("Competitor with Id -1 does not exist.");
+        assertThat(res)
+                .isEqualTo(null);
     }
 
     @Test
@@ -322,19 +290,15 @@ class CompetitorRepositoryTest {
     void TestModify03_ModifyPlayer_ShouldModifyPlayer() {
         insertTestData();
         // arrange
-
         String namePlayer1 = "Faker";
         Player player1 = new Player(namePlayer1, defaultTeam1);
 
         // act
-
         repository.modify(defaultPlayer1.getId(), player1);
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
-
-        List<Competitor> competitors = entityManager.createQuery("select c from Competitor c", Competitor.class).getResultList();
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(1);
@@ -361,17 +325,15 @@ class CompetitorRepositoryTest {
     void TestModify04_ModifyTeam_ShouldModifyTeam() {
         insertTestData();
         // arrange
-
         String nameTeam1 = "T1";
         Team team1 = new Team(nameTeam1, defaultTeam1.getPlayers());
 
         // act
-
         repository.modify(defaultTeam1.getId(), team1);
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(1);
@@ -403,12 +365,11 @@ class CompetitorRepositoryTest {
         Player player1 = new Player(namePlayer1, new Team(nameTeam1));
 
         // act
-
         repository.modify(defaultPlayer1.getId(), player1);
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(1);
@@ -448,12 +409,11 @@ class CompetitorRepositoryTest {
                 List.of(new Player(namePlayer1)));
 
         // act
-
         repository.modify(defaultTeam1.getId(), team1);
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(2);
@@ -489,10 +449,10 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        Competitor competitor = repository.getById((long) -1);
+        Competitor res = repository.getById((long) -1);
 
         // assert
-        assertThat(competitor)
+        assertThat(res)
                 .isEqualTo(null);
     }
 
@@ -503,10 +463,10 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        Competitor competitor = repository.getById(defaultPlayer1.getId());
+        Competitor res = repository.getById(defaultPlayer1.getId());
 
         // assert
-        assertThat(competitor.getName())
+        assertThat(res.getName())
                 .isEqualTo(defaultPlayer1.getName());
     }
 
@@ -516,10 +476,10 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        List<Competitor> competitors = repository.getAll();
+        List<Competitor> res = repository.getAll();
 
         // assert
-        assertThat(competitors.size())
+        assertThat(res.size())
                 .isEqualTo(0);
     }
 
@@ -530,35 +490,30 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        List<Competitor> competitors = repository.getAll();
+        List<Competitor> res = repository.getAll();
 
         // assert
-        assertThat(competitors.size())
+        assertThat(res.size())
                 .isEqualTo(2);
-        assertThat(competitors.get(0).getName())
+        assertThat(res.get(0).getName())
                 .isEqualTo(defaultTeam1.getName());
-        assertThat(competitors.get(1).getName())
+        assertThat(res.get(1).getName())
                 .isEqualTo(defaultPlayer1.getName());
     }
 
     @Test
     @Order(5010)
-    void TestDelete01_DeleteNotExistingCompetitor_ShouldThrowIllegalArgumentException() {
+    void TestDelete01_DeleteNotExistingCompetitor_ShouldReturnNull() {
         insertTestData();
         // arrange
-        String message = "";
 
         // act
-        try {
-            repository.delete((long) -1);
-        } catch (IllegalArgumentException e) {
-            message = e.getMessage();
-        }
+        Competitor res = repository.delete((long) -1);
 
         // assert
 
-        assertThat(message)
-                .isEqualTo("Competitor with Id -1 does not exist.");
+        assertThat(res)
+                .isEqualTo(null);
     }
 
     @Test
@@ -568,11 +523,11 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        Competitor player = repository.delete(defaultPlayer1.getId());
+        Competitor res = repository.delete(defaultPlayer1.getId());
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(0);
@@ -586,7 +541,7 @@ class CompetitorRepositoryTest {
         assertThat(getTeams.getResultList().get(0).getPlayers().size())
                 .isEqualTo(0);
 
-        assertThat(player.getName())
+        assertThat(res.getName())
                 .isEqualTo(defaultPlayer1.getName());
     }
 
@@ -597,11 +552,11 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        Competitor team = repository.delete(defaultTeam1.getId());
+        Competitor res = repository.delete(defaultTeam1.getId());
 
         // assert
-        TypedQuery<Player> getPlayers = entityManager.createQuery("select p from Player p", Player.class);
-        TypedQuery<Team> getTeams = entityManager.createQuery("select t from Team t", Team.class);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
 
         assertThat(getPlayers.getResultList().size())
                 .isEqualTo(1);
@@ -615,7 +570,7 @@ class CompetitorRepositoryTest {
         assertThat(getTeams.getResultList().size())
                 .isEqualTo(0);
 
-        assertThat(team.getName())
+        assertThat(res.getName())
                 .isEqualTo(defaultTeam1.getName());
     }
 
@@ -626,14 +581,14 @@ class CompetitorRepositoryTest {
         // arrange
 
         // act
-        long deleted = repository.clear();
+        long res = repository.clear();
 
         // assert
-        TypedQuery<Competitor> getCompetitors = entityManager.createQuery("select c from Competitor c", Competitor.class);
+        TypedQuery<Competitor> getCompetitors = repository.getEntityManager().createQuery("select c from Competitor c", Competitor.class);
 
         assertThat(getCompetitors.getResultList().size())
                 .isEqualTo(0);
-        assertThat(deleted)
+        assertThat(res)
                 .isEqualTo(2);
     }
 }
