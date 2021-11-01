@@ -3,12 +3,12 @@ version: '3.1'
 services:
 
   db:
-    container_name: payment_postgres
+    container_name: leoturnier_postgres
     image: postgres:13.3-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
       POSTGRES_DB: db
     ports:
       - 5432:5432
@@ -25,7 +25,7 @@ services:
 
 # https://github.com/khezen/compose-postgres/blob/master/docker-compose.yml
   pgadmin:
-    container_name: payment_pgadmin
+    container_name: leoturnier_pgadmin
     image: dpage/pgadmin4:5.5
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
