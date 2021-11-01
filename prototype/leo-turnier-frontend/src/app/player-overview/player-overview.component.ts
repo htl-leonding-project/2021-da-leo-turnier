@@ -3,7 +3,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ApiService} from '../services/api.service';
 
 @Component({
-  selector: 'app-competitor-overview',
+  selector: 'app-player-overview',
   templateUrl: './player-overview.component.html',
   styleUrls: ['./player-overview.component.scss']
 })
