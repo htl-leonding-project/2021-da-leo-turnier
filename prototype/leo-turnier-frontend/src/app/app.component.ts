@@ -15,6 +15,6 @@ export class AppComponent {
   }
 
   onMenuSelected(page: string): void{
-    this.router.navigateByUrl('/' + page);
+    this.router.navigate(['/' + page]);
   }
 }
