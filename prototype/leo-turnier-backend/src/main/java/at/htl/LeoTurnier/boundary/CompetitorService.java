@@ -19,28 +19,55 @@ public class CompetitorService {
     CompetitorRepository repository;
 
     @POST
+    @Path("player")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(Competitor competitor) {
+    public Response addPlayer(Player player) {
         try {
-            competitor = repository.add(competitor);
+            player = (Player) repository.add(player);
         } catch (IllegalArgumentException e) {
             return Response.notModified(e.getMessage()).build();
         }
-        return Response.accepted(competitor).build();
+        return Response.accepted(player).build();
     }
 
     @PUT
-    @Path("{id}")
+    @Path("player/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@PathParam("id") long id, Competitor competitor) {
+    public Response modifyPlayer(@PathParam("id") long id, Player player) {
         try {
-            competitor = repository.modify(id, competitor);
+            player = (Player) repository.modify(id, player);
         } catch (IllegalArgumentException e) {
             return Response.notModified(e.getMessage()).build();
         }
-        return Response.accepted(competitor).build();
+        return Response.accepted(player).build();
+    }
+
+    @POST
+    @Path("team")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addTeam(Team team) {
+        try {
+            team = (Team) repository.add(team);
+        } catch (IllegalArgumentException e) {
+            return Response.notModified(e.getMessage()).build();
+        }
+        return Response.accepted(team).build();
+    }
+
+    @PUT
+    @Path("team/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyTeam(@PathParam("id") long id, Team team) {
+        try {
+            team = (Team) repository.modify(id, team);
+        } catch (IllegalArgumentException e) {
+            return Response.notModified(e.getMessage()).build();
+        }
+        return Response.accepted(team).build();
     }
 
     @GET
