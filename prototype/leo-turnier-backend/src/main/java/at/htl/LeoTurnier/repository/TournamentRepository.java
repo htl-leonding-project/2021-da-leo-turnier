@@ -21,6 +21,9 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
     @Inject
     SportTypeRepository sportTypeRepository;
 
+    @Inject
+    PhaseRepository phaseRepository;
+
     public Tournament add(Tournament tournament) {
         if (tournament == null || getById(tournament.getId()) != null) {
             return null;
@@ -51,6 +54,14 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
         tournament.getCompetitors().forEach(c -> {
             competitorRepository.add(c);
         });
+        if (tournament.getTournamentMode() != null) {
+            tournamentModeRepository.add(tournament.getTournamentMode());
+            tournament.setTournamentMode(tournamentModeRepository.getById(tournament.getTournamentMode().getId()));
+        }
+        if (tournament.getSportType() != null) {
+            sportTypeRepository.add(tournament.getSportType());
+            tournament.setSportType(sportTypeRepository.getById(tournament.getSportType().getId()));
+        }
         toModify.setCompetitors(tournament.getCompetitors());
         return toModify;
     }
@@ -65,11 +76,15 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
 
     public Tournament delete(Long id) {
         Tournament tournament = getById(id);
+        phaseRepository.getAll().forEach(t -> {
+            t.setTournament(null);
+        });
         delete("id", id);
         return tournament;
     }
 
     public long clear() {
+        phaseRepository.clear();
         return deleteAll();
     }
 }

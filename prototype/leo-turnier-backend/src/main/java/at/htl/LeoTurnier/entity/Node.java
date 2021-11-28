@@ -11,13 +11,26 @@ public class Node {
     @Column(name = "N_ID")
     Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "N_M_ID")
+    Match match;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "N_P_ID")
     Phase phase;
 
-    @OneToOne
-    @JoinColumn(name = "N_M_ID")
-    Match match;
+    public Node() {
+        this(null);
+    }
+
+    public Node(Match match) {
+        this(match, null);
+    }
+
+    public Node(Match match, Phase phase) {
+        this.match = match;
+        this.phase = phase;
+    }
 
     public Long getId() {
         return id;
@@ -27,19 +40,19 @@ public class Node {
         this.id = id;
     }
 
-    public Phase getPhase() {
-        return phase;
-    }
-
-    public void setPhase(Phase phase) {
-        this.phase = phase;
-    }
-
     public Match getMatch() {
         return match;
     }
 
     public void setMatch(Match match) {
         this.match = match;
+    }
+
+    public Phase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(Phase phase) {
+        this.phase = phase;
     }
 }

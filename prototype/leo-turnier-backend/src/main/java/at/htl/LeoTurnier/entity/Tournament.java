@@ -27,11 +27,11 @@ public class Tournament {
     @XmlJavaTypeAdapter(type=LocalDate.class, value= LocalDateAdapter.class)
     LocalDate endDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "T_ST_ID")
     SportType sportType;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "T_TM_ID")
     TournamentMode tournamentMode;
 
@@ -46,7 +46,7 @@ public class Tournament {
     }
 
     public Tournament(String name) {
-        this(name, new LinkedList<Competitor>());
+        this(name, new LinkedList<>());
     }
 
     public Tournament(String name, List<Competitor> competitors) {
@@ -62,11 +62,15 @@ public class Tournament {
     }
 
     public Tournament(String name, SportType sportType, TournamentMode tournamentMode) {
-        this(name, sportType, tournamentMode, new LinkedList<Competitor>());
+        this(name, sportType, tournamentMode, new LinkedList<>());
     }
 
     public Tournament(String name, SportType sportType, TournamentMode tournamentMode, List<Competitor> competitors) {
-        this(name, null, null, sportType, tournamentMode, competitors);
+        this(name, null, sportType, tournamentMode, competitors);
+    }
+
+    public Tournament(String name, LocalDate startDate, SportType sportType, TournamentMode tournamentMode, List<Competitor> competitors) {
+        this(name, startDate, null, sportType, tournamentMode, competitors);
     }
 
     public Tournament(String name, LocalDate startDate, LocalDate endDate, SportType sportType, TournamentMode tournamentMode, List<Competitor> competitors) {

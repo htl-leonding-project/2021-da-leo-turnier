@@ -6,12 +6,16 @@ import at.htl.LeoTurnier.entity.Team;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
 @Transactional
 public class CompetitorRepository implements PanacheRepository<Competitor> {
+
+    @Inject
+    MatchRepository matchRepository;
 
     public Competitor add(Competitor competitor) {
         if (competitor == null || getById(competitor.getId()) != null) {
@@ -107,6 +111,7 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
     }
 
     public long clear() {
+        matchRepository.clear();
         return deleteAll();
     }
 }

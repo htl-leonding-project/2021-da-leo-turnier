@@ -11,12 +11,25 @@ public class Phase {
     @Column(name = "P_ID")
     Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(name = "P_PHASE_NUMBER")
+    int phaseNumber;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "P_T_ID")
     Tournament tournament;
 
-    @Column(name = "P_PHASE_NUMBER")
-    int phaseNumber;
+    public Phase() {
+        this(-1);
+    }
+
+    public Phase(int phaseNumber) {
+        this(phaseNumber, null);
+    }
+
+    public Phase(int phaseNumber, Tournament tournament) {
+        this.phaseNumber = phaseNumber;
+        this.tournament = tournament;
+    }
 
     public Long getId() {
         return id;
@@ -26,19 +39,19 @@ public class Phase {
         this.id = id;
     }
 
-    public Tournament getTournament() {
-        return tournament;
-    }
-
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
-    }
-
     public int getPhaseNumber() {
         return phaseNumber;
     }
 
     public void setPhaseNumber(int phaseNumber) {
         this.phaseNumber = phaseNumber;
+    }
+
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
     }
 }

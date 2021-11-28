@@ -9,9 +9,7 @@ import javax.persistence.TypedQuery;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -29,11 +27,25 @@ class TournamentRepositoryTest {
     @Inject
     TournamentModeRepository tournamentModeRepository;
 
+    @Inject
+    PhaseRepository phaseRepository;
+
+    @Inject
+    MatchRepository matchRepository;
+
+    @Inject
+    NodeRepository nodeRepository;
+
     private final Team defaultTeam1 = new Team("DK",
             List.of(new Player("Canyon")));
+    private final Team defaultTeam2 = new Team("FNC",
+            List.of(new Player("Caps")));
     private final SportType defaultSportType1 = new SportType("LoL");
     private final TournamentMode defaultTournamentMode1 = new TournamentMode("KO");
-    private final Tournament defaultTournament1 = new Tournament("MSI", defaultSportType1, defaultTournamentMode1, List.of(defaultTeam1));
+    private final Tournament defaultTournament1 = new Tournament("MSI", defaultSportType1, defaultTournamentMode1, List.of(defaultTeam1, defaultTeam2));
+    private final Phase defaultPhase1 = new Phase(1, defaultTournament1);
+    private final Match defaultMatch1 = new Match(defaultTeam1, defaultTeam2);
+    private final Node defaultNode1 = new Node(defaultMatch1, defaultPhase1);
 
     private void insertTestData() {
         repository.add(defaultTournament1);
@@ -49,6 +61,9 @@ class TournamentRepositoryTest {
         competitorRepository.clear();
         tournamentModeRepository.clear();
         sportTypeRepository.clear();
+        phaseRepository.clear();
+        nodeRepository.clear();
+        matchRepository.clear();
     }
 
     @Test
@@ -309,10 +324,15 @@ class TournamentRepositoryTest {
 
 
         assertThat(getTeams.getResultList().size())
-                .isEqualTo(1);
+                .isEqualTo(2);
         assertThat(getTeams.getResultList().get(0).getName())
                 .isEqualTo(defaultTeam1.getName());
         assertThat(getTeams.getResultList().get(0).getClass())
+                .isEqualTo(Team.class);
+
+        assertThat(getTeams.getResultList().get(1).getName())
+                .isEqualTo(defaultTeam2.getName());
+        assertThat(getTeams.getResultList().get(1).getClass())
                 .isEqualTo(Team.class);
     }
 
@@ -343,16 +363,137 @@ class TournamentRepositoryTest {
 
 
         assertThat(getTeams.getResultList().size())
-                .isEqualTo(2);
+                .isEqualTo(3);
         assertThat(getTeams.getResultList().get(0).getName())
                 .isEqualTo(defaultTeam1.getName());
         assertThat(getTeams.getResultList().get(0).getClass())
                 .isEqualTo(Team.class);
 
         assertThat(getTeams.getResultList().get(1).getName())
-                .isEqualTo(team1.getName());
+                .isEqualTo(defaultTeam2.getName());
         assertThat(getTeams.getResultList().get(1).getClass())
                 .isEqualTo(Team.class);
+
+        assertThat(getTeams.getResultList().get(2).getName())
+                .isEqualTo(team1.getName());
+        assertThat(getTeams.getResultList().get(2).getClass())
+                .isEqualTo(Team.class);
+    }
+
+    @Test
+    @Order(2050)
+    void TestModify05_ModifyTournamentWithExistingSportType_ShouldAddTournament() {
+        insertTestData();
+        // arrange
+        String nameTournament1 = "Worlds";
+        Tournament tournament1 = new Tournament(nameTournament1, defaultSportType1);
+
+        // act
+        sportTypeRepository.add(defaultSportType1);
+        repository.modify(defaultTournament1.getId(), tournament1);
+
+        // assert
+        TypedQuery<Tournament> getTournaments = repository.getEntityManager().createQuery("select t from Tournament t", Tournament.class);
+        TypedQuery<SportType> getSportTypes = repository.getEntityManager().createQuery("select st from SportType st", SportType.class);
+
+        assertThat(getTournaments.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTournaments.getResultList().get(0).getName())
+                .isEqualTo(nameTournament1);
+
+        assertThat(getSportTypes.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getSportTypes.getResultList().get(0).getName())
+                .isEqualTo(defaultSportType1.getName());
+    }
+
+    @Test
+    @Order(2060)
+    void TestModify06_ModifyTournamentWithNotExistingSportType_ShouldAddTournament() {
+        insertTestData();
+        // arrange
+        String nameSportType1 = "DotA2";
+        String nameTournament1 = "Worlds";
+        SportType sportType1 = new SportType(nameSportType1);
+        Tournament tournament1 = new Tournament(nameTournament1, sportType1);
+
+        // act
+        repository.modify(defaultTournament1.getId(), tournament1);
+
+        // assert
+        TypedQuery<Tournament> getTournaments = repository.getEntityManager().createQuery("select t from Tournament t", Tournament.class);
+        TypedQuery<SportType> getSportTypes = repository.getEntityManager().createQuery("select st from SportType st", SportType.class);
+
+        assertThat(getTournaments.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTournaments.getResultList().get(0).getName())
+                .isEqualTo(nameTournament1);
+
+        assertThat(getSportTypes.getResultList().size())
+                .isEqualTo(2);
+        assertThat(getSportTypes.getResultList().get(0).getName())
+                .isEqualTo(defaultSportType1.getName());
+
+        assertThat(getSportTypes.getResultList().get(1).getName())
+                .isEqualTo(nameSportType1);
+    }
+
+    @Test
+    @Order(2070)
+    void TestModify07_ModifyTournamentWithExistingTournamentMode_ShouldAddTournament() {
+        insertTestData();
+        // arrange
+        String nameTournament1 = "Worlds";
+        Tournament tournament1 = new Tournament(nameTournament1, defaultTournamentMode1);
+
+        // act
+        tournamentModeRepository.add(defaultTournamentMode1);
+        repository.modify(defaultTournament1.getId(), tournament1);
+
+        // assert
+        TypedQuery<Tournament> getTournaments = repository.getEntityManager().createQuery("select t from Tournament t", Tournament.class);
+        TypedQuery<TournamentMode> getTournamentModes = repository.getEntityManager().createQuery("select tm from TournamentMode tm", TournamentMode.class);
+
+        assertThat(getTournaments.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTournaments.getResultList().get(0).getName())
+                .isEqualTo(nameTournament1);
+
+        assertThat(getTournamentModes.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTournamentModes.getResultList().get(0).getName())
+                .isEqualTo(defaultTournamentMode1.getName());
+    }
+
+    @Test
+    @Order(2080)
+    void TestModify08_ModifyTournamentWithNotExistingTournamentMode_ShouldAddTournament() {
+        insertTestData();
+        // arrange
+        String nameTournamentMode1 = "KO";
+        String nameTournament1 = "Worlds";
+        TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
+        Tournament tournament1 = new Tournament(nameTournament1, tournamentMode1);
+
+        // act
+        repository.modify(defaultTournament1.getId(), tournament1);
+
+        // assert
+        TypedQuery<Tournament> getTournaments = repository.getEntityManager().createQuery("select t from Tournament t", Tournament.class);
+        TypedQuery<TournamentMode> getTournamentModes = repository.getEntityManager().createQuery("select tm from TournamentMode tm", TournamentMode.class);
+
+        assertThat(getTournaments.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTournaments.getResultList().get(0).getName())
+                .isEqualTo(nameTournament1);
+
+        assertThat(getTournamentModes.getResultList().size())
+                .isEqualTo(2);
+        assertThat(getTournamentModes.getResultList().get(0).getName())
+                .isEqualTo(defaultTournamentMode1.getName());
+
+        assertThat(getTournamentModes.getResultList().get(1).getName())
+                .isEqualTo(nameTournamentMode1);
     }
 
     @Test
@@ -446,10 +587,62 @@ class TournamentRepositoryTest {
                 .isEqualTo(0);
 
         assertThat(getTeams.getResultList().size())
-                .isEqualTo(1);
+                .isEqualTo(2);
         assertThat(getTeams.getResultList().get(0).getName())
                 .isEqualTo(defaultTeam1.getName());
         assertThat(getTeams.getResultList().get(0).getClass())
+                .isEqualTo(Team.class);
+
+        assertThat(getTeams.getResultList().get(1).getName())
+                .isEqualTo(defaultTeam2.getName());
+        assertThat(getTeams.getResultList().get(1).getClass())
+                .isEqualTo(Team.class);
+
+        assertThat(getSportTypes.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getSportTypes.getResultList().get(0).getName())
+                .isEqualTo(defaultSportType1.getName());
+
+        assertThat(getTournamentModes.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTournamentModes.getResultList().get(0).getName())
+                .isEqualTo(defaultTournamentMode1.getName());
+
+        assertThat(res.getName())
+                .isEqualTo(defaultTournament1.getName());
+    }
+
+    @Test
+    @Order(5030)
+    void TestDelete03_DeleteTournamentWithAllRelationsPresent_ShouldDeleteTournament() {
+        insertTestData();
+        phaseRepository.add(defaultPhase1);
+        matchRepository.add(defaultMatch1);
+        nodeRepository.add(defaultNode1);
+        // arrange
+
+        // act
+        Tournament res = repository.delete(defaultTournament1.getId());
+
+        // assert
+        TypedQuery<Tournament> getTournaments = repository.getEntityManager().createQuery("select t from Tournament t", Tournament.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
+        TypedQuery<SportType> getSportTypes = repository.getEntityManager().createQuery("select st from SportType st", SportType.class);
+        TypedQuery<TournamentMode> getTournamentModes = repository.getEntityManager().createQuery("select tm from TournamentMode tm", TournamentMode.class);
+
+        assertThat(getTournaments.getResultList().size())
+                .isEqualTo(0);
+
+        assertThat(getTeams.getResultList().size())
+                .isEqualTo(2);
+        assertThat(getTeams.getResultList().get(0).getName())
+                .isEqualTo(defaultTeam1.getName());
+        assertThat(getTeams.getResultList().get(0).getClass())
+                .isEqualTo(Team.class);
+
+        assertThat(getTeams.getResultList().get(1).getName())
+                .isEqualTo(defaultTeam2.getName());
+        assertThat(getTeams.getResultList().get(1).getClass())
                 .isEqualTo(Team.class);
 
         assertThat(getSportTypes.getResultList().size())

@@ -50,9 +50,10 @@ public class SportTypeRepository implements PanacheRepository<SportType> {
         return sportType;
     }
 
-    public long clear() {tournamentRepository.getAll().forEach(t -> {
-        t.setSportType(null);
-    });
+    public long clear() {
+        tournamentRepository.getAll().forEach(t -> {
+            t.setSportType(null);
+        });
         return deleteAll();
     }
 }
