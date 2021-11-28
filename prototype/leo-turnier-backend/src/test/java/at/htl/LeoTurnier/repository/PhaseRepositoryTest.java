@@ -330,7 +330,7 @@ class PhaseRepositoryTest {
         // assert
         TypedQuery<Phase> getPhases = repository.getEntityManager().createQuery("select p from Phase p", Phase.class);
         TypedQuery<Tournament> getTournaments = repository.getEntityManager().createQuery("select t from Tournament t", Tournament.class);
-        TypedQuery<Node> getNode = repository.getEntityManager().createQuery("select n from Node n", Node.class);
+        TypedQuery<Node> getNodes = repository.getEntityManager().createQuery("select n from Node n", Node.class);
 
         assertThat(getPhases.getResultList().size())
                 .isEqualTo(0);
@@ -340,7 +340,7 @@ class PhaseRepositoryTest {
         assertThat(getTournaments.getResultList().get(0).getName())
                 .isEqualTo(defaultTournament1.getName());
 
-        assertThat(getNode.getResultList().size())
+        assertThat(getNodes.getResultList().size())
                 .isEqualTo(0);
 
         assertThat(res.getPhaseNumber())

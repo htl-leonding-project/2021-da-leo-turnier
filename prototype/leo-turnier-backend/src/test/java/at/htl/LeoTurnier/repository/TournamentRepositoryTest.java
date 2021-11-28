@@ -39,7 +39,7 @@ class TournamentRepositoryTest {
     private final Team defaultTeam1 = new Team("DK",
             List.of(new Player("Canyon")));
     private final Team defaultTeam2 = new Team("FNC",
-            List.of(new Player("Caps")));
+            List.of(new Player("Bwipo")));
     private final SportType defaultSportType1 = new SportType("LoL");
     private final TournamentMode defaultTournamentMode1 = new TournamentMode("KO");
     private final Tournament defaultTournament1 = new Tournament("MSI", defaultSportType1, defaultTournamentMode1, List.of(defaultTeam1, defaultTeam2));

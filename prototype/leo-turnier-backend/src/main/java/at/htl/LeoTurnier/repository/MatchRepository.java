@@ -41,6 +41,19 @@ public class MatchRepository implements PanacheRepository<Match> {
         if (match == null || toModify == null) {
             return null;
         }
+        if (match.getCompetitor1() != null) {
+            competitorRepository.add(match.getCompetitor1());
+            match.setCompetitor1(competitorRepository.getById(match.getCompetitor1().getId()));
+        }
+        if (match.getCompetitor2() != null) {
+            competitorRepository.add(match.getCompetitor2());
+            match.setCompetitor2(competitorRepository.getById(match.getCompetitor2().getId()));
+        }
+        toModify.setCompetitor1(match.getCompetitor1());
+        toModify.setCompetitor2(match.getCompetitor2());
+        toModify.setDate(match.getDate());
+        toModify.setScore1(match.getScore1());
+        toModify.setScore2(match.getScore2());
         return toModify;
     }
 
@@ -54,11 +67,15 @@ public class MatchRepository implements PanacheRepository<Match> {
 
     public Match delete(Long id) {
         Match match = getById(id);
+        nodeRepository.find("match", match).stream().forEach(p -> {
+            nodeRepository.delete(p);
+        });
         delete("id", id);
         return match;
     }
 
     public long clear() {
+        nodeRepository.clear();
         return deleteAll();
     }
 }

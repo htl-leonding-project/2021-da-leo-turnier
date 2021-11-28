@@ -205,7 +205,7 @@ class NodeRepositoryTest {
         Node node1 = new Node();
 
         // act
-        Node res = repository.modify(defaultNode1.getId(), node1);
+        repository.modify(defaultNode1.getId(), node1);
 
         // assert
         TypedQuery<Node> getNodes = repository.getEntityManager().createQuery("select n from Node n", Node.class);
