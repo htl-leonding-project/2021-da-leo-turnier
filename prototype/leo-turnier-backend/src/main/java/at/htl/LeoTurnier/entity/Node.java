@@ -20,11 +20,15 @@ public class Node {
     Phase phase;
 
     public Node() {
-        this(null);
+        this(null, null);
     }
 
     public Node(Match match) {
         this(match, null);
+    }
+
+    public Node(Phase phase) {
+        this(null, phase);
     }
 
     public Node(Match match, Phase phase) {
