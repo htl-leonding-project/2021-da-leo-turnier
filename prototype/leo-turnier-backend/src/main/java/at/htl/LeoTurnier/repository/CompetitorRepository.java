@@ -8,6 +8,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 
 @ApplicationScoped
@@ -15,73 +16,33 @@ import java.util.List;
 public class CompetitorRepository implements PanacheRepository<Competitor> {
 
     @Inject
-    MatchRepository matchRepository;
+    PlayerRepository playerRepository;
+
+    @Inject
+    TeamRepository teamRepository;
 
     public Competitor add(Competitor competitor) {
         if (competitor == null || getById(competitor.getId()) != null) {
             return null;
         }
         if (competitor.getClass() == Player.class) {
-            Player player = (Player) competitor;    // save Competitor in Player variable to avoid casting
-            if (player.getTeam() != null) { // as long as Player has a Team
-                Team team = (Team) getById((player.getTeam().getId())); // search for a Team with the Players Teams Id in the database
-                if (team == null) {     // if the Team does not exist in the database, persist it...
-                    persist(player.getTeam());
-                    team = (Team) getById((player.getTeam().getId()));  // get the actual Team Object from the database
-                }
-                player.setTeam(team);   // avoid passing detached entity to persist
-            }
+            return playerRepository.add((Player) competitor);
         } else if (competitor.getClass() == Team.class) {
-            Team team = (Team) competitor;  // save Competitor in Team variable to avoid casting
-            team.getPlayers().forEach(p -> {    // for each Player in the Team
-                Player player = (Player) getById(p.getId());    // get the actual Team Object from the database
-                if (player == null) {   // if the Player does not exist in the database, persist it...
-                    persist(p);
-                    player = (Player) getById(p.getId());
-                }
-                player.setTeam(team);   // avoid passing detached entity to persist
-            });
+            return teamRepository.add((Team) competitor);
         }
-        persist(competitor);
         return competitor;
     }
 
     public Competitor modify(long id, Competitor competitor) {
-        Competitor toModify = getById(id);
-        if (competitor == null || toModify == null) {
+        if (competitor == null) {
             return null;
         }
-        toModify.setName(competitor.getName());
-        toModify.setTotalScore(competitor.getTotalScore());
-        if (competitor.getClass() == Player.class && toModify.getClass() == Player.class) { // if both the passed Competitor and the Competitor to modify are Players
-            Player playerToModify = (Player) toModify;  // save old Competitor in Player variable to avoid casting
-            Player playerNew = (Player) competitor; // save new passed Competitor in Player variable to avoid casting
-            playerToModify.setBirthdate(playerNew.getBirthdate());
-            Team team = (Team) getById(playerNew.getTeam().getId());    // search for a Team with the Players Teams Id in the database
-            if (team == null) { // if the Team does not exist in the database, persist it...
-                persist(playerNew.getTeam());
-                team = (Team) getById((playerNew.getTeam().getId()));
-            }
-            playerToModify.setTeam(team);
-        } else if (competitor.getClass() == Team.class && toModify.getClass() == Team.class) {  // if both the passed Competitor and the Competitor to modify are Players
-            Team teamToModify = (Team) toModify;    // save old Competitor in Team variable to avoid casting
-            Team teamNew = (Team) competitor;   // save new Competitor in Team variable to avoid casting
-            teamToModify.getPlayers().forEach(p -> {    // remove all the Players from the old Team
-                ((Player) getById(p.getId())).setTeam(null);
-            });
-            if (teamNew.getPlayers() != null) {
-                teamToModify.setPlayers(teamNew.getPlayers());
-                teamToModify.getPlayers().forEach(p -> {    // persist all not existing Players, add all Players, that belong in this Team, to this Team
-                    Player player = (Player) getById(p.getId());
-                    if (player == null) {
-                        persist(p);
-                        player = (Player) getById(p.getId());
-                    }
-                    player.setTeam(teamToModify);
-                });
-            }
+        if (competitor.getClass() == Player.class) {
+            return playerRepository.modify(id, (Player) competitor);
+        } else if (competitor.getClass() == Team.class) {
+            return teamRepository.modify(id, (Team) competitor);
         }
-        return toModify;
+        return null;
     }
 
     public Competitor getById(Long id) {
@@ -89,7 +50,16 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
     }
 
     public List<Competitor> getAll() {
-        return listAll();
+        List<Competitor> competitors = listAll();
+        competitors.sort(((o1, o2) -> {
+            if (o1.getId() < o2.getId()) {
+                return -1;
+            } else if (o1.getId() > o2.getId()) {
+                return 1;
+            }
+            return 0;
+        }));
+        return competitors;
     }
 
     public Competitor delete(Long id) {
@@ -98,20 +68,14 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
             return null;
         }
         if (competitor.getClass() == Player.class) {
-            Player player = (Player) competitor;
-            player.getTeam().getPlayers().remove(player);   // remove Player from his Team
+            return playerRepository.delete(id);
         } else if (competitor.getClass() == Team.class) {
-            Team team = (Team) competitor;
-            team.getPlayers().forEach(p -> {    // set Team of all Players from this Team to null
-                p.setTeam(null);
-            });
+            return teamRepository.delete(id);
         }
-        delete("id", id);
         return competitor;
     }
 
     public long clear() {
-        matchRepository.clear();
-        return deleteAll();
+        return playerRepository.clear() + teamRepository.clear();
     }
 }

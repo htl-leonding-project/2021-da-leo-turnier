@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 
 @Entity
-@DiscriminatorValue("PLAYER")
+@Table(name = "C_PLAYER")
 public class Player extends Competitor {
 
     @Column(name = "C_BIRTHDATE")

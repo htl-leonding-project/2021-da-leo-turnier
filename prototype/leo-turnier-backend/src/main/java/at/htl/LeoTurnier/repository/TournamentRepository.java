@@ -77,7 +77,7 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
     public Tournament delete(Long id) {
         Tournament tournament = getById(id);
         phaseRepository.getAll().forEach(t -> {
-            t.setTournament(null);
+            phaseRepository.delete(t.getId());
         });
         delete("id", id);
         return tournament;

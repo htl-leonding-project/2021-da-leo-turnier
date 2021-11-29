@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("TEAM")
+@Table(name = "C_TEAM")
 public class Team extends Competitor {
 
     @OneToMany(mappedBy = "team")
@@ -16,7 +16,7 @@ public class Team extends Competitor {
     }
 
     public Team(String name) {
-        this(name, new LinkedList<Player>());
+        this(name, new LinkedList<>());
     }
 
     public Team(String name, List<Player> players) {
