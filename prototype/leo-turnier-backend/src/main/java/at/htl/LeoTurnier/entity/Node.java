@@ -11,11 +11,11 @@ public class Node {
     @Column(name = "N_ID")
     Long id;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToOne
     @JoinColumn(name = "N_M_ID")
     Match match;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "N_P_ID")
     Phase phase;
 

@@ -22,10 +22,7 @@ public class PhaseRepository implements PanacheRepository<Phase> {
         if (phase == null || getById(phase.getId()) != null) {
             return null;
         }
-        if (phase.getTournament() != null) {
-            tournamentRepository.add(phase.getTournament());
-            phase.setTournament(tournamentRepository.getById(phase.getTournament().getId()));
-        }
+        tournamentRepository.add(phase.getTournament());
         persist(phase);
         return phase;
     }
@@ -35,10 +32,7 @@ public class PhaseRepository implements PanacheRepository<Phase> {
         if (phase == null || toModify == null) {
             return null;
         }
-        if (phase.getTournament() != null) {
-            tournamentRepository.add(phase.getTournament());
-            phase.setTournament(tournamentRepository.getById(phase.getTournament().getId()));
-        }
+        tournamentRepository.add(phase.getTournament());
         toModify.setPhaseNumber(phase.getPhaseNumber());
         toModify.setTournament(phase.getTournament());
         return toModify;
@@ -54,9 +48,7 @@ public class PhaseRepository implements PanacheRepository<Phase> {
 
     public Phase delete(Long id) {
         Phase phase = getById(id);
-        nodeRepository.find("phase", phase).stream().forEach(p -> {
-            nodeRepository.delete(p);
-        });
+        nodeRepository.find("phase", phase).stream().forEach(p -> nodeRepository.delete(p));
         delete("id", id);
         return phase;
     }

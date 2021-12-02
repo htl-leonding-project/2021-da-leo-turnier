@@ -14,7 +14,7 @@ public class Player extends Competitor {
     @XmlJavaTypeAdapter(type=LocalDate.class, value= LocalDateAdapter.class)
     LocalDate birthdate;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "C_C_ID")
     Team team;
 

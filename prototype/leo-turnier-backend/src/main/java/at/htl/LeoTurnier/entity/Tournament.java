@@ -27,11 +27,11 @@ public class Tournament {
     @XmlJavaTypeAdapter(type=LocalDate.class, value= LocalDateAdapter.class)
     LocalDate endDate;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "T_ST_ID")
     SportType sportType;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "T_TM_ID")
     TournamentMode tournamentMode;
 

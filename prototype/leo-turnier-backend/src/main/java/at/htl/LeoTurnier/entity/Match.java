@@ -12,11 +12,11 @@ public class Match {
     @Column(name = "M_ID")
     Long id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "M_C_ID_1")
     Competitor competitor1;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "M_C_ID_2")
     Competitor competitor2;
 
