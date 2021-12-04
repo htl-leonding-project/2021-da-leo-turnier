@@ -75,6 +75,29 @@ class SportTypeRepositoryTest {
     }
 
     @Test
+    @Order(1030)
+    void TestAdd03_AddExistingSportType_ShouldReturnExistingSportType() {
+        // arrange
+        String nameSportType1 = "LoL";
+        SportType sportType1 = new SportType(nameSportType1);
+
+        // act
+        repository.add(sportType1);
+        SportType res = repository.add(sportType1);
+
+        // assert
+        TypedQuery<SportType> getSportTypes = repository.getEntityManager().createQuery("select st from SportType st", SportType.class);
+
+        assertThat(getSportTypes.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getSportTypes.getResultList().get(0).getName())
+                .isEqualTo(nameSportType1);
+
+        assertThat(res.getId())
+                .isEqualTo(sportType1.getId());
+    }
+
+    @Test
     @Order(2010)
     void TestModify01_ModifyToNull_ShouldReturnNull() {
         insertTestData();

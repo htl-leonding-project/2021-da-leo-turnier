@@ -19,8 +19,12 @@ public class PhaseRepository implements PanacheRepository<Phase> {
     TournamentRepository tournamentRepository;
 
     public Phase add(Phase phase) {
-        if (phase == null || getById(phase.getId()) != null) {
+        if (phase == null) {
             return null;
+        }
+        Phase existing = getById(phase.getId());
+        if (existing != null) {
+            return existing;
         }
         tournamentRepository.add(phase.getTournament());
         persist(phase);
@@ -29,12 +33,14 @@ public class PhaseRepository implements PanacheRepository<Phase> {
 
     public Phase modify(long id, Phase phase) {
         Phase toModify = getById(id);
-        if (phase == null || toModify == null) {
+        if (phase == null) {
             return null;
         }
-        tournamentRepository.add(phase.getTournament());
-        toModify.setPhaseNumber(phase.getPhaseNumber());
-        toModify.setTournament(phase.getTournament());
+        if (toModify != null) {
+            tournamentRepository.add(phase.getTournament());
+            toModify.setPhaseNumber(phase.getPhaseNumber());
+            toModify.setTournament(phase.getTournament());
+        }
         return toModify;
     }
 

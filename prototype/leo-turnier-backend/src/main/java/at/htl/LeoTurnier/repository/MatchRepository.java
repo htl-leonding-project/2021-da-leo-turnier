@@ -21,8 +21,12 @@ public class MatchRepository implements PanacheRepository<Match> {
     CompetitorRepository competitorRepository;
 
     public Match add(Match match) {
-        if (match == null || getById(match.getId()) != null) {
+        if (match == null) {
             return null;
+        }
+        Match existing = getById(match.getId());
+        if (existing != null) {
+            return existing;
         }
         competitorRepository.add(match.getCompetitor1());
         competitorRepository.add(match.getCompetitor2());
@@ -32,16 +36,18 @@ public class MatchRepository implements PanacheRepository<Match> {
 
     public Match modify(long id, Match match) {
         Match toModify = getById(id);
-        if (match == null || toModify == null) {
+        if (match == null) {
             return null;
         }
-        competitorRepository.add(match.getCompetitor1());
-        competitorRepository.add(match.getCompetitor2());
-        toModify.setCompetitor1(match.getCompetitor1());
-        toModify.setCompetitor2(match.getCompetitor2());
-        toModify.setDate(match.getDate());
-        toModify.setScore1(match.getScore1());
-        toModify.setScore2(match.getScore2());
+        if (toModify != null) {
+            competitorRepository.add(match.getCompetitor1());
+            competitorRepository.add(match.getCompetitor2());
+            toModify.setCompetitor1(match.getCompetitor1());
+            toModify.setCompetitor2(match.getCompetitor2());
+            toModify.setDate(match.getDate());
+            toModify.setScore1(match.getScore1());
+            toModify.setScore2(match.getScore2());
+        }
         return toModify;
     }
 

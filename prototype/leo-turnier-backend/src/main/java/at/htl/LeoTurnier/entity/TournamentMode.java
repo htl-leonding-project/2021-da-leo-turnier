@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class TournamentMode {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "TM_SEQ")
     @Column(name = "TM_ID")
     Long id;
 

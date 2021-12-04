@@ -25,8 +25,12 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
     PhaseRepository phaseRepository;
 
     public Tournament add(Tournament tournament) {
-        if (tournament == null || getById(tournament.getId()) != null) {
+        if (tournament == null) {
             return null;
+        }
+        Tournament existing = getById(tournament.getId());
+        if (existing != null) {
+            return existing;
         }
         tournament.getCompetitors().forEach(c -> competitorRepository.add(c));
         tournamentModeRepository.add(tournament.getTournamentMode());
@@ -38,17 +42,18 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
 
     public Tournament modify(long id, Tournament tournament) {
         Tournament toModify = getById(id);
-        if (tournament == null || toModify == null) {
+        if (tournament == null) {
             return null;
         }
-        toModify.setName(tournament.getName());
-        toModify.setStartDate(tournament.getStartDate());
-        toModify.setEndDate(tournament.getEndDate());
-        tournament.getCompetitors().forEach(c -> competitorRepository.add(c));
-        tournamentModeRepository.add(tournament.getTournamentMode());
-        sportTypeRepository.add(tournament.getSportType());
-
-        toModify.setCompetitors(tournament.getCompetitors());
+        if (toModify != null) {
+            toModify.setName(tournament.getName());
+            toModify.setStartDate(tournament.getStartDate());
+            toModify.setEndDate(tournament.getEndDate());
+            tournament.getCompetitors().forEach(c -> competitorRepository.add(c));
+            tournamentModeRepository.add(tournament.getTournamentMode());
+            sportTypeRepository.add(tournament.getSportType());
+            toModify.setCompetitors(tournament.getCompetitors());
+        }
         return toModify;
     }
 

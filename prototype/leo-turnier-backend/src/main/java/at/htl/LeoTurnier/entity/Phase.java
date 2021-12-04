@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Phase {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "P_SEQ")
     @Column(name = "P_ID")
     Long id;
 

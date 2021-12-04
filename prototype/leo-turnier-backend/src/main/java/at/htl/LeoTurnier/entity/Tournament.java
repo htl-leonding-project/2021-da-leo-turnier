@@ -1,7 +1,5 @@
 package at.htl.LeoTurnier.entity;
 
-import at.htl.LeoTurnier.repository.LocalDateAdapter;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
@@ -12,7 +10,7 @@ import java.util.List;
 @Table(name = "T_TOURNAMENT")
 public class Tournament {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "T_SEQ")
     @Column(name = "T_ID")
     Long id;
 
@@ -20,11 +18,9 @@ public class Tournament {
     String name;
 
     @Column(name = "T_START_DATE")
-    @XmlJavaTypeAdapter(type=LocalDate.class, value= LocalDateAdapter.class)
     LocalDate startDate;
 
     @Column(name = "T_END_DATE")
-    @XmlJavaTypeAdapter(type=LocalDate.class, value= LocalDateAdapter.class)
     LocalDate endDate;
 
     @ManyToOne

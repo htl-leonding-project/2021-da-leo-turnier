@@ -41,9 +41,9 @@ class MatchRepositoryTest {
 
     @AfterEach
     void tearDown() {
-        repository.clear();
         competitorRepository.clear();
-        nodeRepository.clear();
+//        nodeRepository.clear();
+        repository.clear();
     }
 
     @Test
@@ -134,6 +134,26 @@ class MatchRepositoryTest {
     }
 
     @Test
+    @Order(1050)
+    void TestAdd05_AddExistingMatch_ShouldReturnExistingMatch() {
+        // arrange
+        Match match1 = new Match();
+
+        // act
+        repository.add(match1);
+        Match res = repository.add(match1);
+
+        // assert
+        TypedQuery<Match> getMatches = repository.getEntityManager().createQuery("select m from Match m", Match.class);
+
+        assertThat(getMatches.getResultList().size())
+                .isEqualTo(1);
+
+        assertThat(res.getId())
+                .isEqualTo(match1.getId());
+    }
+
+    @Test
     @Order(2010)
     void TestModify01_ModifyToNull_ShouldReturnNull() {
         insertTestData();
@@ -184,7 +204,6 @@ class MatchRepositoryTest {
     void TestModify04_ModifyMatchWithExistingCompetitors_ShouldModifyMatch() {
         insertTestData();
         // arrange
-        Competitor competitor1 = new Team("G2");
 
         Match match1 = new Match(defaultCompetitor1, defaultCompetitor2);
 

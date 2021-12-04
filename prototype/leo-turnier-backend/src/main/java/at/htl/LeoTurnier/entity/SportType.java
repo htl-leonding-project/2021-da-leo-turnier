@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class SportType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "ST_SEQ")
     @Column(name = "ST_ID")
     Long id;
 

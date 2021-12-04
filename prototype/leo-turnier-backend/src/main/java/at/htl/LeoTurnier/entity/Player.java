@@ -1,7 +1,5 @@
 package at.htl.LeoTurnier.entity;
 
-import at.htl.LeoTurnier.repository.LocalDateAdapter;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
@@ -11,7 +9,6 @@ import java.time.LocalDate;
 public class Player extends Competitor {
 
     @Column(name = "C_BIRTHDATE")
-    @XmlJavaTypeAdapter(type=LocalDate.class, value= LocalDateAdapter.class)
     LocalDate birthdate;
 
     @ManyToOne

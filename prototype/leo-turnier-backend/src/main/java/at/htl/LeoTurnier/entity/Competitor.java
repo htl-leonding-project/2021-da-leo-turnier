@@ -9,7 +9,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Competitor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "c_competitor_c_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "C_SEQ")
     @Column(name = "C_ID")
     private Long id;
 

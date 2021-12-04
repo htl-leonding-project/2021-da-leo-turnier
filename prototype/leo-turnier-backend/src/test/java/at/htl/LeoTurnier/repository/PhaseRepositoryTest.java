@@ -137,6 +137,29 @@ class PhaseRepositoryTest {
     }
 
     @Test
+    @Order(1050)
+    void TestAdd05_AddExistingPhase_ShouldReturnExistingPhase() {
+        // arrange
+        int numberPhase1 = 2;
+        Phase phase1 = new Phase(numberPhase1);
+
+        // act
+        repository.add(phase1);
+        Phase res = repository.add(phase1);
+
+        // assert
+        TypedQuery<Phase> getPhases = repository.getEntityManager().createQuery("select p from Phase p", Phase.class);
+
+        assertThat(getPhases.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getPhases.getResultList().get(0).getPhaseNumber())
+                .isEqualTo(numberPhase1);
+
+        assertThat(res.getId())
+                .isEqualTo(phase1.getId());
+    }
+
+    @Test
     @Order(2010)
     void TestModify01_ModifyToNull_ShouldReturnNull() {
         insertTestData();

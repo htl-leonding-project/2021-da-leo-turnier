@@ -22,7 +22,7 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
     TeamRepository teamRepository;
 
     public Competitor add(Competitor competitor) {
-        if (competitor == null || getById(competitor.getId()) != null) {
+        if (competitor == null) {
             return null;
         }
         if (competitor.getClass() == Player.class) {

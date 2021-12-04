@@ -76,6 +76,29 @@ class TournamentModeRepositoryTest {
     }
 
     @Test
+    @Order(1030)
+    void TestAdd03_AddExistingTournamentMode_ShouldReturnExistingTournamentMode() {
+        // arrange
+        String nameTournamentMode1 = "KO";
+        TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
+
+        // act
+        repository.add(tournamentMode1);
+        TournamentMode res = repository.add(tournamentMode1);
+
+        // assert
+        TypedQuery<TournamentMode> getTournamentModes = repository.getEntityManager().createQuery("select tm from TournamentMode tm", TournamentMode.class);
+
+        assertThat(getTournamentModes.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTournamentModes.getResultList().get(0).getName())
+                .isEqualTo(nameTournamentMode1);
+
+        assertThat(res.getId())
+                .isEqualTo(tournamentMode1.getId());
+    }
+
+    @Test
     @Order(2010)
     void TestModify01_ModifyToNull_ShouldReturnNull() {
         insertTestData();

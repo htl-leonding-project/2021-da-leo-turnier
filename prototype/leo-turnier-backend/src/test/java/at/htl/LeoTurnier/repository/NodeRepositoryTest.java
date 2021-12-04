@@ -169,6 +169,26 @@ class NodeRepositoryTest {
     }
 
     @Test
+    @Order(1070)
+    void TestAdd07_AddExistingNode_ShouldReturnExistingNode() {
+        // arrange
+        Node node1 = new Node();
+
+        // act
+        repository.add(node1);
+        Node res = repository.add(node1);
+
+        // assert
+        TypedQuery<Node> getNodes = repository.getEntityManager().createQuery("select n from Node n", Node.class);
+
+        assertThat(getNodes.getResultList().size())
+                .isEqualTo(1);
+
+        assertThat(res.getId())
+                .isEqualTo(node1.getId());
+    }
+
+    @Test
     @Order(2010)
     void TestModify01_ModifyToNull_ShouldReturnNull() {
         insertTestData();

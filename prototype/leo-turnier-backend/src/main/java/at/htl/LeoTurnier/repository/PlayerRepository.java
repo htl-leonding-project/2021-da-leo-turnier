@@ -22,28 +22,34 @@ public class PlayerRepository implements PanacheRepository<Player> {
     TeamRepository teamRepository;
 
     public Player add(Player player) {
-        if (player == null || getById(player.getId()) != null) {
+        if (player == null) {
             return null;
         }
-        teamRepository.add(player.getTeam());
+        Player existing = getById(player.getId());
+        if (existing != null) {
+            return existing;
+        }
+        if (player.getTeam() != null) {
+            if (teamRepository.getById(player.getTeam().getId()) == null) {
+                teamRepository.persist(player.getTeam());
+            }
+        }
         persist(player);
         return player;
     }
 
     public Player modify(long id, Player player) {
         Player toModify = getById(id);
-        if (player == null || toModify == null) {
+        if (player == null) {
             return null;
         }
-        toModify.setName(player.getName());
-        toModify.setTotalScore(player.getTotalScore());
-        toModify.setBirthdate(player.getBirthdate());
-        Team team = teamRepository.getById(player.getTeam().getId());
-        if (team == null) {
-            teamRepository.persist(player.getTeam());
-            team = teamRepository.getById((player.getTeam().getId()));
+        if (toModify != null) {
+            Team team = teamRepository.add(player.getTeam());
+            toModify.setTeam(team);
+            toModify.setName(player.getName());
+            toModify.setTotalScore(player.getTotalScore());
+            toModify.setBirthdate(player.getBirthdate());
         }
-        toModify.setTeam(team);
         return toModify;
     }
 
@@ -57,9 +63,12 @@ public class PlayerRepository implements PanacheRepository<Player> {
 
     public Player delete(Long id) {
         Player player = getById(id);
-        getEntityManager().createQuery("delete from Match m where m.competitor1.id = :id or m.competitor2.id = :id")
+        List<Long> matchIds = getEntityManager().createQuery("select m.id from Match m where m.competitor1.id = :id or m.competitor2.id = :id", Long.class)
                 .setParameter("id", id)
-                .executeUpdate();
+                .getResultList();
+        for (Long matchId : matchIds) {
+            matchRepository.delete(matchId);
+        }
         if (player.getTeam() != null) {
             player.getTeam().getPlayers().remove(player);
         }

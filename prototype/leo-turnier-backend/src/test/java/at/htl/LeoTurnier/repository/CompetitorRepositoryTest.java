@@ -241,7 +241,82 @@ class CompetitorRepositoryTest {
 
     @Test
     @Order(1080)
-    void TestAdd08_AddExistingCompetitor_ShouldReturnNull() {
+    void TestAdd08_AddPlayerWithNotExistingTeamContainingThePlayer_ShouldAddPlayerAndTeam() {
+        // arrange
+        String nameTeam1 = "T1";
+        String namePlayer1 = "Faker";
+        Team team1 = new Team(nameTeam1);
+        Player player1 = new Player(namePlayer1, team1);
+        team1.getPlayers().add(player1);
+
+        // act
+        repository.add(player1);
+
+        // assert
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
+
+        assertThat(getPlayers.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getPlayers.getResultList().get(0).getName())
+                .isEqualTo(namePlayer1);
+        assertThat(getPlayers.getResultList().get(0).getClass())
+                .isEqualTo(Player.class);
+        assertThat(getPlayers.getResultList().get(0).getTeam().getName())
+                .isEqualTo(nameTeam1);
+
+
+        assertThat(getTeams.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTeams.getResultList().get(0).getName())
+                .isEqualTo(nameTeam1);
+        assertThat(getTeams.getResultList().get(0).getClass())
+                .isEqualTo(Team.class);
+        assertThat(getTeams.getResultList().get(0).getPlayers().get(0).getName())
+                .isEqualTo(namePlayer1);
+    }
+
+    @Test
+    @Order(1090)
+    void TestAdd09_AddTeamWithNotExistingPlayerContainingTheTeam_ShouldAddTeamAndPlayer() {
+        // arrange
+        String nameTeam1 = "T1";
+        String namePlayer1 = "Faker";
+        Player player1 = new Player(namePlayer1);
+        Team team1 = new Team(nameTeam1,
+                List.of(player1));
+        player1.setTeam(team1);
+
+        // act
+        repository.add(team1);
+
+        // assert
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+        TypedQuery<Team> getTeams = repository.getEntityManager().createQuery("select t from Team t", Team.class);
+
+        assertThat(getPlayers.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getPlayers.getResultList().get(0).getName())
+                .isEqualTo(namePlayer1);
+        assertThat(getPlayers.getResultList().get(0).getClass())
+                .isEqualTo(Player.class);
+        assertThat(getPlayers.getResultList().get(0).getTeam().getName())
+                .isEqualTo(nameTeam1);
+
+
+        assertThat(getTeams.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTeams.getResultList().get(0).getName())
+                .isEqualTo(nameTeam1);
+        assertThat(getTeams.getResultList().get(0).getClass())
+                .isEqualTo(Team.class);
+        assertThat(getTeams.getResultList().get(0).getPlayers().get(0).getName())
+                .isEqualTo(namePlayer1);
+    }
+
+    @Test
+    @Order(1100)
+    void TestAdd10_AddExistingCompetitor_ShouldReturnExistingCompetitor() {
         // arrange
         String namePlayer1 = "Faker";
         Player player1 = new Player(namePlayer1);
@@ -251,8 +326,15 @@ class CompetitorRepositoryTest {
         Competitor res = repository.add(player1);
 
         // assert
-        assertThat(res)
-                .isEqualTo(null);
+        TypedQuery<Player> getPlayers = repository.getEntityManager().createQuery("select p from Player p", Player.class);
+
+        assertThat(getPlayers.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getPlayers.getResultList().get(0).getName())
+                .isEqualTo(namePlayer1);
+
+        assertThat(res.getId())
+                .isEqualTo(player1.getId());
     }
 
     @Test

@@ -57,13 +57,10 @@ class TournamentRepositoryTest {
 
     @AfterEach
     void tearDown() {
-        repository.clear();
         competitorRepository.clear();
         tournamentModeRepository.clear();
         sportTypeRepository.clear();
-        phaseRepository.clear();
-        nodeRepository.clear();
-        matchRepository.clear();
+        repository.clear();
     }
 
     @Test
@@ -267,6 +264,29 @@ class TournamentRepositoryTest {
                 .isEqualTo(nameTournamentMode1);
         assertThat(getTournamentModes.getResultList().get(0).getClass())
                 .isEqualTo(TournamentMode.class);
+    }
+
+    @Test
+    @Order(1080)
+    void TestAdd08_AddExistingTournament_ShouldReturnExistingTournament() {
+        // arrange
+        String nameTournament1 = "Worlds";
+        Tournament tournament1 = new Tournament(nameTournament1);
+
+        // act
+        repository.add(tournament1);
+        Tournament res = repository.add(tournament1);
+
+        // assert
+        TypedQuery<Tournament> getTournaments = repository.getEntityManager().createQuery("select t from Tournament t", Tournament.class);
+
+        assertThat(getTournaments.getResultList().size())
+                .isEqualTo(1);
+        assertThat(getTournaments.getResultList().get(0).getName())
+                .isEqualTo(nameTournament1);
+
+        assertThat(res.getId())
+                .isEqualTo(tournament1.getId());
     }
 
     @Test

@@ -17,8 +17,12 @@ public class SportTypeRepository implements PanacheRepository<SportType> {
     TournamentRepository tournamentRepository;
 
     public SportType add(SportType sportType) {
-        if (sportType == null || getById(sportType.getId()) != null) {
+        if (sportType == null) {
             return null;
+        }
+        SportType existing = getById(sportType.getId());
+        if (existing != null) {
+            return existing;
         }
         persist(sportType);
         return sportType;
@@ -26,10 +30,12 @@ public class SportTypeRepository implements PanacheRepository<SportType> {
 
     public SportType modify(long id, SportType sportType) {
         SportType toModify = getById(id);
-        if (sportType == null || toModify == null) {
+        if (sportType == null) {
             return null;
         }
-        toModify.setName(sportType.getName());
+        if (toModify != null) {
+            toModify.setName(sportType.getName());
+        }
         return toModify;
     }
 
@@ -43,17 +49,13 @@ public class SportTypeRepository implements PanacheRepository<SportType> {
 
     public SportType delete(Long id) {
         SportType sportType = getById(id);
-        tournamentRepository.find("sportType", sportType).stream().forEach(t -> {
-            t.setSportType(null);
-        });
+        tournamentRepository.find("sportType", sportType).stream().forEach(t -> t.setSportType(null));
         delete("id", id);
         return sportType;
     }
 
     public long clear() {
-        tournamentRepository.getAll().forEach(t -> {
-            t.setSportType(null);
-        });
+        tournamentRepository.getAll().forEach(t -> t.setSportType(null));
         return deleteAll();
     }
 }

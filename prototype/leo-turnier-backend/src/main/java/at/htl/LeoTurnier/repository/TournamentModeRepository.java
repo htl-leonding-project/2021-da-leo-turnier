@@ -17,8 +17,12 @@ public class TournamentModeRepository implements PanacheRepository<TournamentMod
     TournamentRepository tournamentRepository;
 
     public TournamentMode add(TournamentMode tournamentMode) {
-        if (tournamentMode == null || getById(tournamentMode.getId()) != null) {
+        if (tournamentMode == null) {
             return null;
+        }
+        TournamentMode existing = getById(tournamentMode.getId());
+        if (existing != null) {
+            return existing;
         }
         persist(tournamentMode);
         return tournamentMode;
@@ -26,10 +30,12 @@ public class TournamentModeRepository implements PanacheRepository<TournamentMod
 
     public TournamentMode modify(long id, TournamentMode tournamentMode) {
         TournamentMode toModify = getById(id);
-        if (tournamentMode == null || toModify == null) {
+        if (tournamentMode == null) {
             return null;
         }
-        toModify.setName(tournamentMode.getName());
+        if (toModify != null) {
+            toModify.setName(tournamentMode.getName());
+        }
         return toModify;
     }
 
@@ -43,17 +49,13 @@ public class TournamentModeRepository implements PanacheRepository<TournamentMod
 
     public TournamentMode delete(Long id) {
         TournamentMode tournamentMode = getById(id);
-        tournamentRepository.find("tournamentMode", tournamentMode).stream().forEach(t -> {
-            t.setTournamentMode(null);
-        });
+        tournamentRepository.find("tournamentMode", tournamentMode).stream().forEach(t -> t.setTournamentMode(null));
         delete("id", id);
         return tournamentMode;
     }
 
     public long clear() {
-        tournamentRepository.getAll().forEach(t -> {
-            t.setTournamentMode(null);
-        });
+        tournamentRepository.getAll().forEach(t -> t.setTournamentMode(null));
         return deleteAll();
     }
 }

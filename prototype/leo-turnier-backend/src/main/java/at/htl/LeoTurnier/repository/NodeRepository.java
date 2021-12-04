@@ -19,8 +19,12 @@ public class NodeRepository implements PanacheRepository<Node> {
     PhaseRepository phaseRepository;
 
     public Node add(Node node) {
-        if (node == null || getById(node.getId()) != null) {
+        if (node == null) {
             return null;
+        }
+        Node existing = getById(node.getId());
+        if (existing != null) {
+            return existing;
         }
         matchRepository.add(node.getMatch());
         phaseRepository.add(node.getPhase());
@@ -30,13 +34,15 @@ public class NodeRepository implements PanacheRepository<Node> {
 
     public Node modify(long id, Node node) {
         Node toModify = getById(id);
-        if (node == null || toModify == null) {
+        if (node == null) {
             return null;
         }
-        matchRepository.add(node.getMatch());
-        phaseRepository.add(node.getPhase());
-        toModify.setMatch(node.getMatch());
-        toModify.setPhase(node.getPhase());
+        if (toModify != null) {
+            matchRepository.add(node.getMatch());
+            phaseRepository.add(node.getPhase());
+            toModify.setMatch(node.getMatch());
+            toModify.setPhase(node.getPhase());
+        }
         return toModify;
     }
 

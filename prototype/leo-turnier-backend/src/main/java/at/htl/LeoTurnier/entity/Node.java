@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Node {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "N_SEQ")
     @Column(name = "N_ID")
     Long id;
 
