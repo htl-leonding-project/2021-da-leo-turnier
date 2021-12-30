@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Path("api/competitor")
+@Path("competitor")
 public class CompetitorService {
 
     @Inject
