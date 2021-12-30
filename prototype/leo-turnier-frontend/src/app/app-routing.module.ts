@@ -5,11 +5,13 @@ import {TournamentOverviewComponent} from './tournament-overview/tournament-over
 import {LoginComponent} from './login/login.component';
 import {PlayerOverviewComponent} from './player-overview/player-overview.component';
 import {TeamOverviewComponent} from './team-overview/team-overview.component';
+import {PlayerComponent} from './player/player.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'tournament-overview'},
   { path: 'tournament-overview', component: TournamentOverviewComponent},
-  { path: 'player-overview', component: PlayerOverviewComponent},
+  { path: 'players', component: PlayerOverviewComponent},
+  { path: 'players/:id', component: PlayerComponent},
   { path: 'team-overview', component: TeamOverviewComponent},
   { path: 'login', component: LoginComponent},
   { path: 'create-tournament', component: CreateTournamentComponent}

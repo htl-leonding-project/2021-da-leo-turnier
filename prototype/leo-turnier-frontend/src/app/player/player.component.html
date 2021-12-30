@@ -1,0 +1,27 @@
+<div class="container">
+  <form [formGroup]="this.playerForm" class="normal-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="standard">
+      <mat-label>Name</mat-label>
+      <input matInput inputmode="tel" formControlName="name" placeholder="Name">
+      <mat-error>Pflichtfeld!!!</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+      <mat-label>Punktezahl</mat-label>
+      <input matInput formControlName="totalScore" placeholder="Punktezahl">
+      <mat-error>Darf nicht negativ sein</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Geburtsdatum</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthdate">
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div mat-dialog-actions style="float: right">
+      <button mat-raised-button type="submit" color="primary" [disabled]="!playerForm.valid">Submit</button>
+    </div>
+  </form>
+</div>
+
+{{this.id}}

@@ -11,7 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { PlayerOverviewComponent } from './player-overview/player-overview.component';
 import { TeamOverviewComponent } from './team-overview/team-overview.component';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { PlayerComponent } from './player/player.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {FormsModule} from '@angular/forms';
     TournamentOverviewComponent,
     LoginComponent,
     PlayerOverviewComponent,
-    TeamOverviewComponent
+    TeamOverviewComponent,
+    PlayerComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import {FormsModule} from '@angular/forms';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
