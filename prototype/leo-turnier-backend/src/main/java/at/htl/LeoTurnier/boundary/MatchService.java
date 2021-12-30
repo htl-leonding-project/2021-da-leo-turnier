@@ -1,8 +1,7 @@
 package at.htl.LeoTurnier.boundary;
 
-
-import at.htl.LeoTurnier.entity.Player;
-import at.htl.LeoTurnier.repository.PlayerRepository;
+import at.htl.LeoTurnier.entity.Match;
+import at.htl.LeoTurnier.repository.MatchRepository;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -11,37 +10,37 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-@Path("/player")
-public class PlayerService {
+@Path("/match")
+public class MatchService {
 
     @Inject
-    PlayerRepository repository;
+    MatchRepository repository;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(Player player, @Context UriInfo info) {
-        player = repository.add(player);
-        if (player == null) {
+    public Response add(Match match, @Context UriInfo info) {
+        match = repository.add(match);
+        if (match == null) {
             return Response.status(204).build();
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(player.getId())).build()).build();
+                .path(Long.toString(match.getId())).build()).build();
     }
 
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@PathParam("id") long id, Player player, @Context UriInfo info) {
-        player = repository.modify(id, player);
-        if (player == null) {
+    public Response modify(@PathParam("id") long id, Match match, @Context UriInfo info) {
+        match = repository.modify(id, match);
+        if (match == null) {
             return Response.status(204).build();
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(player.getId())).build()).build();
+                .path(Long.toString(match.getId())).build()).build();
     }
 
     @GET

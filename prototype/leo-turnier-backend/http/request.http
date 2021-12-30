@@ -1,10 +1,15 @@
-POST http://localhost:8080/api/competitor/player
+POST http://localhost:8080/api/player
 Content-Type: application/json
 
 {
-  "name": "Faker"
+  "name": "Faker",
+  "totalScore": 0
 }
 
 ###
 
-GET http://localhost:8080/api/competitor
+GET http://localhost:8080/api/player
+
+###
+
+GET http://localhost:8080/api/team
