@@ -6,13 +6,15 @@ import {LoginComponent} from './login/login.component';
 import {PlayerOverviewComponent} from './player-overview/player-overview.component';
 import {TeamOverviewComponent} from './team-overview/team-overview.component';
 import {PlayerComponent} from './player/player.component';
+import {TeamComponent} from './team/team.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'tournament-overview'},
   { path: 'tournament-overview', component: TournamentOverviewComponent},
   { path: 'players', component: PlayerOverviewComponent},
   { path: 'players/:id', component: PlayerComponent},
-  { path: 'team-overview', component: TeamOverviewComponent},
+  { path: 'team', component: TeamOverviewComponent},
+  { path: 'team/:id', component: TeamComponent},
   { path: 'login', component: LoginComponent},
   { path: 'create-tournament', component: CreateTournamentComponent}
 ];

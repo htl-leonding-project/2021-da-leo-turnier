@@ -13,6 +13,9 @@ import { TeamOverviewComponent } from './team-overview/team-overview.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PlayerComponent } from './player/player.component';
+import { TeamComponent } from './team/team.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {TeamOverviewDialogComponent} from './team-overview-dialog/team-overview-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { PlayerComponent } from './player/player.component';
     LoginComponent,
     PlayerOverviewComponent,
     TeamOverviewComponent,
-    PlayerComponent
+    TeamOverviewDialogComponent,
+    PlayerComponent,
+    TeamComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,8 @@ import { PlayerComponent } from './player/player.component';
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -6,7 +6,7 @@ import {Team} from '../model/team.model';
   providedIn: 'root'
 })
 export class ApiService {
-  private host = 'http://localhost:8080/api/competitor/';
+  private host = 'http://localhost:8080/api/';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -16,7 +16,7 @@ export class ApiService {
   }
 
   async getPlayer(id: string): Promise<Player> {
-    return this.httpClient.get<Player>(this.host + id).toPromise();
+    return this.httpClient.get<Player>(this.host + 'player/' + id).toPromise();
   }
 
   async deletePlayer(id: number): Promise<void> {
@@ -49,6 +49,9 @@ export class ApiService {
   }
 
   async getTeams(): Promise<Team[]>{
-    return this.httpClient.get<Team[]>(this.host + 'team').toPromise();
+    // return this.httpClient.get<Team[]>(this.host + 'team').toPromise();
+    // Mocking
+    console.log(this.httpClient.get<Team[]>('http://wovg1.mocklab.io/team').toPromise());
+    return this.httpClient.get<Team[]>('http://wovg1.mocklab.io/team').toPromise();
   }
 }
