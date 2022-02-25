@@ -46,7 +46,7 @@ public class TeamRepository implements PanacheRepository<Team> {
         if (toModify != null) {
             toModify.getPlayers().forEach(p -> playerRepository.getById(p.getId()).setTeam(null));
             toModify.setName(team.getName());
-            toModify.setTotalScore(team.getTotalScore());
+            toModify.setSeed(team.getSeed());
             if (team.getPlayers() != null) {
                 toModify.setPlayers(team.getPlayers());
                 toModify.getPlayers().forEach(p -> {

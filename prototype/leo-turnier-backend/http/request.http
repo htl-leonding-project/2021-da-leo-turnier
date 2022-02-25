@@ -3,7 +3,21 @@ Content-Type: application/json
 
 {
   "name": "Faker",
-  "totalScore": 0
+  "birthdate": "2000-01-01"
+}
+
+###
+
+POST http://localhost:8080/api/team
+Content-Type: application/json
+
+{
+  "name": "SKT",
+  "players": [
+    {
+      "id": 1
+    }
+  ]
 }
 
 ###
@@ -13,3 +27,13 @@ GET http://localhost:8080/api/player
 ###
 
 GET http://localhost:8080/api/team
+
+###
+
+PUT http://localhost:8080/api/player/1
+Content-Type: application/json
+
+{
+  "name": "clown",
+  "totalScore": 3
+}
