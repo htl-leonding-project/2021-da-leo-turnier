@@ -16,8 +16,8 @@ public abstract class Competitor {
     @Column(name = "C_NAME")
     String name;
 
-    @Column(name = "C_TOTAL_SCORE")
-    int totalScore;
+    @Column(name = "C_SEED")
+    int seed;
 
     public Competitor() {
         this("");
@@ -43,11 +43,11 @@ public abstract class Competitor {
         this.name = name;
     }
 
-    public int getTotalScore() {
-        return totalScore;
+    public int getSeed() {
+        return seed;
     }
 
-    public void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
+    public void setSeed(int seed) {
+        this.seed = seed;
     }
 }

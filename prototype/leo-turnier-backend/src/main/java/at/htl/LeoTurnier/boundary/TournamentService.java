@@ -54,7 +54,7 @@ public class TournamentService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getALL() {
+    public Response getAll() {
         return Response.ok(repository.getAll()).build();
     }
 

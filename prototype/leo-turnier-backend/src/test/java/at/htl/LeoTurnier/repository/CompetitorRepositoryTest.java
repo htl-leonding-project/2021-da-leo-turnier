@@ -579,6 +579,8 @@ class CompetitorRepositoryTest {
                 .isEqualTo(2);
         assertThat(res.get(0).getName())
                 .isEqualTo(defaultTeam1.getName());
+        assertThat(((Team) res.get(0)).getPlayers().get(0).getName())
+                .isEqualTo(defaultPlayer1.getName());
         assertThat(res.get(1).getName())
                 .isEqualTo(defaultPlayer1.getName());
     }

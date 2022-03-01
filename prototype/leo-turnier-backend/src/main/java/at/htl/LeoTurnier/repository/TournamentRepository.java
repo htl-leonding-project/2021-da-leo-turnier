@@ -13,9 +13,6 @@ import java.util.List;
 public class TournamentRepository implements PanacheRepository<Tournament> {
 
     @Inject
-    CompetitorRepository competitorRepository;
-
-    @Inject
     TournamentModeRepository tournamentModeRepository;
 
     @Inject
@@ -32,7 +29,6 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
         if (existing != null) {
             return existing;
         }
-        tournament.getCompetitors().forEach(c -> competitorRepository.add(c));
         tournamentModeRepository.add(tournament.getTournamentMode());
         sportTypeRepository.add(tournament.getSportType());
 
@@ -49,10 +45,8 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
             toModify.setName(tournament.getName());
             toModify.setStartDate(tournament.getStartDate());
             toModify.setEndDate(tournament.getEndDate());
-            tournament.getCompetitors().forEach(c -> competitorRepository.add(c));
             tournamentModeRepository.add(tournament.getTournamentMode());
             sportTypeRepository.add(tournament.getSportType());
-            toModify.setCompetitors(tournament.getCompetitors());
         }
         return toModify;
     }
