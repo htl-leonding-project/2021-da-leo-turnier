@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: app
       POSTGRES_DB: db
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - ./db-postgres/import:/import
     networks:
@@ -24,20 +24,20 @@ services:
 #      - 8090:8080
 
 # https://github.com/khezen/compose-postgres/blob/master/docker-compose.yml
-  pgadmin:
-    container_name: leoturnier_pgadmin
-    image: dpage/pgadmin4:5.5
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - ./db-postgres/pgadmin:/root/.pgadmin
-    ports:
-      - 8090:80
-    networks:
-      - postgres
-    restart: unless-stopped
+#  pgadmin:
+#    container_name: leoturnier_pgadmin
+#    image: dpage/pgadmin4:5.5
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    volumes:
+#      - ./db-postgres/pgadmin:/root/.pgadmin
+#    ports:
+#      - 8090:80
+#    networks:
+#      - postgres
+#    restart: unless-stopped
 
 networks:
   postgres:

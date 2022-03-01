@@ -6,11 +6,16 @@ import at.htl.LeoTurnier.repository.PlayerRepository;
 import at.htl.LeoTurnier.repository.TeamRepository;
 
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.util.List;
 
 @Path("/team")
 public class TeamService {
@@ -45,17 +50,40 @@ public class TeamService {
                 .path(Long.toString(team.getId())).build()).build();
     }
 
+    private JsonObject buildTeamJsonObject(Team team) {
+        JsonObjectBuilder teamBuilder = Json.createObjectBuilder();
+        teamBuilder.add("id", team.getId());
+        teamBuilder.add("name", team.getName());
+        teamBuilder.add("seed", team.getSeed());
+        JsonArrayBuilder playerArrayBuilder = Json.createArrayBuilder();
+        team.getPlayers().forEach(p -> {
+            JsonObjectBuilder playerBuilder = Json.createObjectBuilder();
+            playerBuilder.add("id", p.getId());
+            playerBuilder.add("name", p.getName());
+            playerBuilder.add("seed", p.getSeed());
+            playerBuilder.add("birthdate", p.getBirthdate().toString());
+            playerArrayBuilder.add(playerBuilder);
+        });
+        teamBuilder.add("players", playerArrayBuilder);
+        return teamBuilder.build();
+    }
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getById(@PathParam("id") long id) {
-        return Response.ok(repository.getById(id)).build();
+        return Response.ok(buildTeamJsonObject(repository.getById(id))).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getALL() {
-        return Response.ok(repository.getAll()).build();
+    public Response getAll() {
+        List<Team> teams = repository.getAll();
+        JsonArrayBuilder teamArrayBuilder = Json.createArrayBuilder();
+        teams.forEach(t -> {
+            teamArrayBuilder.add(buildTeamJsonObject(t));
+        });
+        return Response.ok(teamArrayBuilder.build()).build();
     }
 
     @DELETE

@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "C_TEAM")
 public class Team extends Competitor {
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
     List<Player> players;
 
     public Team() {
