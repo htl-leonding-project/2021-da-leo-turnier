@@ -1,6 +1,7 @@
 package at.htl.LeoTurnier.repository;
 
 import at.htl.LeoTurnier.entity.Node;
+import at.htl.LeoTurnier.entity.Phase;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -48,6 +49,12 @@ public class NodeRepository implements PanacheRepository<Node> {
 
     public Node getById(Long id) {
         return find("id", id).firstResult();
+    }
+
+    public List<Node> getByPhaseId(Long phaseId) {
+        return getEntityManager().createQuery("select n from Node n where n.phase.id = :phaseId", Node.class)
+                .setParameter("phaseId", phaseId)
+                .getResultList();
     }
 
     public List<Node> getAll() {

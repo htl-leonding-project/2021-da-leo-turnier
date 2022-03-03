@@ -2,6 +2,7 @@ package at.htl.LeoTurnier.repository;
 
 import at.htl.LeoTurnier.entity.Competitor;
 import at.htl.LeoTurnier.entity.Participation;
+import at.htl.LeoTurnier.entity.Phase;
 import at.htl.LeoTurnier.entity.Tournament;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.postgresql.core.NativeQuery;
@@ -79,6 +80,10 @@ public class ParticipationRepository implements PanacheRepository<Participation>
                         "where pt.competitor.id = :competitorId ", Participation.class);
         getById.setParameter("competitorId", competitorId);
         return new ArrayList<>(getById.getResultList());
+    }
+
+    public List<Participation> getAll() {
+        return listAll();
     }
 
     public Participation delete(Long tournamentId, Long competitorId) {

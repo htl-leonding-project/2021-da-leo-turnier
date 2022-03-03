@@ -32,10 +32,9 @@ public class PhaseService {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@PathParam("id") long id, Phase phase, @Context UriInfo info) {
+    public Response modify(@QueryParam("id") long id, Phase phase, @Context UriInfo info) {
         phase = repository.modify(id, phase);
         if (phase == null) {
             return Response.status(204).build();
@@ -46,10 +45,15 @@ public class PhaseService {
     }
 
     @GET
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getById(@PathParam("id") long id) {
+    public Response getById(@QueryParam("id") long id) {
         return Response.ok(repository.getById(id)).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getByTournamentId(@QueryParam("tournamentId") long tournamentId) {
+        return Response.ok(repository.getByTournamentId(tournamentId)).build();
     }
 
     @GET
@@ -59,9 +63,8 @@ public class PhaseService {
     }
 
     @DELETE
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("id") long id) {
+    public Response delete(@QueryParam("id") long id) {
         return Response.ok(repository.delete(id)).build();
     }
 }

@@ -30,10 +30,6 @@ public class TeamRepository implements PanacheRepository<Team> {
         if (existing != null) {
             return existing;
         }
-        team.getPlayers().forEach(p -> {
-            Player player = playerRepository.add(p);
-            player.setTeam(team);
-        });
         persist(team);
         return team;
     }
@@ -44,20 +40,8 @@ public class TeamRepository implements PanacheRepository<Team> {
             return null;
         }
         if (toModify != null) {
-            toModify.getPlayers().forEach(p -> playerRepository.getById(p.getId()).setTeam(null));
             toModify.setName(team.getName());
             toModify.setSeed(team.getSeed());
-            if (team.getPlayers() != null) {
-                toModify.setPlayers(team.getPlayers());
-                toModify.getPlayers().forEach(p -> {
-                    Player player = playerRepository.getById(p.getId());
-                    if (player == null) {
-                        playerRepository.add(p);
-                        player = playerRepository.getById(p.getId());
-                    }
-                    player.setTeam(toModify);
-                });
-            }
         }
         return toModify;
     }
@@ -78,7 +62,10 @@ public class TeamRepository implements PanacheRepository<Team> {
         for (Long matchId : matchIds) {
             matchRepository.delete(matchId);
         }
-        team.getPlayers().forEach(p -> p.setTeam(null));
+        List<Player> players = getEntityManager().createQuery("select p from Player p where p.team.id = :teamId", Player.class)
+                .setParameter("teamId", id)
+                .getResultList();
+        players.forEach(player -> player.setTeam(null));
         delete("id", id);
         return team;
     }

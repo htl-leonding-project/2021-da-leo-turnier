@@ -33,6 +33,16 @@ class ParticipationId implements Serializable {
     public void setCompetitorId(Long competitorId) {
         this.competitorId = competitorId;
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }
 
 @Entity
@@ -42,12 +52,12 @@ public class Participation {
     @EmbeddedId
     ParticipationId id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PT_T_ID")
     @MapsId("tournamentId")
     Tournament tournament;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PT_C_ID")
     @MapsId("competitorId")
     Competitor competitor;
@@ -87,18 +97,5 @@ public class Participation {
 
     public void setPlacement(int placement) {
         this.placement = placement;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        Participation participation = (Participation) obj;
-        return this.competitor.getId().equals(participation.competitor.getId())
-                && this.tournament.getId().equals(participation.tournament.getId());
     }
 }

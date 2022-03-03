@@ -37,10 +37,9 @@ public class TeamService {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@PathParam("id") long id, Team team, @Context UriInfo info) {
+    public Response modify(@QueryParam("id") long id, Team team, @Context UriInfo info) {
         team = repository.modify(id, team);
         if (team == null) {
             return Response.status(204).build();
@@ -50,46 +49,21 @@ public class TeamService {
                 .path(Long.toString(team.getId())).build()).build();
     }
 
-    private JsonObject buildTeamJsonObject(Team team) {
-        JsonObjectBuilder teamBuilder = Json.createObjectBuilder();
-        teamBuilder.add("id", team.getId());
-        teamBuilder.add("name", team.getName());
-        teamBuilder.add("seed", team.getSeed());
-        JsonArrayBuilder playerArrayBuilder = Json.createArrayBuilder();
-        team.getPlayers().forEach(p -> {
-            JsonObjectBuilder playerBuilder = Json.createObjectBuilder();
-            playerBuilder.add("id", p.getId());
-            playerBuilder.add("name", p.getName());
-            playerBuilder.add("seed", p.getSeed());
-            playerBuilder.add("birthdate", p.getBirthdate().toString());
-            playerArrayBuilder.add(playerBuilder);
-        });
-        teamBuilder.add("players", playerArrayBuilder);
-        return teamBuilder.build();
-    }
-
     @GET
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getById(@PathParam("id") long id) {
-        return Response.ok(buildTeamJsonObject(repository.getById(id))).build();
+    public Response getById(@QueryParam("id") long id) {
+        return Response.ok(repository.getById(id)).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
-        List<Team> teams = repository.getAll();
-        JsonArrayBuilder teamArrayBuilder = Json.createArrayBuilder();
-        teams.forEach(t -> {
-            teamArrayBuilder.add(buildTeamJsonObject(t));
-        });
-        return Response.ok(teamArrayBuilder.build()).build();
+        return Response.ok(repository.getAll()).build();
     }
 
     @DELETE
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("id") long id) {
+    public Response delete(@QueryParam("id") long id) {
         return Response.ok(repository.delete(id)).build();
     }
 }

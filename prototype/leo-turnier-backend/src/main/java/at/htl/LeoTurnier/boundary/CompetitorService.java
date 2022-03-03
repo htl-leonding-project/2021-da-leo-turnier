@@ -19,9 +19,8 @@ public class CompetitorService {
     CompetitorRepository repository;
 
     @GET
-    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Competitor getById(@PathParam("id") long id) {
+    public Competitor getById(@QueryParam("id") long id) {
         return repository.findById(id);
     }
 

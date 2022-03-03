@@ -17,7 +17,7 @@ public abstract class Competitor {
     String name;
 
     @Column(name = "C_SEED")
-    int seed;
+    double seed;
 
     public Competitor() {
         this("");
@@ -43,11 +43,11 @@ public abstract class Competitor {
         this.name = name;
     }
 
-    public int getSeed() {
+    public double getSeed() {
         return seed;
     }
 
-    public void setSeed(int seed) {
+    public void setSeed(double seed) {
         this.seed = seed;
     }
 }

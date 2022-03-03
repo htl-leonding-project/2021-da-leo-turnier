@@ -301,6 +301,37 @@ class ParticipationRepositoryTest {
     }
 
     @Test
+    @Order(3010)
+    void TestGetAll01_SearchNone_ShouldReturnNull() {
+        // arrange
+
+        // act
+        List<Participation> res = repository.getAll();
+
+        // assert
+        assertThat(res.size())
+                .isEqualTo(0);
+    }
+
+    @Test
+    @Order(3020)
+    void TestGetAll02_SearchAll_ShouldReturnAll() {
+        insertTestData();
+        // arrange
+
+        // act
+        List<Participation> res = repository.getAll();
+
+        // assert
+        assertThat(res.size())
+                .isEqualTo(4);
+        assertThat(res.get(0).getTournament().getId())
+                .isEqualTo(defaultTournament1.getId());
+        assertThat(res.get(0).getCompetitor().getId())
+                .isEqualTo(defaultPlayer1.getId());
+    }
+
+    @Test
     @Order(6010)
     void TestDelete01_DeleteNotExistingParticipation_ShouldReturnNull() {
         insertTestData();
