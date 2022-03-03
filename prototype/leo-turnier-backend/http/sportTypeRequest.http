@@ -1,0 +1,27 @@
+POST http://localhost:8080/api/sportType
+Content-Type: application/json
+
+{
+  "name": "LoL"
+}
+
+###
+
+PUT http://localhost:8080/api/sportType?id=1
+Content-Type: application/json
+
+{
+  "name": "Quidditch"
+}
+
+###
+
+GET http://localhost:8080/api/sportType?id=1
+
+###
+
+GET http://localhost:8080/api/sportType
+
+###
+
+DELETE http://localhost:8080/api/sportType?id=1

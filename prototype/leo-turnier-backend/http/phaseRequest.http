@@ -1,0 +1,37 @@
+POST http://localhost:8080/api/phase
+Content-Type: application/json
+
+{
+  "phaseNumber": 1,
+  "tournament": {
+    "id": 1
+  }
+}
+
+###
+
+PUT http://localhost:8080/api/phase?id=1
+Content-Type: application/json
+
+{
+  "phaseNumber": 1,
+  "tournament": {
+    "id": 1
+  }
+}
+
+###
+
+GET http://localhost:8080/api/phase?id=1
+
+###
+
+GET http://localhost:8080/api/phase?tournamentId=1
+
+###
+
+GET http://localhost:8080/api/phase
+
+###
+
+DELETE http://localhost:8080/api/phase?id=1

@@ -1,0 +1,28 @@
+POST http://localhost:8080/api/team
+Content-Type: application/json
+
+{
+  "name": "DK"
+}
+
+###
+
+PUT http://localhost:8080/api/team?id=1
+Content-Type: application/json
+
+{
+  "name": "SKT",
+  "seed": 5.5
+}
+
+###
+
+GET http://localhost:8080/api/team?id=1
+
+###
+
+GET http://localhost:8080/api/team
+
+###
+
+DELETE http://localhost:8080/api/team?id=1

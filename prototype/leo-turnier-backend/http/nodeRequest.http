@@ -1,0 +1,41 @@
+POST http://localhost:8080/api/node
+Content-Type: application/json
+
+{
+  "match": {
+    "id": 1
+  },
+  "phase": {
+    "id": 1
+  }
+}
+
+###
+
+PUT http://localhost:8080/api/node?id=1
+Content-Type: application/json
+
+{
+  "match": {
+    "id": 1
+  },
+  "phase": {
+    "id": 1
+  }
+}
+
+###
+
+GET http://localhost:8080/api/node?id=1
+
+###
+
+GET http://localhost:8080/api/node?phaseId=1
+
+###
+
+GET http://localhost:8080/api/node
+
+###
+
+DELETE http://localhost:8080/api/node?id=1

@@ -1,0 +1,30 @@
+POST http://localhost:8080/api/participation?tournamentId=1&competitorId=1
+
+###
+
+PUT http://localhost:8080/api/participation?tournamentId=1&competitorId=1
+Content-Type: application/json
+
+{
+  "placement": 1
+}
+
+###
+
+GET http://localhost:8080/api/participation?tournamentId=1&competitorId=1
+
+###
+
+GET http://localhost:8080/api/participation?tournamentId=1
+
+###
+
+GET http://localhost:8080/api/participation?competitorId=1
+
+###
+
+GET http://localhost:8080/api/participation
+
+###
+
+DELETE http://localhost:8080/api/participation?tournamentId=1&competitorId=1
