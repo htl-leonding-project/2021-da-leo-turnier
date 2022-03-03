@@ -38,7 +38,7 @@ class TournamentRepositoryTest {
     private final Tournament defaultTournament1 = new Tournament("MSI", defaultSportType1, defaultTournamentMode1);
     private final Phase defaultPhase1 = new Phase(1, defaultTournament1);
     private final Match defaultMatch1 = new Match();
-    private final Node defaultNode1 = new Node(defaultMatch1, defaultPhase1);
+    private final Node defaultNode1 = new Node(1, defaultMatch1, defaultPhase1);
 
     private void insertTestData() {
         repository.add(defaultTournament1);

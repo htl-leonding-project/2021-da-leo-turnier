@@ -27,7 +27,7 @@ class PhaseRepositoryTest {
 
     private final Tournament defaultTournament1 = new Tournament("MSI");
     private final Phase defaultPhase1 = new Phase(1, defaultTournament1);
-    private final Node defaultNode1 = new Node(new Match(), defaultPhase1);
+    private final Node defaultNode1 = new Node(1, new Match(), defaultPhase1);
 
     private void insertTestData() {
         repository.add(defaultPhase1);

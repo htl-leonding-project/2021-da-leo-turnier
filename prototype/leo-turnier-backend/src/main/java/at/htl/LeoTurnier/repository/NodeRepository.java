@@ -39,6 +39,7 @@ public class NodeRepository implements PanacheRepository<Node> {
             return null;
         }
         if (toModify != null) {
+            toModify.setNodeNumber(node.getNodeNumber());
             matchRepository.add(node.getMatch());
             phaseRepository.add(node.getPhase());
             toModify.setMatch(node.getMatch());
