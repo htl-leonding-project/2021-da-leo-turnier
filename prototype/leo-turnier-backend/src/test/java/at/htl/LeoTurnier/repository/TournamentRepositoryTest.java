@@ -33,12 +33,12 @@ class TournamentRepositoryTest {
     @Inject
     NodeRepository nodeRepository;
 
-    private final SportType defaultSportType1 = new SportType("LoL");
-    private final TournamentMode defaultTournamentMode1 = new TournamentMode("KO");
-    private final Tournament defaultTournament1 = new Tournament("MSI", defaultSportType1, defaultTournamentMode1);
+    private final SportType defaultSportType1 = new SportType("defaultSportType1");
+    private final TournamentMode defaultTournamentMode1 = new TournamentMode("defaultTournamentMode1");
+    private final Tournament defaultTournament1 = new Tournament("defaultTournament1", defaultSportType1, defaultTournamentMode1);
     private final Phase defaultPhase1 = new Phase(1, defaultTournament1);
     private final Match defaultMatch1 = new Match();
-    private final Node defaultNode1 = new Node(1, defaultMatch1, defaultPhase1);
+    private final Node defaultNode1 = new Node(defaultMatch1, defaultPhase1);
 
     private void insertTestData() {
         repository.add(defaultTournament1);
@@ -72,7 +72,7 @@ class TournamentRepositoryTest {
     @Order(1020)
     void TestAdd02_AddTournament_ShouldAddTournament() {
         // arrange
-        String nameTournament1 = "Worlds";
+        String nameTournament1 = "Tournament1";
         Tournament tournament1 = new Tournament(nameTournament1);
 
         // act
@@ -91,8 +91,8 @@ class TournamentRepositoryTest {
     @Order(1030)
     void TestAdd03_AddTournamentWithExistingSportType_ShouldAddTournament() {
         // arrange
-        String nameSportType1 = "LoL";
-        String nameTournament1 = "Worlds";
+        String nameSportType1 = "SportType1";
+        String nameTournament1 = "Tournament1";
         SportType sportType1 = new SportType(nameSportType1);
         Tournament tournament1 = new Tournament(nameTournament1, sportType1);
 
@@ -121,8 +121,8 @@ class TournamentRepositoryTest {
     @Order(1040)
     void TestAdd04_AddTournamentWithNotExistingSportType_ShouldAddTournament() {
         // arrange
-        String nameSportType1 = "LoL";
-        String nameTournament1 = "Worlds";
+        String nameSportType1 = "SportType1";
+        String nameTournament1 = "Tournament1";
         SportType sportType1 = new SportType(nameSportType1);
         Tournament tournament1 = new Tournament(nameTournament1, sportType1);
 
@@ -150,8 +150,8 @@ class TournamentRepositoryTest {
     @Order(1050)
     void TestAdd05_AddTournamentWithExistingTournamentMode_ShouldAddTournament() {
         // arrange
-        String nameTournamentMode1 = "KO";
-        String nameTournament1 = "Worlds";
+        String nameTournamentMode1 = "TournamentMode1";
+        String nameTournament1 = "Tournament1";
         TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
         Tournament tournament1 = new Tournament(nameTournament1, tournamentMode1);
 
@@ -180,8 +180,8 @@ class TournamentRepositoryTest {
     @Order(1060)
     void TestAdd06_AddTournamentWithNotExistingTournamentMode_ShouldAddTournament() {
         // arrange
-        String nameTournamentMode1 = "KO";
-        String nameTournament1 = "Worlds";
+        String nameTournamentMode1 = "TournamentMode1";
+        String nameTournament1 = "Tournament1";
         TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
         Tournament tournament1 = new Tournament(nameTournament1, tournamentMode1);
 
@@ -209,7 +209,7 @@ class TournamentRepositoryTest {
     @Order(1070)
     void TestAdd07_AddExistingTournament_ShouldReturnExistingTournament() {
         // arrange
-        String nameTournament1 = "Worlds";
+        String nameTournament1 = "Tournament1";
         Tournament tournament1 = new Tournament(nameTournament1);
 
         // act
@@ -247,7 +247,7 @@ class TournamentRepositoryTest {
     void TestModify02_ModifyNotExistingTournament_ShouldReturnNull() {
         insertTestData();
         // arrange
-        String nameTournament1 = "Worlds";
+        String nameTournament1 = "Tournament1";
         Tournament tournament1 = new Tournament(nameTournament1);
 
         // act
@@ -263,7 +263,7 @@ class TournamentRepositoryTest {
     void TestModify03_ModifyTournament_ShouldModifyTournament() {
         insertTestData();
         // arrange
-        String nameTournament1 = "Worlds";
+        String nameTournament1 = "Tournament1";
         Tournament tournament1 = new Tournament(nameTournament1);
 
         // act
@@ -283,7 +283,7 @@ class TournamentRepositoryTest {
     void TestModify04_ModifyTournamentWithExistingSportType_ShouldAddTournament() {
         insertTestData();
         // arrange
-        String nameTournament1 = "Worlds";
+        String nameTournament1 = "Tournament1";
         Tournament tournament1 = new Tournament(nameTournament1, defaultSportType1);
 
         // act
@@ -310,8 +310,8 @@ class TournamentRepositoryTest {
     void TestModify05_ModifyTournamentWithNotExistingSportType_ShouldAddTournament() {
         insertTestData();
         // arrange
-        String nameSportType1 = "DotA2";
-        String nameTournament1 = "Worlds";
+        String nameSportType1 = "SportType1";
+        String nameTournament1 = "Tournament1";
         SportType sportType1 = new SportType(nameSportType1);
         Tournament tournament1 = new Tournament(nameTournament1, sportType1);
 
@@ -341,7 +341,7 @@ class TournamentRepositoryTest {
     void TestModify06_ModifyTournamentWithExistingTournamentMode_ShouldAddTournament() {
         insertTestData();
         // arrange
-        String nameTournament1 = "Worlds";
+        String nameTournament1 = "Tournament1";
         Tournament tournament1 = new Tournament(nameTournament1, defaultTournamentMode1);
 
         // act
@@ -368,8 +368,8 @@ class TournamentRepositoryTest {
     void TestModify06_ModifyTournamentWithNotExistingTournamentMode_ShouldAddTournament() {
         insertTestData();
         // arrange
-        String nameTournamentMode1 = "KO";
-        String nameTournament1 = "Worlds";
+        String nameTournamentMode1 = "TournamentMode1";
+        String nameTournament1 = "Tournament1";
         TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
         Tournament tournament1 = new Tournament(nameTournament1, tournamentMode1);
 

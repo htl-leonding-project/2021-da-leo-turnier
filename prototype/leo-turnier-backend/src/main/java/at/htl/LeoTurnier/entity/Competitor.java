@@ -25,6 +25,7 @@ public abstract class Competitor {
 
     public Competitor(String name) {
         this.name = name;
+        this.seed = -1;
     }
 
     public void setId(Long id) {

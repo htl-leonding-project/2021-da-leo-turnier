@@ -75,6 +75,9 @@ public class PlayerRepository implements PanacheRepository<Player> {
         for (Long matchId : matchIds) {
             matchRepository.delete(matchId);
         }
+        getEntityManager().createQuery("delete from Participation p where p.competitor.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
         delete("id", id);
         return player;
     }

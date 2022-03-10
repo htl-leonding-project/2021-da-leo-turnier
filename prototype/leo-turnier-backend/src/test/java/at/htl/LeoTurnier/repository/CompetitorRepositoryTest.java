@@ -26,8 +26,8 @@ class CompetitorRepositoryTest {
     @Inject
     TeamRepository teamRepository;
 
-    private final Team defaultTeam1 = new Team("DK");
-    private final Player defaultPlayer1 = new Player("Canyon", defaultTeam1);
+    private final Team defaultTeam1 = new Team("defaultTeam1");
+    private final Player defaultPlayer1 = new Player("defaultPlayer1", defaultTeam1);
 
     private void insertTestData() {
         repository.add(defaultPlayer1);
@@ -59,7 +59,7 @@ class CompetitorRepositoryTest {
     @Order(1020)
     void TestAdd02_AddPlayer_ShouldAddPlayer() {
         // arrange
-        String namePlayer1 = "Faker";
+        String namePlayer1 = "Player1";
         Player player1 = new Player(namePlayer1);
 
         // act
@@ -80,7 +80,7 @@ class CompetitorRepositoryTest {
     @Order(1030)
     void TestAdd03_AddTeam_ShouldAddTeam() {
         // arrange
-        String nameTeam1 = "T1";
+        String nameTeam1 = "Team1";
         Team team1 = new Team(nameTeam1);
 
         // act
@@ -101,8 +101,8 @@ class CompetitorRepositoryTest {
     @Order(1040)
     void TestAdd04_AddPlayerThenTeam_ShouldAddPlayerAndTeam() {
         // arrange
-        String namePlayer1 = "Faker";
-        String nameTeam1 = "T1";
+        String namePlayer1 = "Player1";
+        String nameTeam1 = "Team1";
         Team team1 = new Team(nameTeam1);
         Player player1 = new Player(namePlayer1, team1);
 
@@ -137,8 +137,8 @@ class CompetitorRepositoryTest {
     @Order(1050)
     void TestAdd05_AddTeamThenPlayer_ShouldAddTeamAndPlayer() {
         // arrange
-        String nameTeam1 = "T1";
-        String namePlayer1 = "Faker";
+        String namePlayer1 = "Player1";
+        String nameTeam1 = "Team1";
         Team team1 = new Team(nameTeam1);
         Player player1 = new Player(namePlayer1, team1);
 
@@ -172,8 +172,8 @@ class CompetitorRepositoryTest {
     @Order(1060)
     void TestAdd06_AddPlayerWithNotExistingTeam_ShouldAddPlayerAndTeam() {
         // arrange
-        String nameTeam1 = "T1";
-        String namePlayer1 = "Faker";
+        String namePlayer1 = "Player1";
+        String nameTeam1 = "Team1";
         Player player1 = new Player(namePlayer1, new Team(nameTeam1));
 
         // act
@@ -205,8 +205,8 @@ class CompetitorRepositoryTest {
     @Order(1070)
     void TestAdd07_AddPlayerWithNotExistingTeamContainingThePlayer_ShouldAddPlayerAndTeam() {
         // arrange
-        String nameTeam1 = "T1";
-        String namePlayer1 = "Faker";
+        String namePlayer1 = "Player1";
+        String nameTeam1 = "Team1";
         Team team1 = new Team(nameTeam1);
         Player player1 = new Player(namePlayer1, team1);
 
@@ -239,7 +239,7 @@ class CompetitorRepositoryTest {
     @Order(1080)
     void TestAdd08_AddExistingCompetitor_ShouldReturnExistingCompetitor() {
         // arrange
-        String namePlayer1 = "Faker";
+        String namePlayer1 = "Player1";
         Player player1 = new Player(namePlayer1);
 
         // act
@@ -277,7 +277,7 @@ class CompetitorRepositoryTest {
     void TestModify02_ModifyNotExistingCompetitor_ShouldReturnNull() {
         insertTestData();
         // arrange
-        String namePlayer1 = "Faker";
+        String namePlayer1 = "Player1";
         Player player1 = new Player(namePlayer1);
 
         // act
@@ -293,7 +293,7 @@ class CompetitorRepositoryTest {
     void TestModify03_ModifyPlayer_ShouldModifyPlayer() {
         insertTestData();
         // arrange
-        String namePlayer1 = "Faker";
+        String namePlayer1 = "Player1";
         Player player1 = new Player(namePlayer1, defaultTeam1);
 
         // act
@@ -326,7 +326,7 @@ class CompetitorRepositoryTest {
     void TestModify04_ModifyTeam_ShouldModifyTeam() {
         insertTestData();
         // arrange
-        String nameTeam1 = "T1";
+        String nameTeam1 = "Team1";
         Team team1 = new Team(nameTeam1);
 
         // act
@@ -359,8 +359,8 @@ class CompetitorRepositoryTest {
     void TestModify05_ModifyToPlayerWithNotExistingTeam_ShouldAddNewTeam() {
         insertTestData();
         // arrange
-        String namePlayer1 = "Faker";
-        String nameTeam1 = "T1";
+        String namePlayer1 = "Player1";
+        String nameTeam1 = "Team1";
         Player player1 = new Player(namePlayer1, new Team(nameTeam1));
 
         // act

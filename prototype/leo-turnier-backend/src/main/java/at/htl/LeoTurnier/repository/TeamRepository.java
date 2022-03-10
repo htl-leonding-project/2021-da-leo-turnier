@@ -66,6 +66,9 @@ public class TeamRepository implements PanacheRepository<Team> {
                 .setParameter("teamId", id)
                 .getResultList();
         players.forEach(player -> player.setTeam(null));
+        getEntityManager().createQuery("delete from Participation p where p.competitor.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
         delete("id", id);
         return team;
     }
