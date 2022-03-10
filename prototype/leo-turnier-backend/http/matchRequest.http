@@ -1,0 +1,41 @@
+POST http://localhost:8080/api/match
+Content-Type: application/json
+
+{
+  "competitor1": {
+    "id": 1
+  },
+  "competitor2": {
+    "id": 1
+  },
+  "date": "2000-01-30"
+}
+
+###
+
+PUT http://localhost:8080/api/match?id=1
+Content-Type: application/json
+
+{
+  "competitor1": {
+    "id": 1
+  },
+  "competitor2": {
+    "id": 1
+  },
+  "date": "2000-01-30",
+  "score1": 1,
+  "score2": 2
+}
+
+###
+
+GET http://localhost:8080/api/match?id=1
+
+###
+
+GET http://localhost:8080/api/match
+
+###
+
+DELETE http://localhost:8080/api/match?id=1

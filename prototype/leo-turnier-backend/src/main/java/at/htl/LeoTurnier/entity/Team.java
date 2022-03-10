@@ -8,27 +8,11 @@ import java.util.List;
 @Table(name = "C_TEAM")
 public class Team extends Competitor {
 
-    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
-    List<Player> players;
-
     public Team() {
         this("");
     }
 
     public Team(String name) {
-        this(name, new LinkedList<>());
-    }
-
-    public Team(String name, List<Player> players) {
         super(name);
-        this.players = players;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
     }
 }

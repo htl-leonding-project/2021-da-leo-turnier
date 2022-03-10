@@ -32,10 +32,9 @@ public class TournamentService {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@PathParam("id") long id, Tournament tournament, @Context UriInfo info) {
+    public Response modify(@QueryParam("id") long id, Tournament tournament, @Context UriInfo info) {
         tournament = repository.modify(id, tournament);
         if (tournament == null) {
             return Response.status(204).build();
@@ -46,22 +45,20 @@ public class TournamentService {
     }
 
     @GET
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getById(@PathParam("id") long id) {
+    public Response getById(@QueryParam("id") long id) {
         return Response.ok(repository.getById(id)).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getALL() {
+    public Response getAll() {
         return Response.ok(repository.getAll()).build();
     }
 
     @DELETE
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("id") long id) {
+    public Response delete(@QueryParam("id") long id) {
         return Response.ok(repository.delete(id)).build();
     }
 }

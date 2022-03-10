@@ -1,14 +1,15 @@
 package at.htl.LeoTurnier.entity;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "T_TOURNAMENT")
 public class Tournament {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "T_SEQ")
     @Column(name = "T_ID")
@@ -31,22 +32,12 @@ public class Tournament {
     @JoinColumn(name = "T_TM_ID")
     TournamentMode tournamentMode;
 
-    @ManyToMany
-    @JoinTable(name = "CT_COMPETITOR_TOURNAMENT",
-        joinColumns = { @JoinColumn(name = "CT_T_ID")},
-        inverseJoinColumns = { @JoinColumn(name = "CT_C_ID")})
-    List<Competitor> competitors;
-
     public Tournament() {
         this("");
     }
 
     public Tournament(String name) {
-        this(name, new LinkedList<>());
-    }
-
-    public Tournament(String name, List<Competitor> competitors) {
-        this(name, null, null, null, null, competitors);
+        this(name, null, null);
     }
 
     public Tournament(String name, SportType sportType) {
@@ -58,24 +49,14 @@ public class Tournament {
     }
 
     public Tournament(String name, SportType sportType, TournamentMode tournamentMode) {
-        this(name, sportType, tournamentMode, new LinkedList<>());
+        this(name, null, sportType, tournamentMode);
     }
 
-    public Tournament(String name, SportType sportType, TournamentMode tournamentMode, List<Competitor> competitors) {
-        this(name, null, sportType, tournamentMode, competitors);
-    }
-
-    public Tournament(String name, LocalDate startDate, SportType sportType, TournamentMode tournamentMode, List<Competitor> competitors) {
-        this(name, startDate, null, sportType, tournamentMode, competitors);
-    }
-
-    public Tournament(String name, LocalDate startDate, LocalDate endDate, SportType sportType, TournamentMode tournamentMode, List<Competitor> competitors) {
+    public Tournament(String name, LocalDate startDate, SportType sportType, TournamentMode tournamentMode) {
         this.name = name;
         this.startDate = startDate;
-        this.endDate = endDate;
         this.sportType = sportType;
         this.tournamentMode = tournamentMode;
-        this.competitors = competitors;
     }
 
     public Long getId() {
@@ -124,13 +105,5 @@ public class Tournament {
 
     public void setTournamentMode(TournamentMode tournamentMode) {
         this.tournamentMode = tournamentMode;
-    }
-
-    public List<Competitor> getCompetitors() {
-        return competitors;
-    }
-
-    public void setCompetitors(List<Competitor> competitors) {
-        this.competitors = competitors;
     }
 }

@@ -1,0 +1,40 @@
+POST http://localhost:8080/api/player
+Content-Type: application/json
+
+{
+  "name": "Faker",
+  "birthdate": "2000-01-01",
+  "team": {
+    "id": 1
+  }
+}
+
+###
+
+PUT http://localhost:8080/api/player?id=1
+Content-Type: application/json
+
+{
+  "name": "Faker",
+  "birthdate": "2000-01-01",
+  "team": {
+    "id": 1
+  },
+  "seed": 4.4
+}
+
+###
+
+GET http://localhost:8080/api/player?id=1
+
+###
+
+GET http://localhost:8080/api/player?teamId=1
+
+###
+
+GET http://localhost:8080/api/player
+
+###
+
+DELETE http://localhost:8080/api/player?id=1

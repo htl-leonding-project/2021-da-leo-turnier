@@ -1,0 +1,27 @@
+POST http://localhost:8080/api/tournament
+Content-Type: application/json
+
+{
+  "name": "KO"
+}
+
+###
+
+PUT http://localhost:8080/api/tournament?id=1
+Content-Type: application/json
+
+{
+  "name": "Group"
+}
+
+###
+
+GET http://localhost:8080/api/tournament?id=1
+
+###
+
+GET http://localhost:8080/api/tournament
+
+###
+
+DELETE http://localhost:8080/api/tournament?id=1

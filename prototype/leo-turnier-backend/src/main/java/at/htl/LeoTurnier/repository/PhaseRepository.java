@@ -1,6 +1,7 @@
 package at.htl.LeoTurnier.repository;
 
 import at.htl.LeoTurnier.entity.Phase;
+import at.htl.LeoTurnier.entity.Player;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -46,6 +47,12 @@ public class PhaseRepository implements PanacheRepository<Phase> {
 
     public Phase getById(Long id) {
         return find("id", id).firstResult();
+    }
+
+    public List<Phase> getByTournamentId(Long tournamentId) {
+        return getEntityManager().createQuery("select p from Phase p where p.tournament.id = :tournamentId", Phase.class)
+                .setParameter("tournamentId", tournamentId)
+                .getResultList();
     }
 
     public List<Phase> getAll() {

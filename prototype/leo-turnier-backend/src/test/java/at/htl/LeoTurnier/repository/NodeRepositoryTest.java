@@ -28,7 +28,7 @@ class NodeRepositoryTest {
 
     private final Phase defaultPhase1 = new Phase(1);
     private final Match defaultMatch1 = new Match();
-    private final Node defaultNode1 = new Node(defaultMatch1, defaultPhase1);
+    private final Node defaultNode1 = new Node(1, defaultMatch1, defaultPhase1);
 
     private void insertTestData() {
         repository.add(defaultNode1);
@@ -78,8 +78,9 @@ class NodeRepositoryTest {
     @Order(1030)
     void TestAdd03_AddNodeWithExistingMatch_ShouldAddNode() {
         // arrange
+        int numberNode1 = 2;
         Match match1 = new Match();
-        Node node1 = new Node(match1);
+        Node node1 = new Node(numberNode1, match1);
 
         // act
         matchRepository.add(match1);
@@ -102,8 +103,9 @@ class NodeRepositoryTest {
     @Order(1040)
     void TestAdd04_AddNodeWithNotExistingMatch_ShouldAddNode() {
         // arrange
+        int numberNode1 = 2;
         Match match1 = new Match();
-        Node node1 = new Node(match1);
+        Node node1 = new Node(numberNode1, match1);
 
         // act
         repository.add(node1);
@@ -125,8 +127,9 @@ class NodeRepositoryTest {
     @Order(1050)
     void TestAdd05_AddNodeWithExistingPhase_ShouldAddNode() {
         // arrange
+        int numberNode1 = 2;
         Phase phase1 = new Phase();
-        Node node1 = new Node(phase1);
+        Node node1 = new Node(numberNode1, phase1);
 
         // act
         phaseRepository.add(phase1);
@@ -149,8 +152,9 @@ class NodeRepositoryTest {
     @Order(1060)
     void TestAdd06_AddNodeWithNotExistingPhase_ShouldAddNode() {
         // arrange
+        int numberNode1 = 2;
         Phase phase1 = new Phase();
-        Node node1 = new Node(phase1);
+        Node node1 = new Node(numberNode1, phase1);
 
         // act
         repository.add(node1);
@@ -239,7 +243,8 @@ class NodeRepositoryTest {
     void TestModify04_ModifyNodeWithExistingMatch_ShouldModifyNode() {
         insertTestData();
         // arrange
-        Node node1 = new Node(defaultMatch1);
+        int numberNode1 = 2;
+        Node node1 = new Node(numberNode1, defaultMatch1);
 
         // act
         repository.modify(defaultNode1.getId(), node1);
@@ -262,8 +267,9 @@ class NodeRepositoryTest {
     void TestModify05_ModifyNodeWithNotExistingMatch_ShouldModifyNode() {
         insertTestData();
         // arrange
+        int numberNode1 = 2;
         Match match1 = new Match();
-        Node node1 = new Node(match1);
+        Node node1 = new Node(numberNode1, match1);
 
         // act
         repository.modify(defaultNode1.getId(), node1);
@@ -286,7 +292,8 @@ class NodeRepositoryTest {
     void TestModify06_ModifyNodeWithExistingPhase_ShouldModifyNode() {
         insertTestData();
         // arrange
-        Node node1 = new Node(defaultPhase1);
+        int numberNode1 = 2;
+        Node node1 = new Node(numberNode1, defaultPhase1);
 
         // act
         repository.modify(defaultNode1.getId(), node1);
@@ -309,8 +316,9 @@ class NodeRepositoryTest {
     void TestModify07_ModifyNodeWithNotExistingPhase_ShouldModifyNode() {
         insertTestData();
         // arrange
+        int numberNode1 = 2;
         Phase phase1 = new Phase();
-        Node node1 = new Node(phase1);
+        Node node1 = new Node(numberNode1, phase1);
 
         // act
         repository.modify(defaultNode1.getId(), node1);
