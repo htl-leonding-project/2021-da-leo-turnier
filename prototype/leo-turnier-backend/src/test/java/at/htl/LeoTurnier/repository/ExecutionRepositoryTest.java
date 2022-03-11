@@ -37,20 +37,13 @@ class ExecutionRepositoryTest {
     NodeRepository nodeRepository;
 
     private final Tournament defaultTournament1 = new Tournament("defaultTournament1");
-    private final List<Player> players = List.of(
-            new Player("defaultPlayer1"),
-            new Player("defaultPlayer2"),
-            new Player("defaultPlayer3"),
-            new Player("defaultPlayer4"),
-            new Player("defaultPlayer5"),
-            new Player("defaultPlayer6"),
-            new Player("defaultPlayer7"),
-            new Player("defaultPlayer8")
-    );
 
-    private void insertTestData() {
-        for (int i = 0; i < players.size(); i++) {
-            players.get(i).setSeed(i + 1);
+    private void insertTestData(int numOfPlayers) {
+        List<Player> players = new LinkedList<>();
+        for (int i = 0; i < numOfPlayers; i++) {
+            Player player = new Player(String.valueOf(i));
+            player.setSeed(i + 1);
+            players.add(player);
         }
         tournamentRepository.add(defaultTournament1);
         players.forEach(p -> {
@@ -75,7 +68,7 @@ class ExecutionRepositoryTest {
     @Test
     @Order(1010)
     void TestStartTournament01_TournamentWith8Players_ShouldSetUpTournament() {
-        insertTestData();
+        insertTestData(8);
         // arrange
 
         // act
@@ -97,17 +90,8 @@ class ExecutionRepositoryTest {
     @Test
     @Order(1020)
     void TestStartTournament02_TournamentWith11Players_ShouldSetUpTournament() {
-        insertTestData();
+        insertTestData(11);
         // arrange
-        Player player9 = new Player("Player9");
-        Player player10 = new Player("Player10");
-        Player player11 = new Player("Player11");
-        competitorRepository.add(player9);
-        competitorRepository.add(player10);
-        competitorRepository.add(player11);
-        participationRepository.add(defaultTournament1.getId(), player9.getId());
-        participationRepository.add(defaultTournament1.getId(), player10.getId());
-        participationRepository.add(defaultTournament1.getId(), player11.getId());
 
         // act
         Tournament res = repository.startTournament(defaultTournament1.getId());
@@ -123,5 +107,27 @@ class ExecutionRepositoryTest {
                 .isEqualTo(10);
         assertThat(getMatches.getResultList().size())
                 .isEqualTo(8);
+    }
+
+    @Test
+    @Order(1030)
+    void TestStartTournament03_TournamentWith100Players_ShouldSetUpTournament() {
+        insertTestData(100);
+        // arrange
+
+        // act
+        Tournament res = repository.startTournament(defaultTournament1.getId());
+
+        // assert
+        TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
+        TypedQuery<Node> getNodes = nodeRepository.getEntityManager().createQuery("select n from Node n", Node.class);
+        TypedQuery<Match> getMatches = nodeRepository.getEntityManager().createQuery("select m from Match m", Match.class);
+
+        assertThat(getPhases.getResultList().size())
+                .isEqualTo(7);
+        assertThat(getNodes.getResultList().size())
+                .isEqualTo(99);
+        assertThat(getMatches.getResultList().size())
+                .isEqualTo(64);
     }
 }

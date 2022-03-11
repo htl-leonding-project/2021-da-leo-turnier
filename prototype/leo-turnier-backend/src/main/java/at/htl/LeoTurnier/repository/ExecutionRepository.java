@@ -40,7 +40,20 @@ public class ExecutionRepository {
         return tournament;
     }
 
+    public Match finishMatch(Long nodeId) {
+        Node node = nodeRepository.getById(nodeId);
+        Match match = node.getMatch();
+        if (match.getScore1() > match.getScore2()) {
+            Match nextMatch = node.getNextNode().getMatch();
+            if (nextMatch == null) {
+                //nextMatch =
+            }
+        }
+        return match;
+    }
+
     private void insertPhases(Tournament tournament) {
+        phaseRepository.getByTournamentId(tournament.getId()).forEach(p -> phaseRepository.delete(p.getId()));
         List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
         double numOfPhases = (Math.log(competitors.size())
                  /  Math.log(2));
@@ -53,6 +66,7 @@ public class ExecutionRepository {
 
     private void insertNodes(Tournament tournament) {
         List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
+        phases.forEach(p -> nodeRepository.getByPhaseId(p.getId()).forEach(n -> nodeRepository.delete(n.getId())));
         List<Node> previousNodes = null;
 
         for (int i = 0; i < phases.size(); i++) {
@@ -71,6 +85,11 @@ public class ExecutionRepository {
 
     private void insertMatches(Tournament tournament) {
         List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
+        phases.forEach(p -> nodeRepository.getByPhaseId(p.getId()).forEach(n -> {
+            if (n.getMatch() != null) {
+                matchRepository.delete(n.getMatch().getId());
+            }
+        }));
         if (phases.size() <= 1) {
             return;
         }
@@ -107,7 +126,7 @@ public class ExecutionRepository {
 
     private List<Competitor> getCompetitorsSeeded(Tournament tournament) {
         // sort by seed
-        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId()).stream()
+        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId()).parallelStream()
                 .sorted((c1, c2) -> {
                     if (c1.getSeed() >= 0 && c2.getSeed() < 0) {
                         return -1;
