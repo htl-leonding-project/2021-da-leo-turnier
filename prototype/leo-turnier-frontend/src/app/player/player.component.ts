@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from '../services/api.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PlayerService} from '../services/player.service';
 
 @Component({
   selector: 'app-player',
@@ -14,11 +14,11 @@ export class PlayerComponent implements OnInit {
 
   playerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    totalScore: new FormControl(''),
     birthdate: new FormControl(''),
+    team: new FormControl('')
   });
 
-  constructor(public api: ApiService, public activatedRouter: ActivatedRoute, private router: Router) {
+  constructor(public api: PlayerService, public activatedRouter: ActivatedRoute, private router: Router) {
     // @ts-ignore
     activatedRouter.paramMap.subscribe(map => this.id = map.get('id'));
   }
@@ -27,17 +27,20 @@ export class PlayerComponent implements OnInit {
     if (this.id !== '0') {
       const player = await this.api.getPlayer(this.id);
       console.log(player);
-      this.playerForm.setValue({name: player.name, totalScore: player.totalScore, birthdate: null});
+      this.playerForm.setValue({name: player.name, birthdate: player.birthdate, team: player.team});
+      console.log(this.playerForm.value);
     }
   }
 
-  onSubmit(): void {
-    if (this.id !== '0'){
-      this.api.updatePlayer(this.playerForm.value);
-    }else {
-      this.api.addPlayer(this.playerForm.value);
+  async onSubmit(): Promise<void> {
+    if (this.id !== '0') {
+      await this.api.updatePlayer(this.id, this.playerForm.value);
+    } else {
+      await this.api.addPlayer(this.playerForm.value);
     }
-    this.router.navigate(['players']).then(() => {window.location.reload()});
+    this.router.navigate(['players']).then(() => {
+      window.location.reload();
+    });
   }
 }
 

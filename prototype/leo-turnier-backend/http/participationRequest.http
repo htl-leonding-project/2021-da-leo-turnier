@@ -1,4 +1,4 @@
-POST http://localhost:8080/api/participation?tournamentId=1&competitorId=1
+POST http://localhost:8080/api/participation?tournamentId=1&competitorId=4
 
 ###
 

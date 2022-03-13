@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {ApiService} from '../services/api.service';
 import {Router} from '@angular/router';
+import {PlayerService} from '../services/player.service';
 
 @Component({
   selector: 'app-player-overview',
@@ -10,10 +10,10 @@ import {Router} from '@angular/router';
 })
 export class PlayerOverviewComponent implements OnInit {
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['id', 'name', 'totalScore', 'birthdate', 'team', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'birthdate', 'team', 'actions'];
 
 
-  constructor(private api: ApiService, public router: Router) { }
+  constructor(private api: PlayerService, public router: Router) { }
 
   async ngOnInit(): Promise<void> {
     this.dataSource.data = await this.api.getPlayers();

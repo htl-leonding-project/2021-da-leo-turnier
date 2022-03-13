@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MaterialModule} from './material-module';
+import { MaterialModule } from './material-module';
 import { CreateTournamentComponent } from './create-tournament/create-tournament.component';
 import { TournamentOverviewComponent } from './tournament-overview/tournament-overview.component';
 import { LoginComponent } from './login/login.component';
@@ -16,6 +16,8 @@ import { PlayerComponent } from './player/player.component';
 import { TeamComponent } from './team/team.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TeamOverviewDialogComponent} from './team-overview-dialog/team-overview-dialog.component';
+import { DatePipe } from '@angular/common';
+import { TeamDialogComponent } from './team-dialog/team-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import {TeamOverviewDialogComponent} from './team-overview-dialog/team-overview-
     TeamOverviewDialogComponent,
     PlayerComponent,
     TeamComponent,
+    TeamDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,7 @@ import {TeamOverviewDialogComponent} from './team-overview-dialog/team-overview-
     ReactiveFormsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

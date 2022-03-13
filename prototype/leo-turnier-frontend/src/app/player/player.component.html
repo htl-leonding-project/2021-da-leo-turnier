@@ -5,11 +5,6 @@
       <input matInput inputmode="tel" formControlName="name" placeholder="Name">
       <mat-error>Pflichtfeld!!!</mat-error>
     </mat-form-field>
-    <mat-form-field appearance="legacy">
-      <mat-label>Punktezahl</mat-label>
-      <input matInput formControlName="totalScore" placeholder="Punktezahl">
-      <mat-error>Darf nicht negativ sein</mat-error>
-    </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Geburtsdatum</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="birthdate">
