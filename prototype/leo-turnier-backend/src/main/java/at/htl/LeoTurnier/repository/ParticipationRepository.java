@@ -64,20 +64,20 @@ public class ParticipationRepository implements PanacheRepository<Participation>
                 .orElse(null);
     }
 
-    public List<Participation> getByTournament(Long tournamentId) {
-        TypedQuery<Participation> getById = getEntityManager().createQuery(
-                "select pt " +
+    public List<Competitor> getCompetitorsByTournament(Long tournamentId) {
+        TypedQuery<Competitor> getById = getEntityManager().createQuery(
+                "select pt.competitor " +
                         "from Participation pt " +
-                        "where pt.tournament.id = :tournamentId ", Participation.class);
+                        "where pt.tournament.id = :tournamentId ", Competitor.class);
         getById.setParameter("tournamentId", tournamentId);
         return new ArrayList<>(getById.getResultList());
     }
 
-    public List<Participation> getByCompetitor(Long competitorId) {
-        TypedQuery<Participation> getById = getEntityManager().createQuery(
-                "select pt " +
+    public List<Tournament> getTournamentsByCompetitor(Long competitorId) {
+        TypedQuery<Tournament> getById = getEntityManager().createQuery(
+                "select pt.tournament " +
                         "from Participation pt " +
-                        "where pt.competitor.id = :competitorId ", Participation.class);
+                        "where pt.competitor.id = :competitorId ", Tournament.class);
         getById.setParameter("competitorId", competitorId);
         return new ArrayList<>(getById.getResultList());
     }

@@ -25,8 +25,8 @@ class TournamentModeRepositoryTest {
     @Inject
     TournamentRepository tournamentRepository;
 
-    private final TournamentMode defaultTournamentMode1 = new TournamentMode("GROUPS");
-    private final Tournament defaultTournament1 = new Tournament("MSI", defaultTournamentMode1);
+    private final TournamentMode defaultTournamentMode1 = new TournamentMode("defaultTournamentMode1");
+    private final Tournament defaultTournament1 = new Tournament("defaultTournament1", defaultTournamentMode1);
 
     private void insertTestData() {
         repository.add(defaultTournamentMode1);
@@ -60,7 +60,7 @@ class TournamentModeRepositoryTest {
     @Order(1020)
     void TestAdd02_AddTournamentMode_ShouldAddTournamentMode() {
         // arrange
-        String nameTournamentMode1 = "KO";
+        String nameTournamentMode1 = "TournamentMode1";
         TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
 
         // act
@@ -79,7 +79,7 @@ class TournamentModeRepositoryTest {
     @Order(1030)
     void TestAdd03_AddExistingTournamentMode_ShouldReturnExistingTournamentMode() {
         // arrange
-        String nameTournamentMode1 = "KO";
+        String nameTournamentMode1 = "TournamentMode1";
         TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
 
         // act
@@ -117,7 +117,7 @@ class TournamentModeRepositoryTest {
     void TestModify02_ModifyNotExistingTournamentMode_ShouldReturnNull() {
         insertTestData();
         // arrange
-        String nameTournamentMode1 = "KO";
+        String nameTournamentMode1 = "TournamentMode1";
         TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
 
         // act
@@ -133,7 +133,7 @@ class TournamentModeRepositoryTest {
     void TestModify03_ModifyTournamentMode_ShouldModifyTournamentMode() {
         insertTestData();
         // arrange
-        String nameTournamentMode1 = "KO";
+        String nameTournamentMode1 = "TournamentMode1";
         TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
 
         // act

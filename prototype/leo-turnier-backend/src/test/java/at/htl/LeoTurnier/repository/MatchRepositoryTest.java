@@ -25,10 +25,10 @@ class MatchRepositoryTest {
     @Inject
     CompetitorRepository competitorRepository;
 
-    private final Team defaultCompetitor1 = new Team("DK");
-    private final Team defaultCompetitor2 = new Team("FNC");
+    private final Team defaultCompetitor1 = new Team("defaultTeam1");
+    private final Team defaultCompetitor2 = new Team("defaultTeam1");
     private final Match defaultMatch1 = new Match(defaultCompetitor1, defaultCompetitor2);
-    private final Node defaultNode1 = new Node(1, defaultMatch1);
+    private final Node defaultNode1 = new Node(defaultMatch1);
 
     private void insertTestData() {
         repository.add(defaultMatch1);

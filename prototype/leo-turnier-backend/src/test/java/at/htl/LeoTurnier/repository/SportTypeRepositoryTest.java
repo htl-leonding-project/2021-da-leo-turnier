@@ -24,8 +24,8 @@ class SportTypeRepositoryTest {
     @Inject
     TournamentRepository tournamentRepository;
 
-    private final SportType defaultSportType1 = new SportType("LoL");
-    private final Tournament defaultTournament1 = new Tournament("MSI", defaultSportType1);
+    private final SportType defaultSportType1 = new SportType("defaultSportType1");
+    private final Tournament defaultTournament1 = new Tournament("defaultTournament1", defaultSportType1);
 
     private void insertTestData() {
         repository.add(defaultSportType1);
@@ -59,7 +59,7 @@ class SportTypeRepositoryTest {
     @Order(1020)
     void TestAdd02_AddSportType_ShouldAddSportType() {
         // arrange
-        String nameSportType1 = "LoL";
+        String nameSportType1 = "SportType1";
         SportType sportType1 = new SportType(nameSportType1);
 
         // act
@@ -78,7 +78,7 @@ class SportTypeRepositoryTest {
     @Order(1030)
     void TestAdd03_AddExistingSportType_ShouldReturnExistingSportType() {
         // arrange
-        String nameSportType1 = "LoL";
+        String nameSportType1 = "SportType1";
         SportType sportType1 = new SportType(nameSportType1);
 
         // act
@@ -117,7 +117,7 @@ class SportTypeRepositoryTest {
         insertTestData();
         // arrange
 
-        String nameSportType1 = "LoL";
+        String nameSportType1 = "SportType1";
         SportType sportType1 = new SportType(nameSportType1);
 
         // act
@@ -135,7 +135,7 @@ class SportTypeRepositoryTest {
         // arrange
 
 
-        String nameSportType1 = "LoL";
+        String nameSportType1 = "SportType1";
         SportType sportType1 = new SportType(nameSportType1);
 
         // act

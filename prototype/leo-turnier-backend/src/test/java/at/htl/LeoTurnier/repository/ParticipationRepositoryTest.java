@@ -24,10 +24,10 @@ class ParticipationRepositoryTest {
     @Inject
     TournamentRepository tournamentRepository;
 
-    private final Tournament defaultTournament1 = new Tournament("MSI");
-    private final Tournament defaultTournament2 = new Tournament("Worlds");
-    private final Player defaultPlayer1 = new Player("Faker");
-    private final Player defaultPlayer2 = new Player("Canyon");
+    private final Tournament defaultTournament1 = new Tournament("defaultTournament1");
+    private final Tournament defaultTournament2 = new Tournament("defaultTournament2");
+    private final Player defaultPlayer1 = new Player("defaultPlayer1");
+    private final Player defaultPlayer2 = new Player("defaultPlayer2");
 
     private void insertTestData() {
         tournamentRepository.add(defaultTournament1);
@@ -226,12 +226,12 @@ class ParticipationRepositoryTest {
 
     @Test
     @Order(4010)
-    void TestGetByTournament01_SearchNull_ShouldReturnNull() {
+    void TestGetCompetitorsByTournament01_SearchNull_ShouldReturnNull() {
         insertTestData();
         // arrange
 
         // act
-        List<Participation> res = repository.getByTournament((long) -1);
+        List<Competitor> res = repository.getCompetitorsByTournament((long) -1);
 
         // assert
         assertThat(res.size())
@@ -240,36 +240,32 @@ class ParticipationRepositoryTest {
 
     @Test
     @Order(4020)
-    void TestGetByTournament02_SearchByTournament_ShouldReturnParticipations() {
+    void TestGetCompetitorsByTournament02_SearchByTournament_ShouldReturnParticipations() {
         insertTestData();
         // arrange
 
         // act
-        List<Participation> res = repository.getByTournament(defaultTournament1.getId());
+        List<Competitor> res = repository.getCompetitorsByTournament(defaultTournament1.getId());
 
         // assert
         assertThat(res.size())
                 .isEqualTo(2);
 
-        assertThat(res.get(0).getTournament().getId())
-                .isEqualTo(defaultTournament1.getId());
-        assertThat(res.get(0).getCompetitor().getId())
+        assertThat(res.get(0).getId())
                 .isEqualTo(defaultPlayer1.getId());
 
-        assertThat(res.get(1).getTournament().getId())
-                .isEqualTo(defaultTournament1.getId());
-        assertThat(res.get(1).getCompetitor().getId())
+        assertThat(res.get(1).getId())
                 .isEqualTo(defaultPlayer2.getId());
     }
 
     @Test
     @Order(5010)
-    void TestGetByCompetitor01_SearchNull_ShouldReturnNull() {
+    void TestGetTournamentsByCompetitor01_SearchNull_ShouldReturnNull() {
         insertTestData();
         // arrange
 
         // act
-        List<Participation> res = repository.getByCompetitor((long) -1);
+        List<Tournament> res = repository.getTournamentsByCompetitor((long) -1);
 
         // assert
         assertThat(res.size())
@@ -278,26 +274,22 @@ class ParticipationRepositoryTest {
 
     @Test
     @Order(5020)
-    void TestGetByCompetitor02_SearchByCompetitor_ShouldReturnParticipations() {
+    void TestGetTournamentsByCompetitor02_SearchByCompetitor_ShouldReturnParticipations() {
         insertTestData();
         // arrange
 
         // act
-        List<Participation> res = repository.getByCompetitor(defaultPlayer1.getId());
+        List<Tournament> res = repository.getTournamentsByCompetitor(defaultPlayer1.getId());
 
         // assert
         assertThat(res.size())
                 .isEqualTo(2);
 
-        assertThat(res.get(0).getTournament().getId())
+        assertThat(res.get(0).getId())
                 .isEqualTo(defaultTournament1.getId());
-        assertThat(res.get(0).getCompetitor().getId())
-                .isEqualTo(defaultPlayer1.getId());
 
-        assertThat(res.get(1).getTournament().getId())
+        assertThat(res.get(1).getId())
                 .isEqualTo(defaultTournament2.getId());
-        assertThat(res.get(1).getCompetitor().getId())
-                .isEqualTo(defaultPlayer1.getId());
     }
 
     @Test

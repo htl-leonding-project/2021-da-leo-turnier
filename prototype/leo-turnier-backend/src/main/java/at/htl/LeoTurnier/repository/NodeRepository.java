@@ -29,6 +29,7 @@ public class NodeRepository implements PanacheRepository<Node> {
         }
         matchRepository.add(node.getMatch());
         phaseRepository.add(node.getPhase());
+        add(node.getNextNode());
         persist(node);
         return node;
     }
@@ -39,11 +40,12 @@ public class NodeRepository implements PanacheRepository<Node> {
             return null;
         }
         if (toModify != null) {
-            toModify.setNodeNumber(node.getNodeNumber());
             matchRepository.add(node.getMatch());
             phaseRepository.add(node.getPhase());
+            add(node.getNextNode());
             toModify.setMatch(node.getMatch());
             toModify.setPhase(node.getPhase());
+            toModify.setNextNode(node.getNextNode());
         }
         return toModify;
     }
@@ -53,7 +55,9 @@ public class NodeRepository implements PanacheRepository<Node> {
     }
 
     public List<Node> getByPhaseId(Long phaseId) {
-        return getEntityManager().createQuery("select n from Node n where n.phase.id = :phaseId", Node.class)
+        return getEntityManager()
+                .createQuery("select n from Node n where n.phase.id = :phaseId",
+                        Node.class)
                 .setParameter("phaseId", phaseId)
                 .getResultList();
     }
@@ -64,6 +68,7 @@ public class NodeRepository implements PanacheRepository<Node> {
 
     public Node delete(Long id) {
         Node node = getById(id);
+        find("nextNode", node).stream().forEach(n -> delete(n.getId()));
         delete("id", id);
         return node;
     }

@@ -13,6 +13,9 @@ import java.util.List;
 public class TournamentRepository implements PanacheRepository<Tournament> {
 
     @Inject
+    ParticipationRepository participationRepository;
+
+    @Inject
     TournamentModeRepository tournamentModeRepository;
 
     @Inject
@@ -62,12 +65,16 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
     public Tournament delete(Long id) {
         Tournament tournament = getById(id);
         phaseRepository.getAll().forEach(t -> phaseRepository.delete(t.getId()));
+        getEntityManager().createQuery("delete from Participation p where p.tournament.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
         delete("id", id);
         return tournament;
     }
 
     public long clear() {
         phaseRepository.clear();
+        participationRepository.clear();
         return deleteAll();
     }
 }

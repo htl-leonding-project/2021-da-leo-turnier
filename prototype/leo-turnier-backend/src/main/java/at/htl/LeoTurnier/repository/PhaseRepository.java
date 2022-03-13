@@ -50,7 +50,9 @@ public class PhaseRepository implements PanacheRepository<Phase> {
     }
 
     public List<Phase> getByTournamentId(Long tournamentId) {
-        return getEntityManager().createQuery("select p from Phase p where p.tournament.id = :tournamentId", Phase.class)
+        return getEntityManager()
+                .createQuery("select p from Phase p where p.tournament.id = :tournamentId order by p.phaseNumber",
+                        Phase.class)
                 .setParameter("tournamentId", tournamentId)
                 .getResultList();
     }
