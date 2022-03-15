@@ -51,19 +51,12 @@ public class PlayerService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getById(@QueryParam("id") long id) {
-        return Response.ok(repository.getById(id)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getByTeamId(@QueryParam("teamId") long teamId) {
-        return Response.ok(repository.getByTeamId(teamId)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll() {
+    public Response get(@QueryParam("id") Long id, @QueryParam("teamId") Long teamId) {
+        if (id != null) {
+            return Response.ok(repository.getById(id)).build();
+        } else if (teamId != null) {
+            return Response.ok(repository.getByTeamId(teamId)).build();
+        }
         return Response.ok(repository.getAll()).build();
     }
 

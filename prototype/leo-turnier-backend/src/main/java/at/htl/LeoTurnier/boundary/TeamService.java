@@ -51,13 +51,10 @@ public class TeamService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getById(@QueryParam("id") long id) {
-        return Response.ok(repository.getById(id)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll() {
+    public Response get(@QueryParam("id") Long id) {
+        if (id != null) {
+            return Response.ok(repository.getById(id)).build();
+        }
         return Response.ok(repository.getAll()).build();
     }
 

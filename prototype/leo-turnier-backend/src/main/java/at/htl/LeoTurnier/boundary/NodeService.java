@@ -46,19 +46,12 @@ public class NodeService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getById(@QueryParam("id") long id) {
-        return Response.ok(repository.getById(id)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getByPhaseId(@QueryParam("phaseId") long phaseId) {
-        return Response.ok(repository.getByPhaseId(phaseId)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll() {
+    public Response get(@QueryParam("id") Long id, @QueryParam("phaseId") Long phaseId) {
+        if (id != null) {
+            return Response.ok(repository.getById(id)).build();
+        } else if (phaseId != null) {
+            return Response.ok(repository.getByPhaseId(phaseId)).build();
+        }
         return Response.ok(repository.getAll()).build();
     }
 

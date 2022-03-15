@@ -20,13 +20,10 @@ public class CompetitorService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Competitor getById(@QueryParam("id") long id) {
-        return repository.findById(id);
-    }
-
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Competitor> getAll() {
-        return repository.getAll();
+    public Response get(@QueryParam("id") Long id) {
+        if (id != null) {
+            return Response.ok(repository.getById(id)).build();
+        }
+        return Response.ok(repository.getAll()).build();
     }
 }

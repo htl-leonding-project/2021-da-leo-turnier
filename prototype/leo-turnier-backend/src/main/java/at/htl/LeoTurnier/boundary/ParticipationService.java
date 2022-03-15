@@ -48,25 +48,14 @@ public class ParticipationService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getById(@QueryParam("tournamentId") Long tournamentId, @QueryParam("competitorId") Long competitorId) {
-        return Response.ok(repository.getById(tournamentId, competitorId)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getByTournamentId(@QueryParam("tournamentId") Long tournamentId) {
-        return Response.ok(repository.getCompetitorsByTournament(tournamentId)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getByCompetitorId(@QueryParam("competitorId") Long competitorId) {
-        return Response.ok(repository.getTournamentsByCompetitor(competitorId)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll() {
+    public Response get(@QueryParam("tournamentId") Long tournamentId, @QueryParam("competitorId") Long competitorId) {
+        if (tournamentId != null && competitorId != null) {
+            return Response.ok(repository.getById(tournamentId, competitorId)).build();
+        } else if (tournamentId != null) {
+            return Response.ok(repository.getCompetitorsByTournament(tournamentId)).build();
+        } else if (competitorId != null) {
+            return Response.ok(repository.getTournamentsByCompetitor(competitorId)).build();
+        }
         return Response.ok(repository.getAll()).build();
     }
 

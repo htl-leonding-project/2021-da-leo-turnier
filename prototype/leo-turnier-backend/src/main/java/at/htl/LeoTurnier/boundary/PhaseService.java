@@ -46,19 +46,12 @@ public class PhaseService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getById(@QueryParam("id") long id) {
-        return Response.ok(repository.getById(id)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getByTournamentId(@QueryParam("tournamentId") long tournamentId) {
-        return Response.ok(repository.getByTournamentId(tournamentId)).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll() {
+    public Response get(@QueryParam("id") Long id, @QueryParam("tournamentId") Long tournamentId) {
+        if (id != null) {
+            return Response.ok(repository.getById(id)).build();
+        } else if (tournamentId != null) {
+            return Response.ok(repository.getByTournamentId(tournamentId)).build();
+        }
         return Response.ok(repository.getAll()).build();
     }
 
