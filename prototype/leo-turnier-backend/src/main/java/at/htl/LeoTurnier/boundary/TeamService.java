@@ -33,7 +33,7 @@ public class TeamService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(team.getId())).build()).build();
+                .queryParam("id", team.getId()).build()).build();
     }
 
     @PUT
@@ -46,7 +46,7 @@ public class TeamService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(team.getId())).build()).build();
+                .queryParam("id", team.getId()).build()).build();
     }
 
     @GET

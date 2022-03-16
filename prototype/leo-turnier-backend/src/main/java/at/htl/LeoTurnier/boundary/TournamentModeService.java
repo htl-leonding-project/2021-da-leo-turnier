@@ -21,27 +21,27 @@ public class TournamentModeService {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(TournamentMode TournamentMode, @Context UriInfo info) {
-        TournamentMode = repository.add(TournamentMode);
-        if (TournamentMode == null) {
+    public Response add(TournamentMode tournamentMode, @Context UriInfo info) {
+        tournamentMode = repository.add(tournamentMode);
+        if (tournamentMode == null) {
             return Response.status(204).build();
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(TournamentMode.getId())).build()).build();
+                .queryParam("id", tournamentMode.getId()).build()).build();
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@QueryParam("id") long id, TournamentMode TournamentMode, @Context UriInfo info) {
-        TournamentMode = repository.modify(id, TournamentMode);
-        if (TournamentMode == null) {
+    public Response modify(@QueryParam("id") long id, TournamentMode tournamentMode, @Context UriInfo info) {
+        tournamentMode = repository.modify(id, tournamentMode);
+        if (tournamentMode == null) {
             return Response.status(204).build();
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(TournamentMode.getId())).build()).build();
+                .queryParam("id", tournamentMode.getId()).build()).build();
     }
 
     @GET

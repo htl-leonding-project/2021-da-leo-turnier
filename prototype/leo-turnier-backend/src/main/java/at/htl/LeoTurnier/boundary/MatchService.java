@@ -26,7 +26,7 @@ public class MatchService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(match.getId())).build()).build();
+                .queryParam("id", match.getId()).build()).build();
     }
 
     @PUT
@@ -39,7 +39,7 @@ public class MatchService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(match.getId())).build()).build();
+                .queryParam("id", match.getId()).build()).build();
     }
 
     @GET

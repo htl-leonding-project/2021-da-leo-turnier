@@ -43,13 +43,26 @@ public class ExecutionRepository {
     public Match finishMatch(Long nodeId) {
         Node node = nodeRepository.getById(nodeId);
         Match match = node.getMatch();
+        Competitor winner;
         if (match.getScore1() > match.getScore2()) {
-            Match nextMatch = node.getNextNode().getMatch();
-            if (nextMatch == null) {
-                //nextMatch =
-            }
+            winner = match.getCompetitor1();
+        } else if (match.getScore1() < match.getScore2()) {
+            winner = match.getCompetitor2();
+        } else {
+            return null;
         }
-        return match;
+
+        Match nextMatch = node.getNextNode().getMatch();
+        if (nextMatch == null) {
+            nextMatch = matchRepository.add(new Match());
+        }
+        if (nextMatch.getCompetitor1() == null) {
+            nextMatch.setCompetitor1(winner);
+        } else if (nextMatch.getCompetitor2() == null) {
+            nextMatch.setCompetitor2(winner);
+        }
+        matchRepository.modify(nextMatch.getId(), nextMatch);
+        return nextMatch;
     }
 
     private void insertPhases(Tournament tournament) {

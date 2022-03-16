@@ -28,7 +28,7 @@ public class NodeService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(node.getId())).build()).build();
+                .queryParam("id", node.getId()).build()).build();
     }
 
     @PUT
@@ -41,7 +41,7 @@ public class NodeService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(node.getId())).build()).build();
+                .queryParam("id", node.getId()).build()).build();
     }
 
     @GET

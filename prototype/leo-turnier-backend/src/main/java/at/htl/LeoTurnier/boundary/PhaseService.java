@@ -28,7 +28,7 @@ public class PhaseService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(phase.getId())).build()).build();
+                .queryParam("id", phase.getId()).build()).build();
     }
 
     @PUT
@@ -41,7 +41,7 @@ public class PhaseService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(phase.getId())).build()).build();
+                .queryParam("id", phase.getId()).build()).build();
     }
 
     @GET

@@ -33,7 +33,7 @@ public class PlayerService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(player.getId())).build()).build();
+                .queryParam("id", player.getId()).build()).build();
     }
 
     @PUT
@@ -46,7 +46,7 @@ public class PlayerService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(player.getId())).build()).build();
+                .queryParam("id", player.getId()).build()).build();
     }
 
     @GET

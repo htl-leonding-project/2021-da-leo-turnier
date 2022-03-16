@@ -26,8 +26,8 @@ public class ParticipationService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .queryParam("t", tournamentId)
-                .queryParam("c", competitorId)
+                .queryParam("tournamentId", tournamentId)
+                .queryParam("competitorId", competitorId)
                 .build()).build();
     }
 

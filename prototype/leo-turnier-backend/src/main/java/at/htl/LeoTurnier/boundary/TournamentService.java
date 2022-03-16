@@ -28,7 +28,7 @@ public class TournamentService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(tournament.getId())).build()).build();
+                .queryParam("id", tournament.getId()).build()).build();
     }
 
     @PUT
@@ -41,7 +41,7 @@ public class TournamentService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(tournament.getId())).build()).build();
+                .queryParam("id", tournament.getId()).build()).build();
     }
 
     @GET

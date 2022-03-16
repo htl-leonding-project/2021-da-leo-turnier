@@ -28,7 +28,7 @@ public class SportTypeService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(sportType.getId())).build()).build();
+                .queryParam("id", sportType.getId()).build()).build();
     }
 
     @PUT
@@ -41,7 +41,7 @@ public class SportTypeService {
         }
         return Response.created(info
                 .getAbsolutePathBuilder()
-                .path(Long.toString(sportType.getId())).build()).build();
+                .queryParam("id", sportType.getId()).build()).build();
     }
 
     @GET
