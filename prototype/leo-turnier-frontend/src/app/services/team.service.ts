@@ -26,13 +26,8 @@ export class TeamService {
   }
 
   async getTeam(id: string): Promise<Team> {
-    const teams: Team[] = await this.httpClient.get<Team[]>(this.host + '?id=' + id ).toPromise();
-    // @ts-ignore
-    const team = teams.pop();
-    // @ts-ignore
-    // @ts-ignore
+    const team: Team = await this.httpClient.get<Team>(this.host + '?id=' + id ).toPromise();
     team.players = await this.httpClient.get<Player[]>('http://localhost:8080/api/player?teamId=' + team.id).toPromise();
-    // @ts-ignore
     return team;
 
     // Mocking

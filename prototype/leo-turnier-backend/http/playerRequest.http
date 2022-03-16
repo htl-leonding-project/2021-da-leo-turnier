@@ -25,7 +25,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/api/player?id=3
+GET http://localhost:8080/api/player?id=2
 
 ###
 

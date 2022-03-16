@@ -60,12 +60,12 @@ export class TeamComponent implements OnInit {
 
     const dialogRef = this.dialog.open(TeamDialogComponent, {
       width: '250px',
-      data: {players: this.getPlayersNotInTeam(allPlayers)},
+      data: {players: await this.getPlayersNotInTeam(allPlayers)},
     });
     dialogRef.afterClosed().subscribe(async result => {
       console.log('The dialog was closed');
       result.data.team = await this.teamApi.getTeam(this.id);
-      this.playerApi.updatePlayer(String(result.data.id), result.data);
+      await this.playerApi.updatePlayer(String(result.data.id), result.data);
       this.router.navigate(['team/' + this.id]).then(() => {
         window.location.reload();
       });
@@ -85,10 +85,12 @@ export class TeamComponent implements OnInit {
     return playersNotInTeam;
   }
 
-  public removePlayer(player: Player): void {
+  public async removePlayer(player: Player): Promise<void> {
     // @ts-ignore
     player.team = null;
-    this.playerApi.updatePlayer(String(player.id), player);
-    this.router.navigate(['team/' + this.id]).then(() => {window.location.reload(); });
+    await this.playerApi.updatePlayer(String(player.id), player);
+    this.router.navigate(['team/' + this.id]).then(() => {
+      window.location.reload();
+    });
   }
 }

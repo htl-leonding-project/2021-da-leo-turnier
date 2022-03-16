@@ -13,7 +13,7 @@ export class TeamDialogComponent {
     public dialogRef: MatDialogRef<TeamDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {
-    console.log(data.players);
+    console.log(data.players.toString());
   }
 
   onNoClick(): void {

@@ -20,10 +20,7 @@ export class PlayerService {
   }
 
   async getPlayer(id: string): Promise<Player> {
-    const player: Player[] = await this.httpClient.get<Player[]>(this.host + '?id=' + id).toPromise();
-
-    // @ts-ignore
-    return player.pop();
+    return await this.httpClient.get<Player>(this.host + '?id=' + id).toPromise();
   }
 
   async addPlayer(value: any): Promise<void> {
