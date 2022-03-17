@@ -1,0 +1,11 @@
+<h1>{{name}}:</h1>
+
+<ng-container>
+  <ngtt-single-elimination-tree [tournament]="this.tournament"
+                                [matchTemplate]="this.matchTemplate"
+                                style="color: aliceblue"></ngtt-single-elimination-tree>
+</ng-container>
+
+<ng-template #matchTemplate let-match>
+  <app-match [match]="match"></app-match>
+</ng-template>
