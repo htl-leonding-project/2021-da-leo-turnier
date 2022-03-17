@@ -7,11 +7,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private router: Router) {
-  }
-
-  loginBtnClick(): void {
-    this.router.navigateByUrl('/login');
+  constructor(public router: Router) {
   }
 
   onMenuSelected(page: string): void{
