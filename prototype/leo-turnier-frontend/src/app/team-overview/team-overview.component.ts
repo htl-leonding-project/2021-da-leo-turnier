@@ -31,5 +31,13 @@ export class TeamOverviewComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+  async deleteTeam(id: number): Promise<void> {
+    if (confirm('Sind Sie sicher dass Sie dieses Team löschen möchten?')) {
+      await this.api.deleteTeam(id);
+      await new Promise(f => setTimeout(f, 10));
+    }
+    window.location.reload();
+  }
 }
 
