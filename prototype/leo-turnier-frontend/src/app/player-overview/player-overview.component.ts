@@ -20,7 +20,7 @@ export class PlayerOverviewComponent implements OnInit {
   }
 
    async deletePlayer(id: number): Promise<void> {
-     if (confirm('Are you sure to delete this record ?')) {
+     if (confirm('Sind Sie sicher dass Sie diesen Spieler löschen möchten?')) {
        await this.api.deletePlayer(id);
        await new Promise(f => setTimeout(f, 10));
      }
