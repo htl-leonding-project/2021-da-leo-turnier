@@ -27,7 +27,8 @@ export class TeamComponent implements OnInit {
   constructor(public teamApi: TeamService,
               public playerApi: PlayerService,
               public activatedRouter: ActivatedRoute,
-              private router: Router, public dialog: MatDialog) {
+              private router: Router,
+              public dialog: MatDialog) {
     // @ts-ignore
     activatedRouter.paramMap.subscribe(map => this.id = map.get('id'));
   }

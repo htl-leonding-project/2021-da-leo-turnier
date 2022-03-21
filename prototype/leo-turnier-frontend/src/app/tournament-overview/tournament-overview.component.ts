@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {TournamentService} from '../services/tournament.service';
 
 @Component({
   selector: 'app-tournament-overview',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TournamentOverviewComponent implements OnInit {
 
-  constructor() { }
+  dataSource = new MatTableDataSource();
+  displayedColumns: string[] = ['id', 'name', 'startDate', 'endDate', 'sportType', 'actions'];
 
-  ngOnInit(): void {
+  constructor(public api: TournamentService) { }
+
+  async ngOnInit(): Promise<void> {
+    this.dataSource.data = await this.api.getTournaments();
   }
 
+  async startTournament(id: number): Promise<void> {
+    if (confirm('Sind sie sicher dass sie dass Turnier starten möchten?' +
+      'Danach können Sie es nicht mehr bearbeiten!')) {
+
+      await this.api.startTournament(id);
+      await new Promise(f => setTimeout(f, 10));
+    }
+    window.location.reload();
+  }
 }

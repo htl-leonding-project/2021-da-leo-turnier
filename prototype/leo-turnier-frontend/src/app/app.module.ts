@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
-import { CreateTournamentComponent } from './create-tournament/create-tournament.component';
 import { TournamentOverviewComponent } from './tournament-overview/tournament-overview.component';
 import { LoginComponent } from './login/login.component';
 import { PlayerOverviewComponent } from './player-overview/player-overview.component';
@@ -18,11 +17,15 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TeamOverviewDialogComponent} from './team-overview-dialog/team-overview-dialog.component';
 import { DatePipe } from '@angular/common';
 import { TeamDialogComponent } from './team-dialog/team-dialog.component';
+import { TournamentComponent } from './tournament/tournament.component';
+import { HomeComponent } from './home/home.component';
+import { TournamentTreeComponent } from './tournament-tree/tournament-tree.component';
+import {NgTournamentTreeModule} from 'ng-tournament-tree';
+import { MatchComponent } from './match/match.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateTournamentComponent,
     TournamentOverviewComponent,
     LoginComponent,
     PlayerOverviewComponent,
@@ -31,6 +34,10 @@ import { TeamDialogComponent } from './team-dialog/team-dialog.component';
     PlayerComponent,
     TeamComponent,
     TeamDialogComponent,
+    TournamentComponent,
+    HomeComponent,
+    TournamentTreeComponent,
+    MatchComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +47,8 @@ import { TeamDialogComponent } from './team-dialog/team-dialog.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    NgTournamentTreeModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -9,6 +9,7 @@ export class Tournament {
               public endDate: Date,
               public sportType: SportType,
               public tournamentMode: TournamentMode,
-              public competitors: Array<Competitor>) {
+              public competitors: Competitor[],
+              public isTournamentRunning: boolean) {
   }
 }
