@@ -369,12 +369,11 @@ class TournamentRepositoryTest {
         insertTestData();
         // arrange
         String nameTournamentMode1 = "TournamentMode1";
-        String nameTournament1 = "Tournament1";
         TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
-        Tournament tournament1 = new Tournament(nameTournament1, tournamentMode1);
+        defaultTournament1.setTournamentMode(tournamentMode1);
 
         // act
-        repository.modify(defaultTournament1.getId(), tournament1);
+        repository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // assert
         TypedQuery<Tournament> getTournaments = repository.getEntityManager().createQuery("select t from Tournament t", Tournament.class);
@@ -383,7 +382,9 @@ class TournamentRepositoryTest {
         assertThat(getTournaments.getResultList().size())
                 .isEqualTo(1);
         assertThat(getTournaments.getResultList().get(0).getName())
-                .isEqualTo(nameTournament1);
+                .isEqualTo(defaultTournament1.getName());
+        assertThat(getTournaments.getResultList().get(0).getTournamentMode().getName())
+                .isEqualTo(nameTournamentMode1);
 
         assertThat(getTournamentModes.getResultList().size())
                 .isEqualTo(2);

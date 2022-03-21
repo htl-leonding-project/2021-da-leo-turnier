@@ -4,6 +4,8 @@ import at.htl.LeoTurnier.entity.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.security.auth.callback.TextOutputCallback;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,24 +34,53 @@ public class ExecutionRepository {
         if(tournament == null) {
             return null;
         }
-        insertPhases(tournament);
-        insertNodes(tournament);
-        insertMatches(tournament);
-        setBuyRounds(tournament);
+        clearTournament(tournament);
+        if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
+            insertPhasesRoundRobin(tournament);
+            insertNodesAndMatchesRoundRobin(tournament);
+        } else {
+            insertPhasesElimination(tournament);
+            insertNodesElimination(tournament);
+            insertMatchesElimination(tournament);
+            setBuyRoundsElimination(tournament);
+        }
 
         return tournament;
     }
 
     public Match finishMatch(Long nodeId) {
         Node node = nodeRepository.getById(nodeId);
+        Tournament tournament = node.getPhase().getTournament();
+        if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
+            return null;
+        }
+        if (node.getNextNode() == null) {
+            return null;
+        }
         Match match = node.getMatch();
         Competitor winner;
+        Competitor loser;
         if (match.getScore1() > match.getScore2()) {
             winner = match.getCompetitor1();
+            loser = match.getCompetitor2();
         } else if (match.getScore1() < match.getScore2()) {
             winner = match.getCompetitor2();
+            loser = match.getCompetitor1();
         } else {
             return null;
+        }
+
+        if (node.getNextNode() != null) {
+            participationRepository.modify(tournament.getId(),
+                    loser.getId(),
+                    nodeRepository.getByPhaseId(node.getNextNode().getPhase().getId()).size() * 2 + 1);
+        } else {
+            participationRepository.modify(tournament.getId(),
+                    loser.getId(),
+                    2);
+            participationRepository.modify(tournament.getId(),
+                    winner.getId(),
+                    1);
         }
 
         Match nextMatch = node.getNextNode().getMatch();
@@ -65,8 +96,33 @@ public class ExecutionRepository {
         return nextMatch;
     }
 
-    private void insertPhases(Tournament tournament) {
-        phaseRepository.getByTournamentId(tournament.getId()).forEach(p -> phaseRepository.delete(p.getId()));
+    private void insertPhasesRoundRobin(Tournament tournament) {
+        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
+        double numOfPhases = competitors.size() - 1 + (competitors.size() % 2);
+        for (int i = 0; i < numOfPhases; i++) {
+            phaseRepository.add(new Phase(i, tournament));
+        }
+    }
+
+    private void insertNodesAndMatchesRoundRobin(Tournament tournament) {
+        List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
+        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
+        int numOfNodes = competitors.size() / 2;
+        for (int i = 0; i < phases.size(); i++) {
+            Phase phase = phases.get(i);
+            List<Competitor> competitorsTmp = new ArrayList<>(competitors);
+            if (competitorsTmp.size() % 2 != 0) {
+                competitorsTmp.remove(i % competitorsTmp.size());
+            }
+            for (int u = 0; u < numOfNodes; u++) {
+                Match match = new Match(competitorsTmp.remove(0),
+                        competitorsTmp.remove(i % competitorsTmp.size()));
+                nodeRepository.add(new Node(u, match, phase));
+            }
+        }
+    }
+
+    private void insertPhasesElimination(Tournament tournament) {
         List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
         double numOfPhases = (Math.log(competitors.size())
                  /  Math.log(2));
@@ -77,9 +133,8 @@ public class ExecutionRepository {
         }
     }
 
-    private void insertNodes(Tournament tournament) {
+    private void insertNodesElimination(Tournament tournament) {
         List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
-        phases.forEach(p -> nodeRepository.getByPhaseId(p.getId()).forEach(n -> nodeRepository.delete(n.getId())));
         List<Node> previousNodes = null;
 
         for (int i = 0; i < phases.size(); i++) {
@@ -96,13 +151,8 @@ public class ExecutionRepository {
         }
     }
 
-    private void insertMatches(Tournament tournament) {
+    private void insertMatchesElimination(Tournament tournament) {
         List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
-        phases.forEach(p -> nodeRepository.getByPhaseId(p.getId()).forEach(n -> {
-            if (n.getMatch() != null) {
-                matchRepository.delete(n.getMatch().getId());
-            }
-        }));
         if (phases.size() <= 1) {
             return;
         }
@@ -124,7 +174,7 @@ public class ExecutionRepository {
         }
     }
 
-    private void setBuyRounds(Tournament tournament) {
+    private void setBuyRoundsElimination(Tournament tournament) {
         Phase phase = phaseRepository.getByTournamentId(tournament.getId()).get(0);
         List<Node> nodes = nodeRepository.getByPhaseId(phase.getId());
         nodes.forEach(n -> {
@@ -191,5 +241,17 @@ public class ExecutionRepository {
             res = seedCompetitors(res, level);
         }
         return res;
+    }
+
+    private void clearTournament(Tournament tournament) {
+        List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
+        phases.forEach(p -> {
+            List<Node> nodes = nodeRepository.getByPhaseId(p.getId());
+            nodes.forEach(n -> {
+                matchRepository.delete(n.getMatch().getId());
+                nodeRepository.delete(n.getId());
+            });
+            phaseRepository.delete(p.getId());
+        });
     }
 }

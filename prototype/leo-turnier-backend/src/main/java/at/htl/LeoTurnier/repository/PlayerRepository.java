@@ -29,11 +29,7 @@ public class PlayerRepository implements PanacheRepository<Player> {
         if (existing != null) {
             return existing;
         }
-        if (player.getTeam() != null) {
-            if (teamRepository.getById(player.getTeam().getId()) == null) {
-                teamRepository.persist(player.getTeam());
-            }
-        }
+        teamRepository.add(player.getTeam());
         persist(player);
         return player;
     }

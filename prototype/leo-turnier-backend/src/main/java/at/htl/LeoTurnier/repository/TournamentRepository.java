@@ -50,6 +50,8 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
             toModify.setEndDate(tournament.getEndDate());
             tournamentModeRepository.add(tournament.getTournamentMode());
             sportTypeRepository.add(tournament.getSportType());
+            toModify.setTournamentMode(tournament.getTournamentMode());
+            toModify.setSportType(tournament.getSportType());
         }
         return toModify;
     }
