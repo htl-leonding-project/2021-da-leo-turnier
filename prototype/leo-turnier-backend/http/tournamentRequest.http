@@ -2,7 +2,9 @@ POST http://localhost:8080/api/tournament
 Content-Type: application/json
 
 {
-  "name": "KO"
+  "name": "KO",
+  "startDate": "2021-01-01",
+  "endDate": "2022-01-01"
 }
 
 ###

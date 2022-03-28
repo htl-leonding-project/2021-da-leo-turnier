@@ -48,14 +48,35 @@ export class HomeComponent implements OnInit {
       console.log(nodes);
 
       for (const node of nodes.sort((a, b) => (a.nodeNumber < b.nodeNumber) ? -1 : 1)){
-        if ('match' in node){
-          round.matches.push(
-            {
-              teams: [
-                {name: node.match.competitor1.name, score: node.match.score1},
-                {name: node.match.competitor2.name, score: node.match.score2}
-              ]
-            });
+        console.log(node);
+        if ('match' in node) {
+          if ('competitor1' in node.match && 'competitor2' in node.match) {
+            round.matches.push(
+              {
+                teams: [
+                  {name: node.match.competitor1.name, score: node.match.score1},
+                  {name: node.match.competitor2.name, score: node.match.score2}
+                ]
+              });
+          } else if ('competitor1' in node.match) {
+            round.matches.push(
+              {
+                teams: [
+                  // @ts-ignore
+                  {name: node.match.competitor1.name, score: 0},
+                  {name: 'Ausstehend', score: 0},
+                ]
+              });
+          } else if ('competitor2' in node.match) {
+            round.matches.push(
+              {
+                teams: [
+                  {name: 'Ausstehend', score: 0},
+                  // @ts-ignore
+                  {name: node.match.competitor2.name, score: 0}
+                ]
+              });
+          }
         }
         else{
           round.matches.push(

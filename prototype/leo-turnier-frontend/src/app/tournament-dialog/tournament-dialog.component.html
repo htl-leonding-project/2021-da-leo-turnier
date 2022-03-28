@@ -1,6 +1,8 @@
-<h1 mat-dialog-title>Players</h1>
+<h1 mat-dialog-title>Competitors</h1>
 <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-  <div *cdkVirtualFor="let player of data.players" class="example-item" (click)="addPlayerToTeam(player)">{{player.name}}</div>
+  <div *cdkVirtualFor="let competitor of data.competitors" class="example-item" (click)="addCompetitor(competitor)">
+    {{competitor.name}}
+  </div>
 </cdk-virtual-scroll-viewport>
 
 <div mat-dialog-actions>

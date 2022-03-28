@@ -34,9 +34,9 @@ export class PlayerService {
     );
   }
 
-  async updatePlayer(id: string, value: any): Promise<void>{
+  async updatePlayer(id: string, value: any, team: any): Promise<void>{
     // @ts-ignore
-    const player = new Player(value.id, value.name, this.datePipe.transform(value.birthdate, 'yyyy-MM-dd'), value.team);
+    const player = new Player(value.id, value.name, this.datePipe.transform(value.birthdate, 'yyyy-MM-dd'), team);
     console.log(JSON.stringify(player));
     const headers = { 'content-type': 'application/json'};
     await this.httpClient.put(this.host + '?id=' + id, JSON.stringify(player), {headers}).subscribe(

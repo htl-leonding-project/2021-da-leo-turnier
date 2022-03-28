@@ -15,8 +15,9 @@ export class PlayerComponent implements OnInit {
   playerForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     birthdate: new FormControl(''),
-    team: new FormControl('')
   });
+
+  private team: any;
 
   constructor(public api: PlayerService, public activatedRouter: ActivatedRoute, private router: Router) {
     // @ts-ignore
@@ -27,14 +28,21 @@ export class PlayerComponent implements OnInit {
     if (this.id !== '0') {
       const player = await this.api.getPlayer(this.id);
       console.log(player);
-      this.playerForm.setValue({name: player.name, birthdate: player.birthdate, team: player.team});
+      this.playerForm.setValue({name: player.name, birthdate: player.birthdate});
+      if ('team' in player){
+        this.team = player.team;
+      }
+      else {
+        this.team = null;
+      }
       console.log(this.playerForm.value);
     }
   }
 
   async onSubmit(): Promise<void> {
     if (this.id !== '0') {
-      await this.api.updatePlayer(this.id, this.playerForm.value);
+      // @ts-ignore
+      await this.api.updatePlayer(this.id, this.playerForm.value, this.team);
     } else {
       await this.api.addPlayer(this.playerForm.value);
     }
