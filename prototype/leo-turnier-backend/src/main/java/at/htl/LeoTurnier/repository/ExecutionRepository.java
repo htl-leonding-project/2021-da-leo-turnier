@@ -34,14 +34,14 @@ public class ExecutionRepository {
 
     public Tournament startTournament(Long tournamentId) {
         Tournament tournament = tournamentRepository.getById(tournamentId);
-        if(tournament == null) {
+        if(tournament == null ||tournament.getTournamentMode() != null) {
             return null;
         }
         clearTournament(tournament);
-        if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
+        if (tournament.getTournamentMode().getName().equals("Round Robin")) {
             roundRobinRepository.insertPhasesRoundRobin(tournament);
             roundRobinRepository.insertNodesAndMatchesRoundRobin(tournament);
-        } else {
+        } else if (tournament.getTournamentMode().getName().equals("Elimination")) {
             eliminationRepository.insertPhasesElimination(tournament);
             eliminationRepository.insertNodesElimination(tournament);
             eliminationRepository.insertMatchesElimination(tournament);
