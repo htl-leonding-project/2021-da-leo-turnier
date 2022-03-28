@@ -68,6 +68,8 @@ class ExecutionRepositoryTest {
     void TestEliminationStartTournament01_TournamentWith8Players_ShouldSetUpTournament() {
         insertTestData(8);
         // arrange
+        defaultTournament1.setTournamentMode(new TournamentMode("Elimination"));
+        tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
         Tournament res = repository.startTournament(defaultTournament1.getId());
@@ -90,6 +92,8 @@ class ExecutionRepositoryTest {
     void TestEliminationStartTournament02_TournamentWith11Players_ShouldSetUpTournament() {
         insertTestData(11);
         // arrange
+        defaultTournament1.setTournamentMode(new TournamentMode("Elimination"));
+        tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
         Tournament res = repository.startTournament(defaultTournament1.getId());
@@ -112,6 +116,8 @@ class ExecutionRepositoryTest {
     void TestEliminationStartTournament03_TournamentWith100Players_ShouldSetUpTournament() {
         insertTestData(100);
         // arrange
+        defaultTournament1.setTournamentMode(new TournamentMode("Elimination"));
+        tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
         Tournament res = repository.startTournament(defaultTournament1.getId());

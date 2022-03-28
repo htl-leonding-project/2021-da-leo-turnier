@@ -34,7 +34,7 @@ public class ExecutionRepository {
 
     public Tournament startTournament(Long tournamentId) {
         Tournament tournament = tournamentRepository.getById(tournamentId);
-        if(tournament == null ||tournament.getTournamentMode() != null) {
+        if(tournament == null || tournament.getTournamentMode() == null) {
             return null;
         }
         clearTournament(tournament);
