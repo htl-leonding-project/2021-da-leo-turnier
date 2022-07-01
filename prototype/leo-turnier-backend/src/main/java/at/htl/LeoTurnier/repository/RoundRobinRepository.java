@@ -20,17 +20,21 @@ public class RoundRobinRepository {
     @Inject
     PhaseRepository phaseRepository;
 
-    public void insertPhasesRoundRobin(Tournament tournament) {
-        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
+    public Tournament startTournament(Tournament tournament, List<Competitor> competitors, int groupNumber) {
+        insertPhasesRoundRobin(tournament, competitors, groupNumber);
+        insertNodesAndMatchesRoundRobin(tournament, competitors, groupNumber);
+        return tournament;
+    }
+
+    public void insertPhasesRoundRobin(Tournament tournament, List<Competitor> competitors, int groupNumber) {
         double numOfPhases = competitors.size() - 1 + (competitors.size() % 2);
         for (int i = 0; i < numOfPhases; i++) {
-            phaseRepository.add(new Phase(i, tournament));
+            phaseRepository.add(new Phase(i, groupNumber, tournament));
         }
     }
 
-    public void insertNodesAndMatchesRoundRobin(Tournament tournament) {
-        List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
-        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
+    public void insertNodesAndMatchesRoundRobin(Tournament tournament, List<Competitor> competitors, int groupNumber) {
+        List<Phase> phases = phaseRepository.getByTournamentGroup(tournament.getId(), groupNumber);
         int numOfNodes = competitors.size() / 2;
         for (int i = 0; i < phases.size(); i++) {
             Phase phase = phases.get(i);

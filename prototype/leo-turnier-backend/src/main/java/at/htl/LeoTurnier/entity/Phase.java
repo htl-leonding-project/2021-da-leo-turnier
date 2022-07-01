@@ -14,6 +14,9 @@ public class Phase {
     @Column(name = "P_PHASE_NUMBER")
     int phaseNumber;
 
+    @Column(name = "P_GROUP_NUMBER")
+    int groupNumber;
+
     @ManyToOne
     @JoinColumn(name = "P_T_ID")
     Tournament tournament;
@@ -23,11 +26,20 @@ public class Phase {
     }
 
     public Phase(int phaseNumber) {
-        this(phaseNumber, null);
+        this(phaseNumber, -1);
+    }
+
+    public Phase(int phaseNumber, int groupNumber) {
+        this(phaseNumber, groupNumber, null);
     }
 
     public Phase(int phaseNumber, Tournament tournament) {
+        this(phaseNumber, -1, tournament);
+    }
+
+    public Phase(int phaseNumber, int groupNumber, Tournament tournament) {
         this.phaseNumber = phaseNumber;
+        this.groupNumber = groupNumber;
         this.tournament = tournament;
     }
 
@@ -45,6 +57,14 @@ public class Phase {
 
     public void setPhaseNumber(int phaseNumber) {
         this.phaseNumber = phaseNumber;
+    }
+
+    public int getGroupNumber() {
+        return groupNumber;
+    }
+
+    public void setGroupNumber(int groupNumber) {
+        this.groupNumber = groupNumber;
     }
 
     public Tournament getTournament() {

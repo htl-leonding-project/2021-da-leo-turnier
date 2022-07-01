@@ -18,6 +18,9 @@ public class ExecutionRepository {
     TournamentRepository tournamentRepository;
 
     @Inject
+    ParticipationRepository participationRepository;
+
+    @Inject
     MatchRepository matchRepository;
 
     @Inject
@@ -32,20 +35,22 @@ public class ExecutionRepository {
     @Inject
     RoundRobinRepository roundRobinRepository;
 
+    @Inject
+    CombinationRepository combinationRepository;
+
     public Tournament startTournament(Long tournamentId) {
         Tournament tournament = tournamentRepository.getById(tournamentId);
         if(tournament == null || tournament.getTournamentMode() == null) {
             return null;
         }
         clearTournament(tournament);
+        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
         if (tournament.getTournamentMode().getName().equals("Round Robin")) {
-            roundRobinRepository.insertPhasesRoundRobin(tournament);
-            roundRobinRepository.insertNodesAndMatchesRoundRobin(tournament);
+            tournament = roundRobinRepository.startTournament(tournament, competitors, -1);
         } else if (tournament.getTournamentMode().getName().equals("Elimination")) {
-            eliminationRepository.insertPhasesElimination(tournament);
-            eliminationRepository.insertNodesElimination(tournament);
-            eliminationRepository.insertMatchesElimination(tournament);
-            eliminationRepository.setBuyRoundsElimination(tournament);
+            tournament = eliminationRepository.startTournament(tournament, competitors);
+        } else if (tournament.getTournamentMode().getName().equals("Combination")) {
+            tournament = combinationRepository.startGroupPhase(tournament, competitors, 4, 2);
         }
 
         return tournament;

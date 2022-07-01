@@ -4,6 +4,8 @@ import at.htl.LeoTurnier.entity.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +24,14 @@ public class EliminationRepository {
 
     @Inject
     PhaseRepository phaseRepository;
+
+    public Tournament startTournament(Tournament tournament, List<Competitor> competitors) {
+        insertPhasesElimination(tournament, competitors);
+        insertNodesElimination(tournament);
+        insertMatchesElimination(tournament, competitors);
+        setBuyRoundsElimination(tournament);
+        return tournament;
+    }
 
     public Match finishMatch(Node node, Tournament tournament) {
         Match match = node.getMatch();
@@ -63,19 +73,18 @@ public class EliminationRepository {
         return nextMatch;
     }
 
-    public void insertPhasesElimination(Tournament tournament) {
-        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
+    private void insertPhasesElimination(Tournament tournament, List<Competitor> competitors) {
         double numOfPhases = (Math.log(competitors.size())
                 /  Math.log(2));
         // numOfPlayers = 2^numOfPhases
         // solve for phases -> numOfPhases = log2(numOfCompetitors) = log(numOfCompetitors) / log(2)
         for (int i = 0; i < numOfPhases; i++) {
-            phaseRepository.add(new Phase(i, tournament));
+            phaseRepository.add(new Phase(i, -1, tournament));
         }
     }
 
-    public void insertNodesElimination(Tournament tournament) {
-        List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
+    private void insertNodesElimination(Tournament tournament) {
+        List<Phase> phases = phaseRepository.getByTournamentGroup(tournament.getId(), -1);
         List<Node> previousNodes = null;
 
         for (int i = 0; i < phases.size(); i++) {
@@ -92,12 +101,12 @@ public class EliminationRepository {
         }
     }
 
-    public void insertMatchesElimination(Tournament tournament) {
-        List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
+    private void insertMatchesElimination(Tournament tournament, List<Competitor> competitors) {
+        List<Phase> phases = phaseRepository.getByTournamentGroup(tournament.getId(), -1);
         if (phases.size() <= 1) {
             return;
         }
-        List<Competitor> competitors = getCompetitorsSeeded(tournament);
+        competitors = getCompetitorsSeeded(tournament, competitors);
         List<Node> nodes = nodeRepository.getByPhaseId(phases.get(0).getId());
         for (int i = 0; i < competitors.size(); i++) {
             Node node = nodes.get(i / 2);
@@ -115,8 +124,8 @@ public class EliminationRepository {
         }
     }
 
-    public void setBuyRoundsElimination(Tournament tournament) {
-        Phase phase = phaseRepository.getByTournamentId(tournament.getId()).get(0);
+    private void setBuyRoundsElimination(Tournament tournament) {
+        Phase phase = phaseRepository.getByTournamentGroup(tournament.getId(), -1).get(0);
         List<Node> nodes = nodeRepository.getByPhaseId(phase.getId());
         nodes.forEach(n -> {
             if (n.getMatch().getCompetitor1() == null || n.getMatch().getCompetitor2() == null) {
@@ -128,24 +137,11 @@ public class EliminationRepository {
         });
     }
 
-    public List<Competitor> getCompetitorsSeeded(Tournament tournament) {
+    private List<Competitor> getCompetitorsSeeded(Tournament tournament, List<Competitor> competitors) {
         // sort by seed
-        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
-        competitors.sort((c1, c2) -> {
-                    if (c1.getSeed() >= 0 && c2.getSeed() < 0) {
-                        return -1;
-                    } else if (c1.getSeed() < 0 && c2.getSeed() >= 0) {
-                        return 1;
-                    } else if (c1.getSeed() < c2.getSeed()) {
-                        return -1;
-                    } else if (c1.getSeed() > c2.getSeed()) {
-                        return 1;
-                    }
-                    return 0;
-                });
-
+        sortBySeed(competitors);
         // add dummies
-        int numOfPhases = phaseRepository.getByTournamentId(tournament.getId()).size();
+        int numOfPhases = phaseRepository.getByTournamentGroup(tournament.getId(), -1).size();
         int numOfCompetitors = competitors.size();
         for (int i = 0; i < Math.pow(2, numOfPhases) - numOfCompetitors; i++) {
             competitors.add(null);
@@ -157,14 +153,29 @@ public class EliminationRepository {
         return competitors;
     }
 
-    public List<Competitor> seedCompetitors(List<Competitor> competitors) {
+    public void sortBySeed(List<Competitor> competitors) {
+        competitors.sort((c1, c2) -> {
+            if (c1.getSeed() >= 0 && c2.getSeed() < 0) {
+                return -1;
+            } else if (c1.getSeed() < 0 && c2.getSeed() >= 0) {
+                return 1;
+            } else if (c1.getSeed() < c2.getSeed()) {
+                return -1;
+            } else if (c1.getSeed() > c2.getSeed()) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+
+    private List<Competitor> seedCompetitors(List<Competitor> competitors) {
         if ((Math.log(competitors.size()) /  Math.log(2)) % 1 != 0 && competitors.size() > 1) { // if numOfCompetitors is an exponent of 2
             return competitors;
         }
         return seedCompetitors(competitors, 1);
     }
 
-    public List<Competitor> seedCompetitors(List<Competitor> competitors, int level) {
+    private List<Competitor> seedCompetitors(List<Competitor> competitors, int level) {
         level = level * 2;
         int numOfCompetitors = competitors.size();
         List<Competitor> res = new LinkedList<>();

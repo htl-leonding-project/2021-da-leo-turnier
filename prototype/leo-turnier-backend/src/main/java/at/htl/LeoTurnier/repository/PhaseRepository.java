@@ -40,6 +40,7 @@ public class PhaseRepository implements PanacheRepository<Phase> {
         if (toModify != null) {
             tournamentRepository.add(phase.getTournament());
             toModify.setPhaseNumber(phase.getPhaseNumber());
+            toModify.setGroupNumber(phase.getGroupNumber());
             toModify.setTournament(phase.getTournament());
         }
         return toModify;
@@ -54,6 +55,16 @@ public class PhaseRepository implements PanacheRepository<Phase> {
                 .createQuery("select p from Phase p where p.tournament.id = :tournamentId order by p.phaseNumber",
                         Phase.class)
                 .setParameter("tournamentId", tournamentId)
+                .getResultList();
+    }
+
+    public List<Phase> getByTournamentGroup(Long tournamentId, int groupNumber) {
+        return getEntityManager()
+                .createQuery("select p from Phase p where p.tournament.id = :tournamentId " +
+                                "and p.groupNumber = :groupNumber order by p.phaseNumber",
+                        Phase.class)
+                .setParameter("tournamentId", tournamentId)
+                .setParameter("groupNumber", groupNumber)
                 .getResultList();
     }
 

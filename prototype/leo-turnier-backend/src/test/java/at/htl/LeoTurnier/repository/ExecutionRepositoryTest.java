@@ -206,4 +206,28 @@ class ExecutionRepositoryTest {
         assertThat(getMatches.getResultList().size())
                 .isEqualTo(28);
     }
+
+    @Test
+    @Order(3010)
+    void TestCombinationStartTournament01_TournamentWith16Players_ShouldSetUpTournament() {
+        insertTestData(16);
+        // arrange
+        defaultTournament1.setTournamentMode(new TournamentMode("Combination"));
+        tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
+
+        // act
+        Tournament res = repository.startTournament(defaultTournament1.getId());
+
+        // assert
+        TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
+        TypedQuery<Node> getNodes = nodeRepository.getEntityManager().createQuery("select n from Node n", Node.class);
+        TypedQuery<Match> getMatches = nodeRepository.getEntityManager().createQuery("select m from Match m", Match.class);
+
+        assertThat(getPhases.getResultList().size())
+                .isEqualTo(12);
+        assertThat(getNodes.getResultList().size())
+                .isEqualTo(24);
+        assertThat(getMatches.getResultList().size())
+                .isEqualTo(24);
+    }
 }
