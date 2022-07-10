@@ -3,22 +3,8 @@ Content-Type: application/json
 
 {
   "name": "KO",
-  "sportType": {
-    "name": "lal"
-  }
-}
-
-###
-
-POST http://localhost:8080/api/tournament
-Content-Type: application/json
-
-{
-  "name": "KO",
-  "sportType": {
-    "id": 1,
-    "name": "lal"
-  }
+  "startDate": "2021-01-01",
+  "endDate": "2022-01-01"
 }
 
 ###

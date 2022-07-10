@@ -22,6 +22,7 @@ import { HomeComponent } from './home/home.component';
 import { TournamentTreeComponent } from './tournament-tree/tournament-tree.component';
 import {NgTournamentTreeModule} from 'ng-tournament-tree';
 import { MatchComponent } from './match/match.component';
+import { TournamentDialogComponent } from './tournament-dialog/tournament-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MatchComponent } from './match/match.component';
     HomeComponent,
     TournamentTreeComponent,
     MatchComponent,
+    TournamentDialogComponent,
   ],
   imports: [
     BrowserModule,
