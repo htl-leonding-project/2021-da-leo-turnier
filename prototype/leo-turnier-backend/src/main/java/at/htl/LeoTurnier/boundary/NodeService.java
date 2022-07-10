@@ -34,7 +34,7 @@ public class NodeService {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@QueryParam("id") long id, Node node, @Context UriInfo info) {
+    public Response modify(@QueryParam("id") Long id, Node node, @Context UriInfo info) {
         node = repository.modify(id, node);
         if (node == null) {
             return Response.status(204).build();
@@ -57,7 +57,7 @@ public class NodeService {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@QueryParam("id") long id) {
+    public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();
     }
 }

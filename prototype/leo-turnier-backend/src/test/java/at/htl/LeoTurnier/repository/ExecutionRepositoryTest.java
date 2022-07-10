@@ -72,7 +72,7 @@ class ExecutionRepositoryTest {
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
-        Tournament res = repository.startTournament(defaultTournament1.getId());
+        Tournament res = repository.startTournament(defaultTournament1.getId(), null);
 
         // assert
         TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
@@ -96,7 +96,7 @@ class ExecutionRepositoryTest {
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
-        Tournament res = repository.startTournament(defaultTournament1.getId());
+        Tournament res = repository.startTournament(defaultTournament1.getId(), null);
 
         // assert
         TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
@@ -120,7 +120,7 @@ class ExecutionRepositoryTest {
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
-        Tournament res = repository.startTournament(defaultTournament1.getId());
+        Tournament res = repository.startTournament(defaultTournament1.getId(), null);
 
         // assert
         TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
@@ -144,7 +144,7 @@ class ExecutionRepositoryTest {
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
-        Tournament res = repository.startTournament(defaultTournament1.getId());
+        Tournament res = repository.startTournament(defaultTournament1.getId(), null);
 
         // assert
         TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
@@ -168,7 +168,7 @@ class ExecutionRepositoryTest {
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
-        Tournament res = repository.startTournament(defaultTournament1.getId());
+        Tournament res = repository.startTournament(defaultTournament1.getId(), null);
 
         // assert
         TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
@@ -192,7 +192,7 @@ class ExecutionRepositoryTest {
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
-        Tournament res = repository.startTournament(defaultTournament1.getId());
+        Tournament res = repository.startTournament(defaultTournament1.getId(), null);
 
         // assert
         TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
@@ -216,7 +216,7 @@ class ExecutionRepositoryTest {
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
-        Tournament res = repository.startTournament(defaultTournament1.getId());
+        Tournament res = repository.startTournament(defaultTournament1.getId(), 4);
 
         // assert
         TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
@@ -229,5 +229,53 @@ class ExecutionRepositoryTest {
                 .isEqualTo(24);
         assertThat(getMatches.getResultList().size())
                 .isEqualTo(24);
+    }
+
+    @Test
+    @Order(3020)
+    void TestCombinationStartTournament02_TournamentWith12Players_ShouldSetUpTournament() {
+        insertTestData(12);
+        // arrange
+        defaultTournament1.setTournamentMode(new TournamentMode("Combination"));
+        tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
+
+        // act
+        Tournament res = repository.startTournament(defaultTournament1.getId(), 4);
+
+        // assert
+        TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
+        TypedQuery<Node> getNodes = nodeRepository.getEntityManager().createQuery("select n from Node n", Node.class);
+        TypedQuery<Match> getMatches = nodeRepository.getEntityManager().createQuery("select m from Match m", Match.class);
+
+        assertThat(getPhases.getResultList().size())
+                .isEqualTo(12);
+        assertThat(getNodes.getResultList().size())
+                .isEqualTo(12);
+        assertThat(getMatches.getResultList().size())
+                .isEqualTo(12);
+    }
+
+    @Test
+    @Order(3030)
+    void TestCombinationStartTournament03_TournamentWith19Players_ShouldSetUpTournament() {
+        insertTestData(19);
+        // arrange
+        defaultTournament1.setTournamentMode(new TournamentMode("Combination"));
+        tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
+
+        // act
+        Tournament res = repository.startTournament(defaultTournament1.getId(), 4);
+
+        // assert
+        TypedQuery<Phase> getPhases = phaseRepository.getEntityManager().createQuery("select p from Phase p", Phase.class);
+        TypedQuery<Node> getNodes = nodeRepository.getEntityManager().createQuery("select n from Node n", Node.class);
+        TypedQuery<Match> getMatches = nodeRepository.getEntityManager().createQuery("select m from Match m", Match.class);
+
+        assertThat(getPhases.getResultList().size())
+                .isEqualTo(18);
+        assertThat(getNodes.getResultList().size())
+                .isEqualTo(36);
+        assertThat(getMatches.getResultList().size())
+                .isEqualTo(36);
     }
 }

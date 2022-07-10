@@ -34,7 +34,7 @@ public class SportTypeService {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@QueryParam("id") long id, SportType sportType, @Context UriInfo info) {
+    public Response modify(@QueryParam("id") Long id, SportType sportType, @Context UriInfo info) {
         sportType = repository.modify(id, sportType);
         if (sportType == null) {
             return Response.status(204).build();
@@ -55,7 +55,7 @@ public class SportTypeService {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@QueryParam("id") long id) {
+    public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();
     }
 }

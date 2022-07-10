@@ -27,9 +27,12 @@ public class NodeRepository implements PanacheRepository<Node> {
         if (existing != null) {
             return existing;
         }
-        matchRepository.add(node.getMatch());
-        phaseRepository.add(node.getPhase());
-        add(node.getNextNode());
+        node.setMatch(
+                matchRepository.add(node.getMatch()));
+        node.setPhase(
+                phaseRepository.add(node.getPhase()));
+        node.setNextNode(
+                add(node.getNextNode()));
         persist(node);
         return node;
     }
@@ -40,9 +43,12 @@ public class NodeRepository implements PanacheRepository<Node> {
             return null;
         }
         if (toModify != null) {
-            matchRepository.add(node.getMatch());
-            phaseRepository.add(node.getPhase());
-            add(node.getNextNode());
+            toModify.setMatch(
+                    matchRepository.add(node.getMatch()));
+            toModify.setPhase(
+                    phaseRepository.add(node.getPhase()));
+            toModify.setNextNode(
+                    add(node.getNextNode()));
             toModify.setMatch(node.getMatch());
             toModify.setPhase(node.getPhase());
             toModify.setNextNode(node.getNextNode());

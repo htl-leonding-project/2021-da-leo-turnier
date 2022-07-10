@@ -2,7 +2,23 @@ POST http://localhost:8080/api/tournament
 Content-Type: application/json
 
 {
-  "name": "KO"
+  "name": "KO",
+  "sportType": {
+    "name": "lal"
+  }
+}
+
+###
+
+POST http://localhost:8080/api/tournament
+Content-Type: application/json
+
+{
+  "name": "KO",
+  "sportType": {
+    "id": 1,
+    "name": "lal"
+  }
 }
 
 ###

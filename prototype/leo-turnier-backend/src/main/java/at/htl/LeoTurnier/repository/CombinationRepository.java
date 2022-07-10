@@ -1,6 +1,7 @@
 package at.htl.LeoTurnier.repository;
 
 
+import at.htl.LeoTurnier.dto.CompetitorDto;
 import at.htl.LeoTurnier.entity.Competitor;
 import at.htl.LeoTurnier.entity.Tournament;
 
@@ -20,8 +21,14 @@ public class CombinationRepository {
     @Inject
     EliminationRepository eliminationRepository;
 
+    @Inject
+    PhaseRepository phaseRepository;
 
-    public Tournament startGroupPhase(Tournament tournament, List<Competitor> competitors, int numOfGroups, int promotedPerGroup) {
+    @Inject
+    CompetitorRepository competitorRepository;
+
+
+    public Tournament startGroupPhase(Tournament tournament, List<Competitor> competitors, int numOfGroups) {
         eliminationRepository.sortBySeed(competitors);
 
         for (int i = 0; i < numOfGroups; i++) {
@@ -35,5 +42,38 @@ public class CombinationRepository {
         }
 
         return tournament;
+    }
+
+    public Tournament startKOPhase(Tournament tournament, int promotedPerGroup) {
+        List<Competitor> promoted = new LinkedList<>();
+        for (int i = 0; i < phaseRepository.getNumOfGroups(tournament.getId()); i++) {
+            List<CompetitorDto> competitorDtos = roundRobinRepository.getCompetitorsSorted(tournament, i);
+            for (int u = 0; u < promotedPerGroup; u++) {
+                promoted.add(competitorRepository.getById(competitorDtos.get(u).getId()));
+            }
+        }
+        return eliminationRepository.startTournament(tournament, promoted);
+    }
+
+    public void rankCompetitors(Tournament tournament, int groupNumber) {
+        int numOfGroups = phaseRepository.getNumOfGroups(tournament.getId());
+        List<CompetitorDto> competitorDtos = roundRobinRepository.getCompetitorsSorted(tournament, groupNumber);
+        for (int i = 0; i < competitorDtos.size(); i++) {
+            CompetitorDto competitorDto = competitorDtos.get(i);
+            CompetitorDto previousCompetitorDto = null;
+            if (i > 0) {
+                previousCompetitorDto = competitorDtos.get(i - 1);
+            }
+            if (previousCompetitorDto != null &&
+                    competitorDto.getWins() == previousCompetitorDto.getWins() &&
+                    competitorDto.getPoints() == previousCompetitorDto.getPoints()) {
+                participationRepository.modify(tournament.getId(),
+                        competitorDtos.get(i).getId(),
+                        participationRepository.getById(tournament.getId(),
+                                previousCompetitorDto.getId()).getPlacement());
+            } else {
+                participationRepository.modify(tournament.getId(), competitorDtos.get(i).getId(), i + numOfGroups);
+            }
+        }
     }
 }

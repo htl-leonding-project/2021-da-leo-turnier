@@ -34,7 +34,7 @@ public class PhaseService {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@QueryParam("id") long id, Phase phase, @Context UriInfo info) {
+    public Response modify(@QueryParam("id") Long id, Phase phase, @Context UriInfo info) {
         phase = repository.modify(id, phase);
         if (phase == null) {
             return Response.status(204).build();
@@ -61,7 +61,7 @@ public class PhaseService {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@QueryParam("id") long id) {
+    public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();
     }
 }

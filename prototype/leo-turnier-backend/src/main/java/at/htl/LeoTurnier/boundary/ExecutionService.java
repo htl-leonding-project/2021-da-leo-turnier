@@ -20,14 +20,21 @@ public class ExecutionService {
     @GET
     @Path("startTournament")
     @Produces(MediaType.APPLICATION_JSON)
-    public Tournament startTournament(@QueryParam("tournamentId") long id) {
-        return repository.startTournament(id);
+    public Tournament startTournament(@QueryParam("tournamentId") Long id, @QueryParam("numOfGroups") Integer numOfGroups) {
+        return repository.startTournament(id, numOfGroups);
+    }
+
+    @GET
+    @Path("startKOPhase")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Tournament startKOPhase(@QueryParam("tournamentId") Long id, @QueryParam("numOfGroups") Integer promotedPerGroup) {
+        return repository.startKOPhase(id, promotedPerGroup);
     }
 
     @GET
     @Path("finishMatch")
     @Produces(MediaType.APPLICATION_JSON)
-    public Match finishMatch(@QueryParam("nodeId") long nodeId) {
+    public Match finishMatch(@QueryParam("nodeId") Long nodeId) {
         return repository.finishMatch(nodeId);
     }
 }

@@ -39,7 +39,7 @@ public class TeamService {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@QueryParam("id") long id, Team team, @Context UriInfo info) {
+    public Response modify(@QueryParam("id") Long id, Team team, @Context UriInfo info) {
         team = repository.modify(id, team);
         if (team == null) {
             return Response.status(204).build();
@@ -60,7 +60,7 @@ public class TeamService {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@QueryParam("id") long id) {
+    public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();
     }
 }

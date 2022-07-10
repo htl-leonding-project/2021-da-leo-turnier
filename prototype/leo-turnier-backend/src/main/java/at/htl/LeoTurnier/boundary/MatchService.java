@@ -32,7 +32,7 @@ public class MatchService {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@QueryParam("id") long id, Match match, @Context UriInfo info) {
+    public Response modify(@QueryParam("id") Long id, Match match, @Context UriInfo info) {
         match = repository.modify(id, match);
         if (match == null) {
             return Response.status(204).build();
@@ -53,7 +53,7 @@ public class MatchService {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@QueryParam("id") long id) {
+    public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();
     }
 }

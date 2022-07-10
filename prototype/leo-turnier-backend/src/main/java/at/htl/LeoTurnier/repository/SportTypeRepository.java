@@ -8,6 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
@@ -20,9 +21,9 @@ public class SportTypeRepository implements PanacheRepository<SportType> {
         if (sportType == null) {
             return null;
         }
-        SportType existing = getById(sportType.getId());
-        if (existing != null) {
-            return existing;
+        Optional<SportType> existing = find("name", sportType.getName()).singleResultOptional();
+        if (existing.isPresent()) {
+            return existing.get();
         }
         persist(sportType);
         return sportType;

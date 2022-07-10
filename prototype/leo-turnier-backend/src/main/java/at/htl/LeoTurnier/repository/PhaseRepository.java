@@ -27,7 +27,8 @@ public class PhaseRepository implements PanacheRepository<Phase> {
         if (existing != null) {
             return existing;
         }
-        tournamentRepository.add(phase.getTournament());
+        phase.setTournament(
+                tournamentRepository.add(phase.getTournament()));
         persist(phase);
         return phase;
     }
@@ -38,7 +39,8 @@ public class PhaseRepository implements PanacheRepository<Phase> {
             return null;
         }
         if (toModify != null) {
-            tournamentRepository.add(phase.getTournament());
+            toModify.setTournament(
+                    tournamentRepository.add(phase.getTournament()));
             toModify.setPhaseNumber(phase.getPhaseNumber());
             toModify.setGroupNumber(phase.getGroupNumber());
             toModify.setTournament(phase.getTournament());
@@ -70,6 +72,15 @@ public class PhaseRepository implements PanacheRepository<Phase> {
 
     public List<Phase> getAll() {
         return listAll();
+    }
+
+    public int getNumOfGroups(Long tournamentId) {
+        return (int) getEntityManager()
+                .createQuery("select count(distinct p.groupNumber) from Phase p " +
+                        "where p.groupNumber <> -1 " +
+                        "and p.tournament.id = :tournamentId")
+                .setParameter("tournamentId", tournamentId)
+                .getSingleResult();
     }
 
     public Phase delete(Long id) {

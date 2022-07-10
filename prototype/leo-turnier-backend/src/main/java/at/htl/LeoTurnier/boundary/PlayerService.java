@@ -39,7 +39,7 @@ public class PlayerService {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modify(@QueryParam("id") long id, Player player, @Context UriInfo info) {
+    public Response modify(@QueryParam("id") Long id, Player player, @Context UriInfo info) {
         player = repository.modify(id, player);
         if (player == null) {
             return Response.status(204).build();
@@ -62,7 +62,7 @@ public class PlayerService {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@QueryParam("id") long id) {
+    public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();
     }
 }

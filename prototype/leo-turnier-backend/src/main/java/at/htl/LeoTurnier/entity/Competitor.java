@@ -11,7 +11,7 @@ public abstract class Competitor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "C_SEQ")
     @Column(name = "C_ID")
-    private Long id;
+    Long id;
 
     @Column(name = "C_NAME")
     String name;

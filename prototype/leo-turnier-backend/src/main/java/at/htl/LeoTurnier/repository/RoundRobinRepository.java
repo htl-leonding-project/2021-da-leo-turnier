@@ -1,5 +1,6 @@
 package at.htl.LeoTurnier.repository;
 
+import at.htl.LeoTurnier.dto.CompetitorDto;
 import at.htl.LeoTurnier.entity.*;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -50,65 +51,80 @@ public class RoundRobinRepository {
         }
     }
 
-    public void finishTournament(Tournament tournament) {
-        List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
-        Map<Long, Integer> wins = new HashMap<>();
-        Map<Long, Integer> scores = new HashMap<>();
+    public List<CompetitorDto> rankCompetitors(Tournament tournament) {
+        List<CompetitorDto> competitorDtos = getCompetitorsSorted(tournament, -1);
+        for (int i = 0; i < competitorDtos.size(); i++) {
+            CompetitorDto competitorDto = competitorDtos.get(i);
+            CompetitorDto previousCompetitorDto = null;
+            if (i > 0) {
+                previousCompetitorDto = competitorDtos.get(i - 1);
+            }
+            if (previousCompetitorDto != null &&
+                    competitorDto.getWins() == previousCompetitorDto.getWins() &&
+                    competitorDto.getPoints() == previousCompetitorDto.getPoints()) {
+                participationRepository.modify(tournament.getId(),
+                        competitorDtos.get(i).getId(),
+                        participationRepository.getById(tournament.getId(),
+                                previousCompetitorDto.getId()).getPlacement());
+            } else {
+                participationRepository.modify(tournament.getId(), competitorDtos.get(i).getId(), i);
+            }
+        }
+        return competitorDtos;
+    }
 
-        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
-        competitors.forEach(c -> {
-            wins.put(c.getId(), 0);
-            scores.put(c.getId(), 0);
-        });
-
+    public List<CompetitorDto> getCompetitorsSorted(Tournament tournament, int groupNumber) {
+        List<Phase> phases = phaseRepository.getByTournamentGroup(tournament.getId(), groupNumber);
+        List<CompetitorDto> competitorDtos = new LinkedList<>();
         phases.forEach(p -> {
             List<Node> nodes = nodeRepository.getByPhaseId(p.getId());
             nodes.forEach(n -> {
                 Match match = n.getMatch();
-                Competitor winner = null;
+
+                var optionalCompetitorDto1 = competitorDtos.stream()
+                        .filter(c -> c.getId().equals(match.getCompetitor1().getId())).findAny();
+                var optionalCompetitorDto2 = competitorDtos.stream()
+                        .filter(c -> c.getId().equals(match.getCompetitor2().getId())).findAny();
+                CompetitorDto competitorDto1;
+                CompetitorDto competitorDto2;
+                if (optionalCompetitorDto1.isPresent()) {
+                    competitorDto1 = optionalCompetitorDto1.get();
+                } else {
+                    competitorDto1 = new CompetitorDto(match.getCompetitor1().getId());
+                    competitorDtos.add(competitorDto1);
+                }
+                if (optionalCompetitorDto2.isPresent()) {
+                    competitorDto2 = optionalCompetitorDto2.get();
+                } else {
+                    competitorDto2 = new CompetitorDto(match.getCompetitor2().getId());
+                    competitorDtos.add(competitorDto2);
+                }
+
+                competitorDto1.addPoints(match.getScore1());
+                competitorDto2.addPoints(match.getScore2());
                 if (match.getScore1() > match.getScore2()) {
-                    winner = match.getCompetitor1();
+                    competitorDto1.addWin();
                 } else if (match.getScore1() < match.getScore2()) {
-                    winner = match.getCompetitor2();
+                    competitorDto2.addWin();
                 }
-                if (winner != null) {
-                    wins.put(winner.getId(), wins.get(winner.getId()) + 1);
-                }
-                scores.put(match.getCompetitor1().getId(),
-                        scores.get(match.getCompetitor1().getId()) + match.getScore1());
-                scores.put(match.getCompetitor2().getId(),
-                        scores.get(match.getCompetitor2().getId()) + match.getScore2());
             });
         });
 
-        competitors.sort((c1, c2) -> {
-            if (wins.get(c1.getId()) > wins.get(c2.getId())) {
+        competitorDtos.sort((c1, c2) -> {
+            if (c1.getWins() > c2.getWins()) {
                 return 1;
-            }
-            else if (wins.get(c1.getId()) < wins.get(c2.getId())) {
+            } else if (c1.getWins() < c2.getWins()) {
                 return -1;
-            }
-            else if (scores.get(c1.getId()) > scores.get(c2.getId())) {
+            } else if (c1.getPoints() > c2.getPoints()) {
                 return 1;
-            }
-            else if (scores.get(c1.getId()) < scores.get(c2.getId())) {
+            } else if (c1.getPoints() < c2.getPoints()) {
                 return -1;
             }
             return 0;
         });
 
-        for (int i = 0; i < competitors.size(); i++) {
-            int placement = i;
-            if (i > 0
-            && Objects.equals(wins.get(competitors.get(i - 1).getId()),
-                    wins.get(competitors.get(i).getId()))
-            && Objects.equals(scores.get(competitors.get(i - 1).getId()),
-                    scores.get(competitors.get(i).getId()))) {
-                placement = participationRepository.getById(tournament.getId(),
-                        competitors.get(i - 1).getId())
-                        .getPlacement();
-            }
-            participationRepository.modify(tournament.getId(), competitors.get(i).getId(), placement);
-        }
+
+
+        return competitorDtos;
     }
 }

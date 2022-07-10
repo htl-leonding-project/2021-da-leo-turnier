@@ -29,7 +29,8 @@ public class PlayerRepository implements PanacheRepository<Player> {
         if (existing != null) {
             return existing;
         }
-        teamRepository.add(player.getTeam());
+        player.setTeam(
+                teamRepository.add(player.getTeam()));
         persist(player);
         return player;
     }
@@ -40,8 +41,8 @@ public class PlayerRepository implements PanacheRepository<Player> {
             return null;
         }
         if (toModify != null) {
-            Team team = teamRepository.add(player.getTeam());
-            toModify.setTeam(team);
+            toModify.setTeam(
+                    teamRepository.add(player.getTeam()));
             toModify.setName(player.getName());
             toModify.setSeed(player.getSeed());
             toModify.setBirthdate(player.getBirthdate());

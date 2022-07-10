@@ -28,8 +28,10 @@ public class MatchRepository implements PanacheRepository<Match> {
         if (existing != null) {
             return existing;
         }
-        competitorRepository.add(match.getCompetitor1());
-        competitorRepository.add(match.getCompetitor2());
+        match.setCompetitor1(
+                competitorRepository.add(match.getCompetitor1()));
+        match.setCompetitor2(
+                competitorRepository.add(match.getCompetitor2()));
         persist(match);
         return match;
     }
@@ -40,8 +42,10 @@ public class MatchRepository implements PanacheRepository<Match> {
             return null;
         }
         if (toModify != null) {
-            competitorRepository.add(match.getCompetitor1());
-            competitorRepository.add(match.getCompetitor2());
+            match.setCompetitor1(
+                    competitorRepository.add(match.getCompetitor1()));
+            match.setCompetitor2(
+                    competitorRepository.add(match.getCompetitor2()));
             toModify.setCompetitor1(match.getCompetitor1());
             toModify.setCompetitor2(match.getCompetitor2());
             toModify.setDate(match.getDate());
