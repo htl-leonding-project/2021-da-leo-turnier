@@ -3,6 +3,7 @@ package at.htl.LeoTurnier.boundary;
 import at.htl.LeoTurnier.entity.Match;
 import at.htl.LeoTurnier.repository.MatchRepository;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -17,6 +18,7 @@ public class MatchService {
     MatchRepository repository;
 
     @POST
+    @RolesAllowed({"Admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Match match, @Context UriInfo info) {
@@ -30,6 +32,7 @@ public class MatchService {
     }
 
     @PUT
+    @RolesAllowed({"Admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("id") Long id, Match match, @Context UriInfo info) {
@@ -52,6 +55,7 @@ public class MatchService {
     }
 
     @DELETE
+    @RolesAllowed({"Admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();

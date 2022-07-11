@@ -6,6 +6,7 @@ import at.htl.LeoTurnier.entity.Node;
 import at.htl.LeoTurnier.entity.Tournament;
 import at.htl.LeoTurnier.repository.ExecutionRepository;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,6 +19,7 @@ public class ExecutionService {
     ExecutionRepository repository;
 
     @GET
+    @RolesAllowed({"Organizer"})
     @Path("startTournament")
     @Produces(MediaType.APPLICATION_JSON)
     public Tournament startTournament(@QueryParam("tournamentId") Long id, @QueryParam("numOfGroups") Integer numOfGroups) {
@@ -25,6 +27,7 @@ public class ExecutionService {
     }
 
     @GET
+    @RolesAllowed({"Organizer"})
     @Path("startKOPhase")
     @Produces(MediaType.APPLICATION_JSON)
     public Tournament startKOPhase(@QueryParam("tournamentId") Long id, @QueryParam("numOfGroups") Integer promotedPerGroup) {
@@ -32,6 +35,7 @@ public class ExecutionService {
     }
 
     @GET
+    @RolesAllowed({"Organizer"})
     @Path("finishMatch")
     @Produces(MediaType.APPLICATION_JSON)
     public Match finishMatch(@QueryParam("nodeId") Long nodeId) {

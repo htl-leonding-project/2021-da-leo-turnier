@@ -3,6 +3,7 @@ package at.htl.LeoTurnier.boundary;
 import at.htl.LeoTurnier.entity.Participation;
 import at.htl.LeoTurnier.repository.ParticipationRepository;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -17,6 +18,7 @@ public class ParticipationService {
     ParticipationRepository repository;
 
     @POST
+    @RolesAllowed({"Organizer"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(@QueryParam("tournamentId") Long tournamentId, @QueryParam("competitorId") Long competitorId, @Context UriInfo info) {
@@ -32,6 +34,7 @@ public class ParticipationService {
     }
 
     @PUT
+    @RolesAllowed({"Organizer"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("tournamentId") Long tournamentId, @QueryParam("competitorId") Long competitorId, Participation participation, @Context UriInfo info) {
@@ -60,6 +63,7 @@ public class ParticipationService {
     }
 
     @DELETE
+    @RolesAllowed({"Organizer"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("tournamentId") Long tournamentId, @QueryParam("competitorId") Long competitorId) {
         return Response.ok(repository.delete(tournamentId, competitorId)).build();

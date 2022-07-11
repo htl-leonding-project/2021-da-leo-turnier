@@ -5,6 +5,7 @@ import at.htl.LeoTurnier.entity.SportType;
 import at.htl.LeoTurnier.repository.PlayerRepository;
 import at.htl.LeoTurnier.repository.SportTypeRepository;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -19,6 +20,7 @@ public class SportTypeService {
     SportTypeRepository repository;
 
     @POST
+    @RolesAllowed({"Organizer"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(SportType sportType, @Context UriInfo info) {
@@ -32,6 +34,7 @@ public class SportTypeService {
     }
 
     @PUT
+    @RolesAllowed({"Admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("id") Long id, SportType sportType, @Context UriInfo info) {
@@ -54,6 +57,7 @@ public class SportTypeService {
     }
 
     @DELETE
+    @RolesAllowed({"Admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();

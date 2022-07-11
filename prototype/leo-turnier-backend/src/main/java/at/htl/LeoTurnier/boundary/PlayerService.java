@@ -5,6 +5,7 @@ import at.htl.LeoTurnier.entity.Player;
 import at.htl.LeoTurnier.entity.Team;
 import at.htl.LeoTurnier.repository.PlayerRepository;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -24,6 +25,7 @@ public class PlayerService {
     PlayerRepository repository;
 
     @POST
+    @RolesAllowed({"Admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Player player, @Context UriInfo info) {
@@ -37,6 +39,7 @@ public class PlayerService {
     }
 
     @PUT
+    @RolesAllowed({"Admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("id") Long id, Player player, @Context UriInfo info) {
@@ -61,6 +64,7 @@ public class PlayerService {
     }
 
     @DELETE
+    @RolesAllowed({"Admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();
