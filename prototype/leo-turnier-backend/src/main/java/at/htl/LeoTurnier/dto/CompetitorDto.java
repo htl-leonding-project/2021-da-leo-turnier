@@ -10,8 +10,16 @@ public class CompetitorDto {
 
     private int points;
 
+    private int tieBreakerWins;
+
     public CompetitorDto(Long id) {
         this.id = id;
+    }
+
+    public CompetitorDto(int wins, int points, int tieBreakerWins) {
+        this.wins = wins;
+        this.points = points;
+        this.tieBreakerWins = tieBreakerWins;
     }
 
     public Long getId() {
@@ -36,5 +44,24 @@ public class CompetitorDto {
 
     public void addPoints(int points) {
         this.points += points;
+    }
+
+    public int getTieBreakerWins() {
+        return tieBreakerWins;
+    }
+
+    public void addTieBreakerWin() {
+        this.tieBreakerWins++;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != CompetitorDto.class) {
+            return false;
+        }
+        CompetitorDto c = (CompetitorDto) obj;
+        return this.getWins() == c.getWins() &&
+                this.getPoints() == c.getPoints() &&
+                this.getTieBreakerWins() == c.getTieBreakerWins();
     }
 }

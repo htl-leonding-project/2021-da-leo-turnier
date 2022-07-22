@@ -4,6 +4,7 @@ package at.htl.LeoTurnier.repository;
 import at.htl.LeoTurnier.dto.CompetitorDto;
 import at.htl.LeoTurnier.entity.Competitor;
 import at.htl.LeoTurnier.entity.Tournament;
+import org.apache.http.impl.conn.DefaultRoutePlanner;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -44,6 +45,13 @@ public class CombinationRepository {
         return tournament;
     }
 
+    public Tournament startTieBreakers(Tournament tournament) {
+        for (int i = 0; i < phaseRepository.getNumOfGroups(tournament.getId()); i++) {
+            roundRobinRepository.startTieBreakers(tournament, i);
+        }
+        return tournament;
+    }
+
     public Tournament startKOPhase(Tournament tournament, int promotedPerGroup) {
         List<Competitor> promoted = new LinkedList<>();
         for (int i = 0; i < phaseRepository.getNumOfGroups(tournament.getId()); i++) {
@@ -55,24 +63,26 @@ public class CombinationRepository {
         return eliminationRepository.startTournament(tournament, promoted);
     }
 
-    public void rankCompetitors(Tournament tournament, int groupNumber) {
+    public void rankCompetitors(Tournament tournament) {
         int numOfGroups = phaseRepository.getNumOfGroups(tournament.getId());
-        List<CompetitorDto> competitorDtos = roundRobinRepository.getCompetitorsSorted(tournament, groupNumber);
-        for (int i = 0; i < competitorDtos.size(); i++) {
-            CompetitorDto competitorDto = competitorDtos.get(i);
-            CompetitorDto previousCompetitorDto = null;
-            if (i > 0) {
-                previousCompetitorDto = competitorDtos.get(i - 1);
-            }
-            if (previousCompetitorDto != null &&
-                    competitorDto.getWins() == previousCompetitorDto.getWins() &&
-                    competitorDto.getPoints() == previousCompetitorDto.getPoints()) {
-                participationRepository.modify(tournament.getId(),
-                        competitorDtos.get(i).getId(),
-                        participationRepository.getById(tournament.getId(),
-                                previousCompetitorDto.getId()).getPlacement());
-            } else {
-                participationRepository.modify(tournament.getId(), competitorDtos.get(i).getId(), i + numOfGroups);
+        for (int i = 0; i < numOfGroups; i++) {
+            List<CompetitorDto> competitorDtos = roundRobinRepository.getCompetitorsSorted(tournament, i);
+            for (int u = 0; u < competitorDtos.size(); u++) {
+                CompetitorDto competitorDto = competitorDtos.get(u);
+                CompetitorDto previousCompetitorDto = null;
+                if (u > 0) {
+                    previousCompetitorDto = competitorDtos.get(u - 1);
+                }
+                if (previousCompetitorDto != null &&
+                        competitorDto.getWins() == previousCompetitorDto.getWins() &&
+                        competitorDto.getPoints() == previousCompetitorDto.getPoints()) {
+                    participationRepository.modify(tournament.getId(),
+                            competitorDtos.get(u).getId(),
+                            participationRepository.getById(tournament.getId(),
+                                    previousCompetitorDto.getId()).getPlacement());
+                } else {
+                    participationRepository.modify(tournament.getId(), competitorDtos.get(u).getId(), u + numOfGroups);
+                }
             }
         }
     }

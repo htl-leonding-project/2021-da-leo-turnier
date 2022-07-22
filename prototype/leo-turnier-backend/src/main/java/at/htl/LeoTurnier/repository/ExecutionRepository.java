@@ -1,5 +1,6 @@
 package at.htl.LeoTurnier.repository;
 
+import at.htl.LeoTurnier.dto.CompetitorDto;
 import at.htl.LeoTurnier.entity.*;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -43,7 +44,7 @@ public class ExecutionRepository {
         if(tournament == null) {
             return null;
         }
-        clearTournament(tournament);
+        clearTournament(tournamentId);
         List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
         if (tournament.getTournamentMode().getName().equals("Round Robin")) {
             tournament = roundRobinRepository.startTournament(tournament, competitors, -1);
@@ -53,6 +54,19 @@ public class ExecutionRepository {
             tournament = eliminationRepository.startTournament(tournament, competitors);
         }
 
+        return tournament;
+    }
+
+    public Tournament startTieBreakers(Long tournamentId) {
+        Tournament tournament = tournamentRepository.getById(tournamentId);
+        if(tournament == null) {
+            return null;
+        }
+        if (tournament.getTournamentMode().getName().equals("Round Robin")) {
+            tournament = roundRobinRepository.startTieBreakers(tournament, -1);
+        } else if (tournament.getTournamentMode().getName().equals("Combination")) {
+            tournament = combinationRepository.startTieBreakers(tournament);
+        }
         return tournament;
     }
 
@@ -71,11 +85,11 @@ public class ExecutionRepository {
         Node node = nodeRepository.getById(nodeId);
         Tournament tournament = node.getPhase().getTournament();
         if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
-            roundRobinRepository.rankCompetitors(tournament);
+            roundRobinRepository.rankCompetitors(tournament, -1);
             return node.getMatch();
         } else if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Combination")) {
             if (node.getPhase().getGroupNumber() != -1) {
-                combinationRepository.rankCompetitors(tournament, node.getPhase().getGroupNumber());
+                roundRobinRepository.rankCompetitors(tournament, node.getPhase().getGroupNumber());
             } else {
                 eliminationRepository.finishMatch(node, tournament);
             }
@@ -85,7 +99,20 @@ public class ExecutionRepository {
         }
     }
 
-    private void clearTournament(Tournament tournament) {
+    public void rankCompetitors(Long tournamentId) {
+        Tournament tournament = tournamentRepository.getById(tournamentId);
+        if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
+            roundRobinRepository.rankCompetitors(tournament, -1);
+        } else if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Combination")) {
+             combinationRepository.rankCompetitors(tournament);
+        }
+    }
+
+    public void clearTournament(Long tournamentId) {
+        Tournament tournament = tournamentRepository.getById(tournamentId);
+        if(tournament == null) {
+            return;
+        }
         List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
         phases.forEach(p -> {
             List<Node> nodes = nodeRepository.getByPhaseId(p.getId());

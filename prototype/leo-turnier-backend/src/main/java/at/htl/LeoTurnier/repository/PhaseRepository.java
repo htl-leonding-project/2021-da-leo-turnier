@@ -83,6 +83,20 @@ public class PhaseRepository implements PanacheRepository<Phase> {
                 .getSingleResult();
     }
 
+    public int getMaxPhaseNumberForGroup(Long tournamentId, int groupNumber) {
+        Integer max = getEntityManager()
+                .createQuery("select max(p.groupNumber) from Phase p " +
+                        "where p.groupNumber = :groupNumber " +
+                        "and p.tournament.id = :tournamentId", Integer.class)
+                .setParameter("groupNumber", groupNumber)
+                .setParameter("tournamentId", tournamentId)
+                .getSingleResult();
+        if (max == null) {
+            return 0;
+        }
+        return max;
+    }
+
     public Phase delete(Long id) {
         Phase phase = getById(id);
         nodeRepository.find("phase", phase).stream().forEach(p -> nodeRepository.delete(p));

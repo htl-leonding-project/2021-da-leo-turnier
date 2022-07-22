@@ -16,28 +16,55 @@ public class RoundRobinRepository {
     ParticipationRepository participationRepository;
 
     @Inject
+    CompetitorRepository competitorRepository;
+
+    @Inject
     NodeRepository nodeRepository;
 
     @Inject
     PhaseRepository phaseRepository;
 
     public Tournament startTournament(Tournament tournament, List<Competitor> competitors, int groupNumber) {
-        insertPhasesRoundRobin(tournament, competitors, groupNumber);
-        insertNodesAndMatchesRoundRobin(tournament, competitors, groupNumber);
+        insertPhasesRoundRobin(tournament, competitors, groupNumber, 0);
+        insertNodesAndMatchesRoundRobin(tournament, competitors, groupNumber, 0);
         return tournament;
     }
 
-    public void insertPhasesRoundRobin(Tournament tournament, List<Competitor> competitors, int groupNumber) {
+    public Tournament startTieBreakers(Tournament tournament, int groupNumber) {
+        List<CompetitorDto> competitorDtos = getCompetitorsSorted(tournament, groupNumber);
+        List<CompetitorDto> standingsShared = new LinkedList<>();
+        for (int i = 0; i < competitorDtos.size() - 1; i++) {
+            CompetitorDto curr = competitorDtos.get(i);
+            if (curr.equals(competitorDtos.get(i + 1)) &&
+                    standingsShared.stream().noneMatch(c -> c.equals(curr))) {
+                standingsShared.add(new CompetitorDto(curr.getWins(), curr.getPoints(), curr.getTieBreakerWins()));
+            }
+        }
+        for (CompetitorDto standing : standingsShared) {
+            List<Competitor> tiedCompetitors = competitorDtos.stream()
+                    .filter(c -> c.equals(standing))
+                    .map(c -> competitorRepository.getById(c.getId()))
+                    .collect(Collectors.toList());
+            int startingPhaseNumber = phaseRepository.getMaxPhaseNumberForGroup(tournament.getId(), groupNumber);
+            insertPhasesRoundRobin(tournament, tiedCompetitors, groupNumber, startingPhaseNumber);
+            insertNodesAndMatchesRoundRobin(tournament, tiedCompetitors, groupNumber, startingPhaseNumber);
+        }
+        return tournament;
+    }
+
+    public void insertPhasesRoundRobin(Tournament tournament, List<Competitor> competitors,
+                                       int groupNumber, int startingPhaseNumber) {
         double numOfPhases = competitors.size() - 1 + (competitors.size() % 2);
         for (int i = 0; i < numOfPhases; i++) {
-            phaseRepository.add(new Phase(i, groupNumber, tournament));
+            phaseRepository.add(new Phase(i + startingPhaseNumber, groupNumber, tournament));
         }
     }
 
-    public void insertNodesAndMatchesRoundRobin(Tournament tournament, List<Competitor> competitors, int groupNumber) {
+    public void insertNodesAndMatchesRoundRobin(Tournament tournament, List<Competitor> competitors,
+                                                int groupNumber, int startingPhaseNumber) {
         List<Phase> phases = phaseRepository.getByTournamentGroup(tournament.getId(), groupNumber);
         int numOfNodes = competitors.size() / 2;
-        for (int i = 0; i < phases.size(); i++) {
+        for (int i = startingPhaseNumber; i < phases.size(); i++) {
             Phase phase = phases.get(i);
             List<Competitor> competitorsTmp = new ArrayList<>(competitors);
             if (competitorsTmp.size() % 2 != 0) {
@@ -46,13 +73,17 @@ public class RoundRobinRepository {
             for (int u = 0; u < numOfNodes; u++) {
                 Match match = new Match(competitorsTmp.remove(0),
                         competitorsTmp.remove(i % competitorsTmp.size()));
-                nodeRepository.add(new Node(u, match, phase));
+                if (startingPhaseNumber > 0) {
+                    nodeRepository.add(new Node(-1, match, phase));
+                } else {
+                    nodeRepository.add(new Node(u, match, phase));
+                }
             }
         }
     }
 
-    public List<CompetitorDto> rankCompetitors(Tournament tournament) {
-        List<CompetitorDto> competitorDtos = getCompetitorsSorted(tournament, -1);
+    public void rankCompetitors(Tournament tournament, int groupNumber) {
+        List<CompetitorDto> competitorDtos = getCompetitorsSorted(tournament, groupNumber);
         for (int i = 0; i < competitorDtos.size(); i++) {
             CompetitorDto competitorDto = competitorDtos.get(i);
             CompetitorDto previousCompetitorDto = null;
@@ -70,7 +101,6 @@ public class RoundRobinRepository {
                 participationRepository.modify(tournament.getId(), competitorDtos.get(i).getId(), i);
             }
         }
-        return competitorDtos;
     }
 
     public List<CompetitorDto> getCompetitorsSorted(Tournament tournament, int groupNumber) {
