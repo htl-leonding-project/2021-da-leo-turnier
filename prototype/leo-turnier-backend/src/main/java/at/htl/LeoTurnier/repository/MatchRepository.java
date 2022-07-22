@@ -51,6 +51,7 @@ public class MatchRepository implements PanacheRepository<Match> {
             toModify.setDate(match.getDate());
             toModify.setScore1(match.getScore1());
             toModify.setScore2(match.getScore2());
+            toModify.setFinished(match.isFinished());
         }
         return toModify;
     }

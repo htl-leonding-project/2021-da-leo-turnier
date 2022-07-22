@@ -29,6 +29,9 @@ public class Match {
     @Column(name = "M_SCORE_2")
     int score2;
 
+    @Column(name = "M_IS_FINISHED")
+    boolean isFinished;
+
     public Match() {
         this(null, null);
     }
@@ -89,5 +92,13 @@ public class Match {
 
     public void setScore2(int score2) {
         this.score2 = score2;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 }
