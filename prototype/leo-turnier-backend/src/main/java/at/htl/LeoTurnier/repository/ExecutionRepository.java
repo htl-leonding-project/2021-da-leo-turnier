@@ -83,6 +83,8 @@ public class ExecutionRepository {
 
     public Match finishMatch(Long nodeId) {
         Node node = nodeRepository.getById(nodeId);
+        node.getMatch().setFinished(true);
+        matchRepository.modify(node.getMatch().getId(), node.getMatch());
         Tournament tournament = node.getPhase().getTournament();
         if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
             roundRobinRepository.rankCompetitors(tournament, -1);

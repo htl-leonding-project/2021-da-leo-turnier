@@ -47,9 +47,11 @@ public class MatchService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@QueryParam("id") Long id) {
+    public Response get(@QueryParam("id") Long id, @QueryParam("tournamentId") Long tournamentId) {
         if (id != null) {
             return Response.ok(repository.getById(id)).build();
+        } else if (tournamentId != null) {
+            return Response.ok(repository.getByTournamentId(tournamentId)).build();
         }
         return Response.ok(repository.getAll()).build();
     }

@@ -60,6 +60,17 @@ public class MatchRepository implements PanacheRepository<Match> {
         return find("id", id).firstResult();
     }
 
+    public List<Match> getByTournamentId(Long tournamentId) {
+        return getEntityManager()
+                .createQuery("select m from Match m join Node n " +
+                        "where n.phase.tournament.id = :tournamentId " +
+                        "and m.competitor1 is not null " +
+                        "and m.competitor2 is not null " +
+                        "order by m.isFinished, m.date", Match.class)
+                .setParameter("tournamentId", tournamentId)
+                .getResultList();
+    }
+
     public List<Match> getAll() {
         return listAll();
     }
