@@ -103,7 +103,7 @@ public class EliminationRepository {
 
     private void insertMatchesElimination(Tournament tournament, List<Competitor> competitors) {
         List<Phase> phases = phaseRepository.getByTournamentGroup(tournament.getId(), -1);
-        if (phases.size() <= 1) {
+        if (phases.size() < 1) {
             return;
         }
         competitors = getCompetitorsSeeded(tournament, competitors);

@@ -5,7 +5,10 @@ Content-Type: application/json
 {
   "name": "KO",
   "startDate": "2021-01-01",
-  "endDate": "2022-01-01"
+  "endDate": "2022-01-01",
+  "tournamentMode": {
+    "id": 1
+  }
 }
 
 ###
@@ -28,3 +31,7 @@ GET http://localhost:8080/api/tournament
 ###
 
 DELETE http://localhost:8080/api/tournament?id=1
+
+###
+
+GET http://localhost:8080/api/execution/startTournament?tournamentId=1

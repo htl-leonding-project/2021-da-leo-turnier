@@ -41,7 +41,7 @@ public class ExecutionRepository {
 
     public Tournament startTournament(Long tournamentId, Integer numOfGroups) {
         Tournament tournament = tournamentRepository.getById(tournamentId);
-        if(tournament == null) {
+        if(tournament == null || tournament.getTournamentMode() == null) {
             return null;
         }
         clearTournament(tournamentId);
@@ -59,7 +59,7 @@ public class ExecutionRepository {
 
     public Tournament startTieBreakers(Long tournamentId) {
         Tournament tournament = tournamentRepository.getById(tournamentId);
-        if(tournament == null) {
+        if(tournament == null || tournament.getTournamentMode() == null) {
             return null;
         }
         if (tournament.getTournamentMode().getName().equals("Round Robin")) {

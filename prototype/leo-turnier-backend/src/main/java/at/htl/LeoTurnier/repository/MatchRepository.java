@@ -62,7 +62,7 @@ public class MatchRepository implements PanacheRepository<Match> {
 
     public List<Match> getByTournamentId(Long tournamentId) {
         return getEntityManager()
-                .createQuery("select m from Match m join Node n " +
+                .createQuery("select m from Match m join Node n on m.id = n.match.id " +
                         "where n.phase.tournament.id = :tournamentId " +
                         "and m.competitor1 is not null " +
                         "and m.competitor2 is not null " +
