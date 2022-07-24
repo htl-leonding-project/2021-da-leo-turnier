@@ -20,7 +20,7 @@ public class PhaseService {
     PhaseRepository repository;
 
     @POST
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Phase phase, @Context UriInfo info) {
@@ -34,7 +34,7 @@ public class PhaseService {
     }
 
     @PUT
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("id") Long id, Phase phase, @Context UriInfo info) {
@@ -63,7 +63,7 @@ public class PhaseService {
     }
 
     @DELETE
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();

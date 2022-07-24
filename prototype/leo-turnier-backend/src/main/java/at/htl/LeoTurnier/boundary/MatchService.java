@@ -18,7 +18,7 @@ public class MatchService {
     MatchRepository repository;
 
     @POST
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Match match, @Context UriInfo info) {
@@ -32,7 +32,7 @@ public class MatchService {
     }
 
     @PUT
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("id") Long id, Match match, @Context UriInfo info) {
@@ -57,7 +57,7 @@ public class MatchService {
     }
 
     @DELETE
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();

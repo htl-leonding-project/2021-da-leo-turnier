@@ -33,7 +33,7 @@ public class NodeService {
     }
 
     @PUT
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("id") Long id, Node node, @Context UriInfo info) {
@@ -47,7 +47,7 @@ public class NodeService {
     }
 
     @GET
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@QueryParam("id") Long id, @QueryParam("phaseId") Long phaseId) {
         if (id != null) {
@@ -59,7 +59,7 @@ public class NodeService {
     }
 
     @DELETE
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();

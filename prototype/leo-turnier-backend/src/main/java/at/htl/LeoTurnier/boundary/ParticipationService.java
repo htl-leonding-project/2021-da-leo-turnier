@@ -18,7 +18,7 @@ public class ParticipationService {
     ParticipationRepository repository;
 
     @POST
-    @RolesAllowed({"Organizer"})
+    @RolesAllowed({"tournament-organizer"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(@QueryParam("tournamentId") Long tournamentId, @QueryParam("competitorId") Long competitorId, @Context UriInfo info) {
@@ -34,7 +34,7 @@ public class ParticipationService {
     }
 
     @PUT
-    @RolesAllowed({"Organizer"})
+    @RolesAllowed({"tournament-organizer"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("tournamentId") Long tournamentId, @QueryParam("competitorId") Long competitorId, Participation participation, @Context UriInfo info) {
@@ -63,7 +63,7 @@ public class ParticipationService {
     }
 
     @DELETE
-    @RolesAllowed({"Organizer"})
+    @RolesAllowed({"tournament-organizer"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("tournamentId") Long tournamentId, @QueryParam("competitorId") Long competitorId) {
         return Response.ok(repository.delete(tournamentId, competitorId)).build();

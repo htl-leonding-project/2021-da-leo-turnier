@@ -25,7 +25,7 @@ public class PlayerService {
     PlayerRepository repository;
 
     @POST
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Player player, @Context UriInfo info) {
@@ -39,7 +39,7 @@ public class PlayerService {
     }
 
     @PUT
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("id") Long id, Player player, @Context UriInfo info) {
@@ -64,7 +64,7 @@ public class PlayerService {
     }
 
     @DELETE
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();

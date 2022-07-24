@@ -25,7 +25,7 @@ public class TeamService {
     TeamRepository repository;
 
     @POST
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Team team, @Context UriInfo info) {
@@ -39,7 +39,7 @@ public class TeamService {
     }
 
     @PUT
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("id") Long id, Team team, @Context UriInfo info) {
@@ -62,7 +62,7 @@ public class TeamService {
     }
 
     @DELETE
-    @RolesAllowed({"Admin"})
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("id") Long id) {
         return Response.ok(repository.delete(id)).build();

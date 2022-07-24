@@ -20,7 +20,7 @@ public class ExecutionService {
     ExecutionRepository repository;
 
     @GET
-    @RolesAllowed({"Organizer"})
+    @RolesAllowed({"tournament-organizer"})
     @Path("startTournament")
     @Produces(MediaType.APPLICATION_JSON)
     public Tournament startTournament(@QueryParam("tournamentId") Long id, @QueryParam("numOfGroups") Integer numOfGroups) {
@@ -28,7 +28,7 @@ public class ExecutionService {
     }
 
     @GET
-    @RolesAllowed({"Organizer"})
+    @RolesAllowed({"tournament-organizer"})
     @Path("startTieBreakers")
     @Produces(MediaType.APPLICATION_JSON)
     public Tournament startTieBreakers(@QueryParam("tournamentId") Long id) {
@@ -36,7 +36,7 @@ public class ExecutionService {
     }
 
     @GET
-    @RolesAllowed({"Organizer"})
+    @RolesAllowed({"tournament-organizer"})
     @Path("startKOPhase")
     @Produces(MediaType.APPLICATION_JSON)
     public Tournament startKOPhase(@QueryParam("tournamentId") Long id, @QueryParam("numOfGroups") Integer promotedPerGroup) {
@@ -44,7 +44,7 @@ public class ExecutionService {
     }
 
     @GET
-    @RolesAllowed({"Organizer"})
+    @RolesAllowed({"tournament-organizer"})
     @Path("finishMatch")
     @Produces(MediaType.APPLICATION_JSON)
     public Match finishMatch(@QueryParam("nodeId") Long nodeId) {
@@ -60,6 +60,7 @@ public class ExecutionService {
     }
 
     @GET
+    @RolesAllowed({"tournament-organizer"})
     @Path("startTieBreakers")
     @Produces(MediaType.APPLICATION_JSON)
     public Response clearTournament(@QueryParam("tournamentId") Long id) {
