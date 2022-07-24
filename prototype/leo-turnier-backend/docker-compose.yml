@@ -3,8 +3,8 @@ version: '3.1'
 services:
 
   db:
-    container_name: leoturnier_postgres
-    image: postgres:13.3-alpine
+    container_name: leoturnier_db
+    image: postgres:latest
     restart: unless-stopped
     environment:
       POSTGRES_USER: app
@@ -16,6 +16,38 @@ services:
       - ./db-postgres/import:/import
     networks:
       - postgres
+  auth_db:
+    container_name: leoturnier_auth_db
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+  auth:
+    container_name: leoturnier_auth
+    image: quay.io/keycloak/keycloak:latest
+    restart: unless-stopped
+    command:
+      - start --import-realm --http-port 8443
+    volumes:
+      - ./imports:/opt/keycloak/data/import
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: auth_db
+      DB_DATABASE: auth_db
+      DB_USER: app
+      DB_SCHEMA: public
+      DB_PASSWORD: app
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: 'true'
+      KC_HOSTNAME_STRICT: 'false'
+      KC_HOSTNAME_STRICT_HTTPS: 'false'
+    ports:
+      - "8443:8443"
+    depends_on:
+      - auth_db
 
 #  adminer:
 #    image: adminer
