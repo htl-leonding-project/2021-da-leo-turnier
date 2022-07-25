@@ -48,14 +48,14 @@ public class EliminationRepository {
         }
 
         if (node.getNextNode() != null) {
-            participationRepository.modify(tournament.getId(),
+            participationRepository.modifyPlacement(tournament.getId(),
                     loser.getId(),
                     nodeRepository.getByPhaseId(node.getNextNode().getPhase().getId()).size() * 2 + 1);
         } else {
-            participationRepository.modify(tournament.getId(),
+            participationRepository.modifyPlacement(tournament.getId(),
                     loser.getId(),
                     2);
-            participationRepository.modify(tournament.getId(),
+            participationRepository.modifyPlacement(tournament.getId(),
                     winner.getId(),
                     1);
         }
@@ -139,7 +139,7 @@ public class EliminationRepository {
 
     private List<Competitor> getCompetitorsSeeded(Tournament tournament, List<Competitor> competitors) {
         // sort by seed
-        sortBySeed(competitors);
+        sortBySeed(tournament, competitors);
         // add dummies
         int numOfPhases = phaseRepository.getByTournamentGroup(tournament.getId(), -1).size();
         int numOfCompetitors = competitors.size();
@@ -148,34 +148,36 @@ public class EliminationRepository {
         }
 
         // seed competitors
-        competitors = seedCompetitors(competitors);
+        competitors = orderSeededCompetitors(competitors);
 
         return competitors;
     }
 
-    public void sortBySeed(List<Competitor> competitors) {
+    public void sortBySeed(Tournament tournament, List<Competitor> competitors) {
         competitors.sort((c1, c2) -> {
-            if (c1.getSeed() >= 0 && c2.getSeed() < 0) {
+            Participation p1 = participationRepository.getById(tournament.getId(), c1.getId());
+            Participation p2 = participationRepository.getById(tournament.getId(), c2.getId());
+            if (p1.getSeed() != null && p2.getSeed() == null) {
                 return -1;
-            } else if (c1.getSeed() < 0 && c2.getSeed() >= 0) {
+            } else if (p1.getSeed() == null && p2.getSeed() != null) {
                 return 1;
-            } else if (c1.getSeed() < c2.getSeed()) {
+            } else if (p1.getSeed() < p2.getSeed()) {
                 return -1;
-            } else if (c1.getSeed() > c2.getSeed()) {
+            } else if (p1.getSeed() > p2.getSeed()) {
                 return 1;
             }
             return 0;
         });
     }
 
-    private List<Competitor> seedCompetitors(List<Competitor> competitors) {
+    private List<Competitor> orderSeededCompetitors(List<Competitor> competitors) {
         if ((Math.log(competitors.size()) /  Math.log(2)) % 1 != 0 && competitors.size() > 1) { // if numOfCompetitors is an exponent of 2
             return competitors;
         }
-        return seedCompetitors(competitors, 1);
+        return orderSeededCompetitors(competitors, 1);
     }
 
-    private List<Competitor> seedCompetitors(List<Competitor> competitors, int level) {
+    private List<Competitor> orderSeededCompetitors(List<Competitor> competitors, int level) {
         level = level * 2;
         int numOfCompetitors = competitors.size();
         List<Competitor> res = new LinkedList<>();
@@ -190,7 +192,7 @@ public class EliminationRepository {
             }
         }
         if (level < numOfCompetitors) {
-            res = seedCompetitors(res, level);
+            res = orderSeededCompetitors(res, level);
         }
         return res;
     }

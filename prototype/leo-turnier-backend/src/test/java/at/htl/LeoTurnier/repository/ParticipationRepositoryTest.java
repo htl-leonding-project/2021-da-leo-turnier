@@ -9,7 +9,6 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -151,7 +150,7 @@ class ParticipationRepositoryTest {
         // arrange
 
         // act
-        Participation res = repository.modify(null, null, 1);
+        Participation res = repository.modifyPlacement(null, null, 1);
 
         // assert
         assertThat(res)
@@ -166,7 +165,7 @@ class ParticipationRepositoryTest {
         int numberPlacement1 = 1;
 
         // act
-        Participation res = repository.modify(defaultTournament1.getId(), defaultPlayer1.getId(), numberPlacement1);
+        Participation res = repository.modifyPlacement(defaultTournament1.getId(), defaultPlayer1.getId(), numberPlacement1);
 
         // assert
         TypedQuery<Participation> getParticipations = repository.getEntityManager().createQuery(
@@ -231,7 +230,7 @@ class ParticipationRepositoryTest {
         // arrange
 
         // act
-        List<Competitor> res = repository.getCompetitorsByTournament((long) -1);
+        List<Participation> res = repository.getByTournamentId((long) -1);
 
         // assert
         assertThat(res.size())
@@ -245,16 +244,16 @@ class ParticipationRepositoryTest {
         // arrange
 
         // act
-        List<Competitor> res = repository.getCompetitorsByTournament(defaultTournament1.getId());
+        List<Participation> res = repository.getByTournamentId(defaultTournament1.getId());
 
         // assert
         assertThat(res.size())
                 .isEqualTo(2);
 
-        assertThat(res.get(0).getId())
+        assertThat(res.get(0).getCompetitor().getId())
                 .isEqualTo(defaultPlayer1.getId());
 
-        assertThat(res.get(1).getId())
+        assertThat(res.get(1).getCompetitor().getId())
                 .isEqualTo(defaultPlayer2.getId());
     }
 
@@ -265,7 +264,7 @@ class ParticipationRepositoryTest {
         // arrange
 
         // act
-        List<Tournament> res = repository.getTournamentsByCompetitor((long) -1);
+        List<Participation> res = repository.getByTournamentId((long) -1);
 
         // assert
         assertThat(res.size())
@@ -279,16 +278,16 @@ class ParticipationRepositoryTest {
         // arrange
 
         // act
-        List<Tournament> res = repository.getTournamentsByCompetitor(defaultPlayer1.getId());
+        List<Participation> res = repository.getByCompetitorId(defaultPlayer1.getId());
 
         // assert
         assertThat(res.size())
                 .isEqualTo(2);
 
-        assertThat(res.get(0).getId())
+        assertThat(res.get(0).getTournament().getId())
                 .isEqualTo(defaultTournament1.getId());
 
-        assertThat(res.get(1).getId())
+        assertThat(res.get(1).getTournament().getId())
                 .isEqualTo(defaultTournament2.getId());
     }
 

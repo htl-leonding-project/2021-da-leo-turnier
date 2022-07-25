@@ -1,21 +1,17 @@
 package at.htl.LeoTurnier.repository;
 
+import at.htl.LeoTurnier.dto.SeedDto;
 import at.htl.LeoTurnier.entity.Competitor;
 import at.htl.LeoTurnier.entity.Participation;
-import at.htl.LeoTurnier.entity.Phase;
 import at.htl.LeoTurnier.entity.Tournament;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
-import org.postgresql.core.NativeQuery;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.management.Query;
-import javax.persistence.NamedQuery;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Transactional
@@ -43,10 +39,18 @@ public class ParticipationRepository implements PanacheRepository<Participation>
         return participation;
     }
 
-    public Participation modify(Long tournamentId, Long competitorId, int placement) {
+    public Participation modifyPlacement(Long tournamentId, Long competitorId, int placement) {
         Participation toModify = getById(tournamentId, competitorId);
         if (toModify != null) {
             toModify.setPlacement(placement);
+        }
+        return toModify;
+    }
+
+    public Participation modifySeed(Long tournamentId, Long competitorId, int seed) {
+        Participation toModify = getById(tournamentId, competitorId);
+        if (toModify != null) {
+            toModify.setSeed(seed);
         }
         return toModify;
     }
@@ -64,22 +68,22 @@ public class ParticipationRepository implements PanacheRepository<Participation>
                 .orElse(null);
     }
 
-    public List<Competitor> getCompetitorsByTournament(Long tournamentId) {
-        TypedQuery<Competitor> getById = getEntityManager().createQuery(
-                "select pt.competitor " +
+    public List<Participation> getByTournamentId(Long tournamentId) {
+        TypedQuery<Participation> getById = getEntityManager().createQuery(
+                "select pt " +
                         "from Participation pt " +
-                        "where pt.tournament.id = :tournamentId ", Competitor.class);
+                        "where pt.tournament.id = :tournamentId ", Participation.class);
         getById.setParameter("tournamentId", tournamentId);
-        return new ArrayList<>(getById.getResultList());
+        return getById.getResultList();
     }
 
-    public List<Tournament> getTournamentsByCompetitor(Long competitorId) {
-        TypedQuery<Tournament> getById = getEntityManager().createQuery(
-                "select pt.tournament " +
+    public List<Participation> getByCompetitorId(Long competitorId) {
+        TypedQuery<Participation> getById = getEntityManager().createQuery(
+                "select pt " +
                         "from Participation pt " +
-                        "where pt.competitor.id = :competitorId ", Tournament.class);
+                        "where pt.competitor.id = :competitorId ", Participation.class);
         getById.setParameter("competitorId", competitorId);
-        return new ArrayList<>(getById.getResultList());
+        return getById.getResultList();
     }
 
     public List<Participation> getAll() {
@@ -98,5 +102,59 @@ public class ParticipationRepository implements PanacheRepository<Participation>
 
     public long clear() {
         return deleteAll();
+    }
+
+    public Tournament seedCompetitors(Long tournamentId) {
+        Tournament tournament = tournamentRepository.getById(tournamentId);
+        if (tournament == null) {
+            return null;
+        }
+        List<SeedDto> res = new LinkedList<>();
+        List<Competitor> competitors = competitorRepository.getByTournamentId(tournamentId);
+        for (Competitor competitor : competitors) {
+            List<Participation> competitorParticipations = getByCompetitorId(competitor.getId());
+            double sumOfPlacement = competitorParticipations.stream()
+                    .map(Participation::getPlacement)
+                    .reduce(0, Integer::sum);
+            res.add(new SeedDto(competitor.getId(), sumOfPlacement / competitorParticipations.size()));
+        }
+
+        res.sort((s1, s2) -> {
+            if (s1.getSeed() > 0 && s2.getSeed() == 0) {
+                return -1;
+            } else if (s1.getSeed() == 0 && s2.getSeed() > 0) {
+                return 1;
+            } else if (s1.getSeed() < s2.getSeed()) {
+                return -1;
+            } else if (s1.getSeed() > s2.getSeed()) {
+                return 1;
+            }
+            return 0;
+        });
+
+        for (int i = 0; i < res.size(); i++) {
+            modifySeed(tournamentId, res.get(i).getId(), i);
+        }
+        return tournament;
+    }
+
+    public Tournament orderCompetitors(Long tournamentId, List<Competitor> competitors) {
+        Tournament tournament = tournamentRepository.getById(tournamentId);
+        if (tournament == null) {
+            return null;
+        }
+        List<Competitor> competitorsOld = competitorRepository.getByTournamentId(tournamentId);
+        if (competitors.size() != competitorsOld.size()) {
+            return null;
+        }
+        for (Competitor competitor : competitors) {
+            if (competitorsOld.stream().noneMatch(c -> c.getId().equals(competitor.getId()))) {
+                return null;
+            }
+        }
+        for (int i = 0; i < competitors.size(); i++) {
+            modifySeed(tournamentId, competitors.get(i).getId(), i);
+        }
+        return tournament;
     }
 }

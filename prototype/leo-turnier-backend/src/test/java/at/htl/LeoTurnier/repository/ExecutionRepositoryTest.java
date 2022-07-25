@@ -39,17 +39,14 @@ class ExecutionRepositoryTest {
     private final Tournament defaultTournament1 = new Tournament("defaultTournament1");
 
     private void insertTestData(int numOfPlayers) {
-        List<Player> players = new LinkedList<>();
+        tournamentRepository.add(defaultTournament1);
         for (int i = 0; i < numOfPlayers; i++) {
             Player player = new Player(String.valueOf(i + 1));
-            player.setSeed(i + 1);
-            players.add(player);
+            competitorRepository.add(player);
+            Participation participation = participationRepository.add(defaultTournament1.getId(), player.getId());
+            participationRepository.modifySeed(participation.getTournament().getId(), participation.getCompetitor().getId(),
+                    i + 1);
         }
-        tournamentRepository.add(defaultTournament1);
-        players.forEach(p -> {
-            competitorRepository.add(p);
-            participationRepository.add(defaultTournament1.getId(), p.getId());
-        });
     }
 
     @BeforeEach

@@ -1,6 +1,7 @@
 package at.htl.LeoTurnier.repository;
 
 import at.htl.LeoTurnier.dto.CompetitorDto;
+import at.htl.LeoTurnier.dto.SeedDto;
 import at.htl.LeoTurnier.entity.*;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,6 +18,9 @@ public class ExecutionRepository {
 
     @Inject
     TournamentRepository tournamentRepository;
+
+    @Inject
+    CompetitorRepository competitorRepository;
 
     @Inject
     ParticipationRepository participationRepository;
@@ -45,7 +49,7 @@ public class ExecutionRepository {
             return null;
         }
         clearTournament(tournamentId);
-        List<Competitor> competitors = participationRepository.getCompetitorsByTournament(tournament.getId());
+        List<Competitor> competitors = competitorRepository.getByTournamentId(tournament.getId());
         if (tournament.getTournamentMode().getName().equals("Round Robin")) {
             tournament = roundRobinRepository.startTournament(tournament, competitors, -1);
         } else if (tournament.getTournamentMode().getName().equals("Combination") && numOfGroups != null) {

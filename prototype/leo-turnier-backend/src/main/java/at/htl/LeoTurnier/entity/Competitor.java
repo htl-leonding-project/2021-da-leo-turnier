@@ -16,16 +16,12 @@ public abstract class Competitor {
     @Column(name = "C_NAME")
     String name;
 
-    @Column(name = "C_SEED")
-    double seed;
-
     public Competitor() {
         this("");
     }
 
     public Competitor(String name) {
         this.name = name;
-        this.seed = -1;
     }
 
     public void setId(Long id) {
@@ -42,13 +38,5 @@ public abstract class Competitor {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getSeed() {
-        return seed;
-    }
-
-    public void setSeed(double seed) {
-        this.seed = seed;
     }
 }

@@ -63,7 +63,10 @@ public class Participation {
     Competitor competitor;
 
     @Column(name = "PT_PLACEMENT")
-    int placement;
+    Integer placement;
+
+    @Column(name = "PT_SEED")
+    Integer seed;
 
     public Participation() {
         this(null, null);
@@ -91,11 +94,19 @@ public class Participation {
         this.competitor = competitor;
     }
 
-    public int getPlacement() {
+    public Integer getPlacement() {
         return placement;
     }
 
-    public void setPlacement(int placement) {
+    public void setPlacement(Integer placement) {
         this.placement = placement;
+    }
+
+    public Integer getSeed() {
+        return seed;
+    }
+
+    public void setSeed(Integer seed) {
+        this.seed = seed;
     }
 }

@@ -1,6 +1,5 @@
 package at.htl.LeoTurnier.dto;
 
-import at.htl.LeoTurnier.entity.Competitor;
 
 public class CompetitorDto {
 
@@ -11,6 +10,10 @@ public class CompetitorDto {
     private int points;
 
     private int tieBreakerWins;
+
+    public CompetitorDto() {
+        this(-1L);
+    }
 
     public CompetitorDto(Long id) {
         this.id = id;

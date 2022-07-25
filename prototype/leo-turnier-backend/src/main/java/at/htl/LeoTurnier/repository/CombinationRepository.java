@@ -30,7 +30,7 @@ public class CombinationRepository {
 
 
     public Tournament startGroupPhase(Tournament tournament, List<Competitor> competitors, int numOfGroups) {
-        eliminationRepository.sortBySeed(competitors);
+        eliminationRepository.sortBySeed(tournament, competitors);
 
         for (int i = 0; i < numOfGroups; i++) {
             List<Competitor> competitorsInGroup = new LinkedList<>();
@@ -76,12 +76,12 @@ public class CombinationRepository {
                 if (previousCompetitorDto != null &&
                         competitorDto.getWins() == previousCompetitorDto.getWins() &&
                         competitorDto.getPoints() == previousCompetitorDto.getPoints()) {
-                    participationRepository.modify(tournament.getId(),
+                    participationRepository.modifyPlacement(tournament.getId(),
                             competitorDtos.get(u).getId(),
                             participationRepository.getById(tournament.getId(),
                                     previousCompetitorDto.getId()).getPlacement());
                 } else {
-                    participationRepository.modify(tournament.getId(), competitorDtos.get(u).getId(), u + numOfGroups);
+                    participationRepository.modifyPlacement(tournament.getId(), competitorDtos.get(u).getId(), u + numOfGroups);
                 }
             }
         }

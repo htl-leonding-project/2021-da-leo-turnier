@@ -5,7 +5,9 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -62,6 +64,15 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
 
     public Tournament getById(Long id) {
         return find("id", id).firstResult();
+    }
+
+    public List<Tournament> getByCompetitorId(Long competitorId) {
+        TypedQuery<Tournament> getById = getEntityManager().createQuery(
+                "select pt.tournament " +
+                        "from Participation pt " +
+                        "where pt.competitor.id = :competitorId ", Tournament.class);
+        getById.setParameter("competitorId", competitorId);
+        return getById.getResultList();
     }
 
     public List<Tournament> getAll() {

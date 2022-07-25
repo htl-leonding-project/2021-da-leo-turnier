@@ -44,7 +44,6 @@ public class PlayerRepository implements PanacheRepository<Player> {
             toModify.setTeam(
                     teamRepository.add(player.getTeam()));
             toModify.setName(player.getName());
-            toModify.setSeed(player.getSeed());
             toModify.setBirthdate(player.getBirthdate());
         }
         return toModify;

@@ -41,7 +41,6 @@ public class TeamRepository implements PanacheRepository<Team> {
         }
         if (toModify != null) {
             toModify.setName(team.getName());
-            toModify.setSeed(team.getSeed());
         }
         return toModify;
     }
