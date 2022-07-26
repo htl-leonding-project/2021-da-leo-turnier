@@ -36,6 +36,9 @@ class ExecutionRepositoryTest {
     @Inject
     NodeRepository nodeRepository;
 
+    @Inject
+    TournamentModeRepository tournamentModeRepository;
+
     private final Tournament defaultTournament1 = new Tournament("defaultTournament1");
 
     private void insertTestData(int numOfPlayers) {
@@ -65,7 +68,7 @@ class ExecutionRepositoryTest {
     void TestEliminationStartTournament01_TournamentWith8Players_ShouldSetUpTournament() {
         insertTestData(8);
         // arrange
-        defaultTournament1.setTournamentMode(new TournamentMode("Elimination"));
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(1L));
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
@@ -89,7 +92,7 @@ class ExecutionRepositoryTest {
     void TestEliminationStartTournament02_TournamentWith11Players_ShouldSetUpTournament() {
         insertTestData(11);
         // arrange
-        defaultTournament1.setTournamentMode(new TournamentMode("Elimination"));
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(1L));
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
@@ -113,7 +116,7 @@ class ExecutionRepositoryTest {
     void TestEliminationStartTournament03_TournamentWith100Players_ShouldSetUpTournament() {
         insertTestData(100);
         // arrange
-        defaultTournament1.setTournamentMode(new TournamentMode("Elimination"));
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(1L));
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
@@ -137,7 +140,7 @@ class ExecutionRepositoryTest {
     void StartRoundRobinTestTournament01_TournamentWith4Players_ShouldSetUpTournament() {
         insertTestData(4);
         // arrange
-        defaultTournament1.setTournamentMode(new TournamentMode("Round Robin"));
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(2L));
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
@@ -161,7 +164,7 @@ class ExecutionRepositoryTest {
     void StartRoundRobinTestTournament02_TournamentWith5Players_ShouldSetUpTournament() {
         insertTestData(5);
         // arrange
-        defaultTournament1.setTournamentMode(new TournamentMode("Round Robin"));
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(2L));
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
@@ -185,7 +188,7 @@ class ExecutionRepositoryTest {
     void StartRoundRobinTestTournament03_TournamentWith8Players_ShouldSetUpTournament() {
         insertTestData(8);
         // arrange
-        defaultTournament1.setTournamentMode(new TournamentMode("Round Robin"));
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(2L));
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
@@ -209,7 +212,7 @@ class ExecutionRepositoryTest {
     void TestCombinationStartTournament01_TournamentWith16Players_ShouldSetUpTournament() {
         insertTestData(16);
         // arrange
-        defaultTournament1.setTournamentMode(new TournamentMode("Combination"));
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(3L));
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
@@ -233,7 +236,7 @@ class ExecutionRepositoryTest {
     void TestCombinationStartTournament02_TournamentWith12Players_ShouldSetUpTournament() {
         insertTestData(12);
         // arrange
-        defaultTournament1.setTournamentMode(new TournamentMode("Combination"));
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(3L));
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act
@@ -257,7 +260,7 @@ class ExecutionRepositoryTest {
     void TestCombinationStartTournament03_TournamentWith19Players_ShouldSetUpTournament() {
         insertTestData(19);
         // arrange
-        defaultTournament1.setTournamentMode(new TournamentMode("Combination"));
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(3L));
         tournamentRepository.modify(defaultTournament1.getId(), defaultTournament1);
 
         // act

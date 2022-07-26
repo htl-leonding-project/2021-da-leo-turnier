@@ -20,6 +20,7 @@ public class NodeService {
     NodeRepository repository;
 
     @POST
+    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Node node, @Context UriInfo info) {
@@ -47,7 +48,6 @@ public class NodeService {
     }
 
     @GET
-    @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@QueryParam("id") Long id, @QueryParam("phaseId") Long phaseId) {
         if (id != null) {

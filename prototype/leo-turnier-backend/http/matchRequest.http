@@ -7,9 +7,8 @@ Content-Type: application/json
     "id": 1
   },
   "competitor2": {
-    "id": 1
-  },
-  "date": "2000-01-30"
+    "id": 2
+  }
 }
 
 ###

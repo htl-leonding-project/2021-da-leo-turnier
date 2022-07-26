@@ -34,13 +34,14 @@ class TournamentRepositoryTest {
     NodeRepository nodeRepository;
 
     private final SportType defaultSportType1 = new SportType("defaultSportType1");
-    private final TournamentMode defaultTournamentMode1 = new TournamentMode("defaultTournamentMode1");
-    private final Tournament defaultTournament1 = new Tournament("defaultTournament1", defaultSportType1, defaultTournamentMode1);
+    private final Tournament defaultTournament1 = new Tournament("defaultTournament1",
+            defaultSportType1);
     private final Phase defaultPhase1 = new Phase(1, defaultTournament1);
     private final Match defaultMatch1 = new Match();
     private final Node defaultNode1 = new Node(defaultMatch1, defaultPhase1);
 
     private void insertTestData() {
+        tournamentModeRepository.getById(1L);
         repository.add(defaultTournament1);
     }
 
@@ -50,7 +51,6 @@ class TournamentRepositoryTest {
 
     @AfterEach
     void tearDown() {
-        tournamentModeRepository.clear();
         sportTypeRepository.clear();
         repository.clear();
     }
@@ -150,13 +150,10 @@ class TournamentRepositoryTest {
     @Order(1050)
     void TestAdd05_AddTournamentWithExistingTournamentMode_ShouldAddTournament() {
         // arrange
-        String nameTournamentMode1 = "TournamentMode1";
         String nameTournament1 = "Tournament1";
-        TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
-        Tournament tournament1 = new Tournament(nameTournament1, tournamentMode1);
+        Tournament tournament1 = new Tournament(nameTournament1, tournamentModeRepository.getById(2L));
 
         // act
-        tournamentModeRepository.add(tournamentMode1);
         repository.add(tournament1);
 
         // assert
@@ -169,9 +166,7 @@ class TournamentRepositoryTest {
                 .isEqualTo(nameTournament1);
 
         assertThat(getTournamentModes.getResultList().size())
-                .isEqualTo(1);
-        assertThat(getTournamentModes.getResultList().get(0).getName())
-                .isEqualTo(nameTournamentMode1);
+                .isEqualTo(3);
         assertThat(getTournamentModes.getResultList().get(0).getClass())
                 .isEqualTo(TournamentMode.class);
     }
@@ -180,10 +175,8 @@ class TournamentRepositoryTest {
     @Order(1060)
     void TestAdd06_AddTournamentWithNotExistingTournamentMode_ShouldAddTournament() {
         // arrange
-        String nameTournamentMode1 = "TournamentMode1";
         String nameTournament1 = "Tournament1";
-        TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
-        Tournament tournament1 = new Tournament(nameTournament1, tournamentMode1);
+        Tournament tournament1 = new Tournament(nameTournament1, tournamentModeRepository.getById(2L));
 
         // act
         repository.add(tournament1);
@@ -198,9 +191,7 @@ class TournamentRepositoryTest {
                 .isEqualTo(nameTournament1);
 
         assertThat(getTournamentModes.getResultList().size())
-                .isEqualTo(1);
-        assertThat(getTournamentModes.getResultList().get(0).getName())
-                .isEqualTo(nameTournamentMode1);
+                .isEqualTo(3);
         assertThat(getTournamentModes.getResultList().get(0).getClass())
                 .isEqualTo(TournamentMode.class);
     }
@@ -342,10 +333,9 @@ class TournamentRepositoryTest {
         insertTestData();
         // arrange
         String nameTournament1 = "Tournament1";
-        Tournament tournament1 = new Tournament(nameTournament1, defaultTournamentMode1);
+        Tournament tournament1 = new Tournament(nameTournament1, tournamentModeRepository.getById(1L));
 
         // act
-        tournamentModeRepository.add(defaultTournamentMode1);
         repository.modify(defaultTournament1.getId(), tournament1);
 
         // assert
@@ -358,9 +348,7 @@ class TournamentRepositoryTest {
                 .isEqualTo(nameTournament1);
 
         assertThat(getTournamentModes.getResultList().size())
-                .isEqualTo(1);
-        assertThat(getTournamentModes.getResultList().get(0).getName())
-                .isEqualTo(defaultTournamentMode1.getName());
+                .isEqualTo(3);
     }
 
     @Test
@@ -368,9 +356,7 @@ class TournamentRepositoryTest {
     void TestModify06_ModifyTournamentWithNotExistingTournamentMode_ShouldAddTournament() {
         insertTestData();
         // arrange
-        String nameTournamentMode1 = "TournamentMode1";
-        TournamentMode tournamentMode1 = new TournamentMode(nameTournamentMode1);
-        defaultTournament1.setTournamentMode(tournamentMode1);
+        defaultTournament1.setTournamentMode(tournamentModeRepository.getById(2L));
 
         // act
         repository.modify(defaultTournament1.getId(), defaultTournament1);
@@ -383,16 +369,9 @@ class TournamentRepositoryTest {
                 .isEqualTo(1);
         assertThat(getTournaments.getResultList().get(0).getName())
                 .isEqualTo(defaultTournament1.getName());
-        assertThat(getTournaments.getResultList().get(0).getTournamentMode().getName())
-                .isEqualTo(nameTournamentMode1);
 
         assertThat(getTournamentModes.getResultList().size())
-                .isEqualTo(2);
-        assertThat(getTournamentModes.getResultList().get(0).getName())
-                .isEqualTo(defaultTournamentMode1.getName());
-
-        assertThat(getTournamentModes.getResultList().get(1).getName())
-                .isEqualTo(nameTournamentMode1);
+                .isEqualTo(3);
     }
 
     @Test
@@ -490,9 +469,7 @@ class TournamentRepositoryTest {
                 .isEqualTo(defaultSportType1.getName());
 
         assertThat(getTournamentModes.getResultList().size())
-                .isEqualTo(1);
-        assertThat(getTournamentModes.getResultList().get(0).getName())
-                .isEqualTo(defaultTournamentMode1.getName());
+                .isEqualTo(3);
 
         assertThat(res.getName())
                 .isEqualTo(defaultTournament1.getName());
@@ -524,9 +501,7 @@ class TournamentRepositoryTest {
                 .isEqualTo(defaultSportType1.getName());
 
         assertThat(getTournamentModes.getResultList().size())
-                .isEqualTo(1);
-        assertThat(getTournamentModes.getResultList().get(0).getName())
-                .isEqualTo(defaultTournamentMode1.getName());
+                .isEqualTo(3);
 
         assertThat(res.getName())
                 .isEqualTo(defaultTournament1.getName());

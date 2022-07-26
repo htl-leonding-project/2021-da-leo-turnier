@@ -34,8 +34,10 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
         if (existing != null) {
             return existing;
         }
-        tournament.setTournamentMode(
-                tournamentModeRepository.add(tournament.getTournamentMode()));
+        if (tournament.getTournamentMode() != null) {
+            tournament.setTournamentMode(
+                    tournamentModeRepository.getById(tournament.getTournamentMode().getId()));
+        }
         tournament.setSportType(
                 sportTypeRepository.add(tournament.getSportType()));
 
@@ -49,8 +51,10 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
             return null;
         }
         if (toModify != null) {
-            toModify.setTournamentMode(
-                    tournamentModeRepository.add(tournament.getTournamentMode()));
+            if (tournament.getTournamentMode() != null) {
+                toModify.setTournamentMode(
+                        tournamentModeRepository.getById(tournament.getTournamentMode().getId()));
+            }
             toModify.setSportType(
                     sportTypeRepository.add(tournament.getSportType()));
             toModify.setName(tournament.getName());

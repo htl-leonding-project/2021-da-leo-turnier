@@ -49,7 +49,6 @@ public class TournamentService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"admin"})
     public Response get(@QueryParam("id") Long id, @QueryParam("competitorId") Long competitorId) {
         if (id != null) {
             return Response.ok(repository.getById(id)).build();

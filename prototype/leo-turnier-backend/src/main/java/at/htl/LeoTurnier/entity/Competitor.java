@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "C_COMPETITOR")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Competitor {
+public class Competitor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "C_SEQ")
     @Column(name = "C_ID")
