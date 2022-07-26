@@ -47,8 +47,8 @@ public class ExecutionService {
     @RolesAllowed({"tournament-organizer"})
     @Path("finishMatch")
     @Produces(MediaType.APPLICATION_JSON)
-    public Match finishMatch(@QueryParam("nodeId") Long nodeId) {
-        return repository.finishMatch(nodeId);
+    public Match finishMatch(@QueryParam("matchId") Long matchId) {
+        return repository.finishMatch(matchId);
     }
 
     @GET

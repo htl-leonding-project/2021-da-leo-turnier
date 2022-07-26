@@ -60,6 +60,14 @@ public class NodeRepository implements PanacheRepository<Node> {
         return find("id", id).firstResult();
     }
 
+    public Node getByMatchId(Long matchId) {
+        return getEntityManager()
+                .createQuery("select n from Node n where n.match.id = :matchId",
+                        Node.class)
+                .setParameter("matchId", matchId)
+                .getSingleResult();
+    }
+
     public List<Node> getByPhaseId(Long phaseId) {
         return getEntityManager()
                 .createQuery("select n from Node n where n.phase.id = :phaseId",

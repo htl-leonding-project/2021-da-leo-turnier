@@ -85,8 +85,8 @@ public class ExecutionRepository {
         return null;
     }
 
-    public Match finishMatch(Long nodeId) {
-        Node node = nodeRepository.getById(nodeId);
+    public Match finishMatch(Long matchId) {
+        Node node = nodeRepository.getByMatchId(matchId);
         node.getMatch().setFinished(true);
         matchRepository.modify(node.getMatch().getId(), node.getMatch());
         Tournament tournament = node.getPhase().getTournament();
