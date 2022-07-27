@@ -1,0 +1,63 @@
+POST http://localhost:8080/api/player
+Content-Type: application/json
+
+{
+  "name": "Faker",
+  "birthdate": "2000-01-01"
+}
+
+###
+
+POST http://localhost:8080/api/tournament
+Content-Type: application/json
+
+{
+  "name": "KO",
+  "startDate": "2021-01-01",
+  "endDate": "2022-01-01",
+  "tournamentMode": {
+    "id": 1
+  }
+}
+
+###
+
+POST http://localhost:8080/api/participation?tournamentId=1&competitorId=1
+
+###
+
+POST http://localhost:8080/api/participation?tournamentId=1&competitorId=2
+
+###
+
+GET http://localhost:8080/api/execution/startTournament?tournamentId=1
+
+###
+
+GET http://localhost:8080/api/match?id=1
+
+###
+
+PUT http://localhost:8080/api/match?id=1
+Content-Type: application/json
+
+{
+  "competitor1": {
+    "id": 1,
+    "name": "Faker",
+    "birthdate": "2000-01-01"
+  },
+  "competitor2": {
+    "id": 2,
+    "name": "Faker",
+    "birthdate": "2000-01-01"
+  },
+  "finished": false,
+  "id": 1,
+  "score1": 1,
+  "score2": 2
+}
+
+###
+
+GET http://localhost:8080/api/execution/finishMatch?matchId=1

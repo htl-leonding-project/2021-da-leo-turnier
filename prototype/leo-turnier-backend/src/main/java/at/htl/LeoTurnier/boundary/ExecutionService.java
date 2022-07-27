@@ -1,17 +1,17 @@
 package at.htl.LeoTurnier.boundary;
 
-import at.htl.LeoTurnier.entity.Competitor;
 import at.htl.LeoTurnier.entity.Match;
-import at.htl.LeoTurnier.entity.Node;
 import at.htl.LeoTurnier.entity.Tournament;
 import at.htl.LeoTurnier.repository.ExecutionRepository;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.concurrent.ExecutionException;
 
 @Path("execution")
 public class ExecutionService {
@@ -52,7 +52,7 @@ public class ExecutionService {
     }
 
     @GET
-    @Path("startTieBreakers")
+    @Path("rankCompetitors")
     @Produces(MediaType.APPLICATION_JSON)
     public Response rankCompetitors(@QueryParam("tournamentId") Long id) {
         repository.rankCompetitors(id);
@@ -61,7 +61,7 @@ public class ExecutionService {
 
     @GET
     @RolesAllowed({"tournament-organizer"})
-    @Path("startTieBreakers")
+    @Path("clearTournament")
     @Produces(MediaType.APPLICATION_JSON)
     public Response clearTournament(@QueryParam("tournamentId") Long id) {
         repository.clearTournament(id);

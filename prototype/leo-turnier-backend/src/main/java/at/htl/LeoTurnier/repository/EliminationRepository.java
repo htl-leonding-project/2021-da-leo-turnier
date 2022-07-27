@@ -4,11 +4,8 @@ import at.htl.LeoTurnier.entity.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class EliminationRepository {
@@ -51,6 +48,16 @@ public class EliminationRepository {
             participationRepository.modifyPlacement(tournament.getId(),
                     loser.getId(),
                     nodeRepository.getByPhaseId(node.getNextNode().getPhase().getId()).size() * 2 + 1);
+            Match nextMatch = node.getNextNode().getMatch();
+            if (nextMatch == null) {
+                nextMatch = matchRepository.add(new Match());
+            }
+            if (nextMatch.getCompetitor1() == null) {
+                nextMatch.setCompetitor1(winner);
+            } else if (nextMatch.getCompetitor2() == null) {
+                nextMatch.setCompetitor2(winner);
+            }
+            matchRepository.modify(nextMatch.getId(), nextMatch);
         } else {
             participationRepository.modifyPlacement(tournament.getId(),
                     loser.getId(),
@@ -60,17 +67,7 @@ public class EliminationRepository {
                     1);
         }
 
-        Match nextMatch = node.getNextNode().getMatch();
-        if (nextMatch == null) {
-            nextMatch = matchRepository.add(new Match());
-        }
-        if (nextMatch.getCompetitor1() == null) {
-            nextMatch.setCompetitor1(winner);
-        } else if (nextMatch.getCompetitor2() == null) {
-            nextMatch.setCompetitor2(winner);
-        }
-        matchRepository.modify(nextMatch.getId(), nextMatch);
-        return nextMatch;
+        return match;
     }
 
     private void insertPhasesElimination(Tournament tournament, List<Competitor> competitors) {
