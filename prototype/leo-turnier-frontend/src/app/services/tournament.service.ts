@@ -53,7 +53,8 @@ export class TournamentService {
     // tslint:disable-next-line:max-line-length
     const tournament = new TournamentDTO(null, value.name, this.datePipe.transform(value.startDate, 'yyyy-MM-dd'), this.datePipe.transform(value.endDate, 'yyyy-MM-dd'), new SportType(value.sportType), value.tournamentMode);
     console.log(JSON.stringify(tournament));
-    const headers = { 'content-type': 'application/json'};
+    const headers = { 'content-type': 'application/json', Authorization: 'Basic admin adminpwd'};
+    console.log(headers);
     await this.httpClient.post(this.host + 'tournament', JSON.stringify(tournament), {headers}).subscribe(
       data => console.log('success', data),
       // tslint:disable-next-line:no-shadowed-variable
@@ -64,8 +65,9 @@ export class TournamentService {
   async updateTournament(id: string, value: any): Promise<void> {
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
-    const tournament = new TournamentDTO(+id, value.name, this.datePipe.transform(value.startDate, 'yyyy-MM-dd'), this.datePipe.transform(value.endDate, 'yyyy-MM-dd'), new SportType(value.sportType), value.tournamentMode);
+    const tournament = new TournamentDTO(+id, value.name, this.datePipe.transform(value.startDate, 'yyyy-MM-dd'), this.datePipe.transform(value.endDate, 'yyyy-MM-dd'), value.sportType, value.tournamentMode);
     console.log(JSON.stringify(tournament));
+    await new Promise(f => setTimeout(f, 100000));
     const headers = { 'content-type': 'application/json'};
     await this.httpClient.put(this.host + 'tournament?id=' + id, JSON.stringify(tournament), {headers}).subscribe(
       data => console.log('success', data),
@@ -75,7 +77,9 @@ export class TournamentService {
   }
 
   async startTournament(id: number): Promise<void> {
-    await this.httpClient.get(this.host + 'execution/startTournament?tournamentId=' + id).toPromise();
+    const headers = {Authorization: 'Basic ' + btoa('admin:adminpwd')};
+    console.log(headers);
+    await this.httpClient.get(this.host + 'execution/startTournament?tournamentId=' + id, {headers}).toPromise();
   }
 
   async getRunningTournaments(): Promise<Tournament[]> {

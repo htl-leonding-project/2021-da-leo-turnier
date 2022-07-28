@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {TournamentService} from '../services/tournament.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-tournament-overview',
@@ -12,7 +13,8 @@ export class TournamentOverviewComponent implements OnInit {
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['id', 'name', 'startDate', 'endDate', 'sportType', 'mode', 'actions'];
 
-  constructor(public api: TournamentService) { }
+  constructor(public api: TournamentService,
+              private router: Router) { }
 
   async ngOnInit(): Promise<void> {
     this.dataSource.data = await this.api.getTournaments();
@@ -34,5 +36,9 @@ export class TournamentOverviewComponent implements OnInit {
       await new Promise(f => setTimeout(f, 10));
     }
     window.location.reload();
+  }
+
+  navigateToMatches(id: number): void{
+    this.router.navigate(['/matches/' + id]);
   }
 }
