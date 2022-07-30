@@ -1,9 +1,7 @@
 package at.htl.LeoTurnier.boundary;
 
 import at.htl.LeoTurnier.entity.Node;
-import at.htl.LeoTurnier.entity.Player;
 import at.htl.LeoTurnier.repository.NodeRepository;
-import at.htl.LeoTurnier.repository.PlayerRepository;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;

@@ -1,16 +1,14 @@
 package at.htl.LeoTurnier.boundary;
 
-import at.htl.LeoTurnier.entity.Player;
-import at.htl.LeoTurnier.entity.TournamentMode;
-import at.htl.LeoTurnier.repository.PlayerRepository;
 import at.htl.LeoTurnier.repository.TournamentModeRepository;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 @Path("/tournamentMode")
 public class TournamentModeService {

@@ -5,7 +5,6 @@ import at.htl.LeoTurnier.entity.Participation;
 import at.htl.LeoTurnier.repository.ParticipationRepository;
 
 import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;

@@ -1,8 +1,6 @@
 package at.htl.LeoTurnier.boundary;
 
-import at.htl.LeoTurnier.entity.Player;
 import at.htl.LeoTurnier.entity.SportType;
-import at.htl.LeoTurnier.repository.PlayerRepository;
 import at.htl.LeoTurnier.repository.SportTypeRepository;
 
 import javax.annotation.security.RolesAllowed;

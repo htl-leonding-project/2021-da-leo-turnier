@@ -1,22 +1,15 @@
 package at.htl.LeoTurnier.boundary;
 
-import at.htl.LeoTurnier.entity.Player;
 import at.htl.LeoTurnier.entity.Team;
-import at.htl.LeoTurnier.repository.PlayerRepository;
 import at.htl.LeoTurnier.repository.TeamRepository;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.util.List;
 
 @Path("/team")
 public class TeamService {
