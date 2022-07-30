@@ -16,6 +16,7 @@ public class CompetitorService {
     @Inject
     CompetitorRepository repository;
 
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@QueryParam("id") Long id, @QueryParam("tournamentId") Long tournamentId) {
