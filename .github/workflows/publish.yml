@@ -14,7 +14,7 @@ jobs:
       IMAGE_NAME: leo-turnier-backend
     defaults:
       run:
-        working-directory: ./prototypes/leo-turnier-backend
+        working-directory: ./prototype/leo-turnier-backend
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -44,7 +44,7 @@ jobs:
       IMAGE_NAME: leo-turnier-frontend
     defaults:
       run:
-        working-directory: ./prototypes/leo-turnier-backend
+        working-directory: ./prototype/leo-turnier-backend
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
