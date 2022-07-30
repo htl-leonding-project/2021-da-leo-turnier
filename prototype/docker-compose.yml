@@ -61,6 +61,15 @@ services:
       - auth
     networks:
       - leoturnier
+  frontend:
+    image: ghcr.io/htl-leonding-project/leo-turnier-frontend:latest
+    container_name: leoturnier_frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    networks:
+      - leoturnier
 
 networks:
   leoturnier:
