@@ -15,7 +15,7 @@ services:
     volumes:
       - ./db-postgres/import:/import
     networks:
-      - postgres
+      - leoturnier
   auth_db:
     container_name: leoturnier_auth_db
     image: postgres:latest
@@ -24,6 +24,8 @@ services:
       POSTGRES_DB: auth_db
       POSTGRES_USER: app
       POSTGRES_PASSWORD: app
+    networks:
+      - leoturnier
   auth:
     container_name: leoturnier_auth
     image: quay.io/keycloak/keycloak:latest
@@ -46,31 +48,20 @@ services:
       KC_HOSTNAME_STRICT_HTTPS: 'false'
     ports:
       - "8443:8443"
+    networks:
+      - leoturnier
     depends_on:
       - auth_db
-
-#  adminer:
-#    image: adminer
-#    restart: always
-#    ports:
-#      - 8090:8080
-
-# https://github.com/khezen/compose-postgres/blob/master/docker-compose.yml
-#  pgadmin:
-#    container_name: leoturnier_pgadmin
-#    image: dpage/pgadmin4:5.5
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-#      PGADMIN_CONFIG_SERVER_MODE: 'False'
-#    volumes:
-#      - ./db-postgres/pgadmin:/root/.pgadmin
-#    ports:
-#      - 8090:80
-#    networks:
-#      - postgres
-#    restart: unless-stopped
+  backend:
+    image: ghcr.io/htl-leonding-project/leo-turnier-backend:latest
+    container_name: leoturnier_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth
+    networks:
+      - leoturnier
 
 networks:
-  postgres:
+  leoturnier:
     driver: bridge
