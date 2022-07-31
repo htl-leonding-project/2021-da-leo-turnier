@@ -53,8 +53,9 @@ services:
     depends_on:
       - auth_db
   backend:
-    image: ghcr.io/htl-leonding-project/leo-turnier-backend:latest
     container_name: leoturnier_backend
+    image: ghcr.io/htl-leonding-project/leo-turnier-backend:latest
+    restart: unless-stopped
     ports:
       - "8080:8080"
     depends_on:
@@ -62,8 +63,9 @@ services:
     networks:
       - leoturnier
   frontend:
-    image: ghcr.io/htl-leonding-project/leo-turnier-frontend:latest
     container_name: leoturnier_frontend
+    image: ghcr.io/htl-leonding-project/leo-turnier-frontend:latest
+    restart: unless-stopped
     ports:
       - "4200:80"
     depends_on:
