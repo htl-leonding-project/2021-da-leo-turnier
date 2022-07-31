@@ -67,7 +67,7 @@ services:
     image: ghcr.io/htl-leonding-project/leo-turnier-frontend:latest
     restart: unless-stopped
     ports:
-      - "4200:4200"
+      - "4200:80"
     depends_on:
       - backend
     networks:
