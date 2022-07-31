@@ -7,7 +7,7 @@ RUN npm install
 # RUN ls
 RUN npm run build
 RUN npm start
-### STAGE 2 ###+
+### STAGE 2 ###
 #FROM nginx:stable-alpine
 #COPY --from=build /app/dist/leo-turnier-frontend /etc/nginx/html
 #EXPOSE 80
