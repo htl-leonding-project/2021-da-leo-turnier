@@ -8,6 +8,6 @@ RUN npm install
 RUN npm run build --prod
 ### STAGE 2 ###+
 FROM nginx:stable-alpine
-COPY --from=build /dist/leo-turnier-frontend /usr/share/nginx/html
+COPY --from=build /app/dist/leo-turnier-frontend /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
