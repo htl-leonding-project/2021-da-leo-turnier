@@ -64,8 +64,6 @@ services:
   frontend:
     image: ghcr.io/htl-leonding-project/leo-turnier-frontend:latest
     container_name: leoturnier_frontend
-    command:
-      - npm start
     ports:
       - "80:80"
     depends_on:
