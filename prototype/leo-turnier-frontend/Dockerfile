@@ -3,7 +3,7 @@ FROM node:14-alpine3.10 as build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
-COPY . .
+COPY . /app
 # RUN ls
 RUN npm run build --prod
 ### STAGE 2 ###
