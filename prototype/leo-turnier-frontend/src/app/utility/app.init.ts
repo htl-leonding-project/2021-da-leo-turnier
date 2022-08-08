@@ -4,12 +4,12 @@ export function initializeKeycloak(keycloak: KeycloakService): () => Promise<boo
   return () =>
     keycloak.init({
       config: {
-        url: 'http://localhost:8443/auth',
+        url: 'http://localhost:8443',
         realm: 'leoturnier',
-        clientId: 'leoturnier-client'
+        clientId: 'angular-leoturnier-client'
       },
       initOptions: {
-        checkLoginIframe: true,
+        checkLoginIframe: false,
         checkLoginIframeInterval: 25
       }
     });
