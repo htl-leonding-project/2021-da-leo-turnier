@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component({
   selector: 'app-login',
@@ -7,21 +8,25 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  public loginValid = true;
   public username = '';
-  public password = '';
+  public role = '';
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private keycloakService: KeycloakService
   ) {
   }
 
   public ngOnInit(): void {
+    this.initializeUserOptions();
   }
 
-  public onSubmit(): void {
-    this.loginValid = true;
+  private initializeUserOptions(): void {
+    this.username = this.keycloakService.getUsername();
+    // @ts-ignore
+    this.role = this.keycloakService.getUserRoles().pop();
+
+    console.log(this.username);
   }
 }

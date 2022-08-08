@@ -1,3 +1,4 @@
+<!--
 <mat-card>
   <mat-card-content>
     <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
@@ -20,4 +21,12 @@
       <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Login</button>
     </form>
   </mat-card-content>
+</mat-card>
+-->
+<mat-card style="padding: 25px">
+  <mat-card-title>Hallo {{this.username}}</mat-card-title>
+  <mat-card-content>Rollen: {{this.role}}</mat-card-content>
+  <mat-card-footer>
+    <button mat-raised-button color="warn">Logout</button>
+  </mat-card-footer>
 </mat-card>
