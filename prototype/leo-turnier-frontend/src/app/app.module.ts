@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,8 @@ import { TournamentTreeComponent } from './tournament-tree/tournament-tree.compo
 import {NgTournamentTreeModule} from 'ng-tournament-tree';
 import { MatchComponent } from './match/match.component';
 import { TournamentDialogComponent } from './tournament-dialog/tournament-dialog.component';
+import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
+import {initializeKeycloak} from './utility/app.init';
 
 @NgModule({
   declarations: [
@@ -50,9 +52,16 @@ import { TournamentDialogComponent } from './tournament-dialog/tournament-dialog
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    NgTournamentTreeModule
+    NgTournamentTreeModule,
+    KeycloakAngularModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

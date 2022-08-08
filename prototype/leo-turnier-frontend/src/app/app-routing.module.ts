@@ -9,6 +9,7 @@ import {TeamComponent} from './team/team.component';
 import {TournamentComponent} from './tournament/tournament.component';
 import {HomeComponent} from './home/home.component';
 import {TournamentTreeComponent} from './tournament-tree/tournament-tree.component';
+import {AuthGuard} from './utility/app.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -20,7 +21,7 @@ const routes: Routes = [
   { path: 'players/:id', component: PlayerComponent},
   { path: 'team', component: TeamOverviewComponent},
   { path: 'team/:id', component: TeamComponent},
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
