@@ -29,4 +29,8 @@ export class LoginComponent implements OnInit {
 
     console.log(this.username);
   }
+
+  public logout(): void {
+    this.keycloakService.logout('http://localhost:4200/home');
+  }
 }

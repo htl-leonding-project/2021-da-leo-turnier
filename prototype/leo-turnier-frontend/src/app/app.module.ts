@@ -25,6 +25,8 @@ import { MatchComponent } from './match/match.component';
 import { TournamentDialogComponent } from './tournament-dialog/tournament-dialog.component';
 import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
 import {initializeKeycloak} from './utility/app.init';
+import { MatchOverviewComponent } from './match-overview/match-overview.component';
+import { MatchSubmitionComponent } from './match-submition/match-submition.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import {initializeKeycloak} from './utility/app.init';
     TournamentTreeComponent,
     MatchComponent,
     TournamentDialogComponent,
+    MatchOverviewComponent,
+    MatchSubmitionComponent,
   ],
   imports: [
     BrowserModule,
