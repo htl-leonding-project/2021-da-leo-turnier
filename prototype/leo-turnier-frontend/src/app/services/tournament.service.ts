@@ -67,7 +67,7 @@ export class TournamentService {
     // tslint:disable-next-line:max-line-length
     const tournament = new TournamentDTO(+id, value.name, this.datePipe.transform(value.startDate, 'yyyy-MM-dd'), this.datePipe.transform(value.endDate, 'yyyy-MM-dd'), value.sportType, value.tournamentMode);
     console.log(JSON.stringify(tournament));
-    await new Promise(f => setTimeout(f, 100000));
+    await new Promise(f => setTimeout(f, 100));
     const headers = { 'content-type': 'application/json'};
     await this.httpClient.put(this.host + 'tournament?id=' + id, JSON.stringify(tournament), {headers}).subscribe(
       data => console.log('success', data),

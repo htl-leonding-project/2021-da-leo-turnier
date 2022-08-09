@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="nav.toggle()" aria-label="icon-button with menu icon">
+  <button mat-icon-button (click)="nav.toggle()" aria-label="icon-button with menu icon" *ngIf="isLoggedIn">
     <mat-icon>menu</mat-icon>
   </button>
   <span (click)="this.router.navigateByUrl('/home')">LeoTurnier</span>

@@ -10,6 +10,8 @@ import {TournamentComponent} from './tournament/tournament.component';
 import {HomeComponent} from './home/home.component';
 import {TournamentTreeComponent} from './tournament-tree/tournament-tree.component';
 import {AuthGuard} from './utility/app.guard';
+import {MatchOverviewComponent} from './match-overview/match-overview.component';
+import {MatchSubmitionComponent} from './match-submition/match-submition.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'players/:id', component: PlayerComponent},
   { path: 'team', component: TeamOverviewComponent},
   { path: 'team/:id', component: TeamComponent},
+  { path: 'matches/:id', component: MatchOverviewComponent},
+  { path: 'match-submition/:id', component: MatchSubmitionComponent},
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard]}
 ];
 

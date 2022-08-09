@@ -5,6 +5,7 @@ export class Match{
               public competitor1: Competitor,
               public competitor2: Competitor,
               public score1: number,
-              public score2: number) {
+              public score2: number,
+              public isFinished: boolean) {
   }
 }

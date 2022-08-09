@@ -1,0 +1,25 @@
+<button mat-raised-button style="margin: 20px" (click)="this.router.navigate(['tournaments'])">Zurück</button>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="competitor1">
+    <th mat-header-cell *matHeaderCellDef> Competitor 1 </th>
+    <td mat-cell *matCellDef="let element"> {{element.competitor1.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="score">
+    <th mat-header-cell *matHeaderCellDef> Score </th>
+    <td mat-cell *matCellDef="let element"> {{element.score1}} : {{element.score2}}</td>
+  </ng-container>
+  <ng-container matColumnDef="competitor2">
+    <th mat-header-cell *matHeaderCellDef> Competitor 2 </th>
+    <td mat-cell *matCellDef="let element"> {{element.competitor2.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button *ngIf="!element.isFinished" (click)="navigateToSubmition(element.id)"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button *ngIf="element.isFinished"><mat-icon style="color: green; font-size: xxx-large">check</mat-icon></button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
