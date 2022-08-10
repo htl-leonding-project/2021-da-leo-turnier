@@ -1,1 +1,29 @@
-<p>match-submition works!</p>
+<form class="center">
+  <div style="width: 100%; display: flex; flex-direction: row; justify-content: center;">
+    <div>
+      <div>
+        <mat-form-field class="example-full-width" appearance="fill" style="margin-right: 50px">
+          <mat-label>Comp 1</mat-label>
+          <input matInput type="number" min="0" max="999">
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <div>
+        <p style="font-size: 100px; margin-top: 180px">:</p>
+      </div>
+    </div>
+    <div>
+      <div>
+        <mat-form-field class="example-full-width" appearance="fill" style="margin-left: 50px">
+          <mat-label>Comp 2</mat-label>
+          <input matInput type="number" min="0" max="999">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button mat-raised-button color="primary" style="margin-right: 15px">Submit Score</button>
+    <button mat-raised-button color="accent">Finish Match</button>
+  </div>
+</form>

@@ -1,0 +1,19 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+}
+
+mat-form-field {
+  text-align: center;
+}
+
+input {
+  text-align: center;
+  font-size: 100px;
+  min-height: 350px;
+}
