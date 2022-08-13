@@ -1,10 +1,10 @@
-<form class="center">
-  <div style="width: 100%; display: flex; flex-direction: row; justify-content: center;">
+<form class="center" [formGroup]="submitionForm" (ngSubmit)="onSubmit()">
+  <div style="width: 100%; display: flex; flex-direction: row; justify-content: center; margin-top: 25%">
     <div>
       <div>
         <mat-form-field class="example-full-width" appearance="fill" style="margin-right: 50px">
-          <mat-label>Comp 1</mat-label>
-          <input matInput type="number" min="0" max="999">
+          <mat-label style="font-size: xx-large">{{match.competitor1.name}}</mat-label>
+          <input matInput type="number" min="0" max="999" formControlName="score1">
         </mat-form-field>
       </div>
     </div>
@@ -16,14 +16,14 @@
     <div>
       <div>
         <mat-form-field class="example-full-width" appearance="fill" style="margin-left: 50px">
-          <mat-label>Comp 2</mat-label>
-          <input matInput type="number" min="0" max="999">
+          <mat-label style="font-size: xx-large">{{match.competitor2.name}}</mat-label>
+          <input matInput type="number" min="0" max="999" formControlName="score2">
         </mat-form-field>
       </div>
     </div>
   </div>
   <div>
-    <button mat-raised-button color="primary" style="margin-right: 15px">Submit Score</button>
-    <button mat-raised-button color="accent">Finish Match</button>
+    <button mat-raised-button name="Submit" color="primary" style="margin-right: 15px">Submit Score</button>
+    <button mat-raised-button name="Finish" color="accent">Finish Match</button>
   </div>
 </form>
