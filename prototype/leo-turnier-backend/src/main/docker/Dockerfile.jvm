@@ -47,7 +47,7 @@ COPY --chown=1001 target/quarkus-app/lib/ /deployments/lib/
 COPY --chown=1001 target/quarkus-app/*.jar /deployments/
 COPY --chown=1001 target/quarkus-app/app/ /deployments/app/
 COPY --chown=1001 target/quarkus-app/quarkus/ /deployments/quarkus/
-COPY --chown=185 target/classes/sql/import.sql /deployments/resources/sql/
+COPY --chown=185 target/classes/import.sql /deployments/resources/sql/
 # RUN mv /deployments/resources/sql/docker-script-files.properties /deployments/resources/sql/test-script-files.properties
 
 EXPOSE 8080
