@@ -47,11 +47,15 @@ public class MatchService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@QueryParam("id") Long id, @QueryParam("tournamentId") Long tournamentId) {
+    public Response get(@QueryParam("id") Long id, @QueryParam("tournamentId") Long tournamentId, @QueryParam("groupNumber") Integer groupNumber) {
         if (id != null) {
             return Response.ok(repository.getById(id)).build();
         } else if (tournamentId != null) {
-            return Response.ok(repository.getByTournamentId(tournamentId)).build();
+            if (groupNumber != null) {
+                return Response.ok(repository.getByTournamentGroup(tournamentId, groupNumber)).build();
+            } else {
+                return Response.ok(repository.getByTournamentId(tournamentId)).build();
+            }
         }
         return Response.ok(repository.getAll()).build();
     }

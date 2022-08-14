@@ -65,6 +65,7 @@ public class EliminationRepository {
             participationRepository.modifyPlacement(tournament.getId(),
                     winner.getId(),
                     1);
+            tournament.setFinished(true);
         }
 
         return match;

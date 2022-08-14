@@ -2,9 +2,6 @@ package at.htl.LeoTurnier.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "T_TOURNAMENT")
@@ -31,6 +28,9 @@ public class Tournament {
     @ManyToOne
     @JoinColumn(name = "T_TM_ID")
     TournamentMode tournamentMode;
+
+    @Column(name = "T_IS_FINISHED")
+    boolean isFinished;
 
     public Tournament() {
         this("");
@@ -105,5 +105,13 @@ public class Tournament {
 
     public void setTournamentMode(TournamentMode tournamentMode) {
         this.tournamentMode = tournamentMode;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 }
