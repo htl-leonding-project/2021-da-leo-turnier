@@ -5,8 +5,9 @@ import at.htl.LeoTurnier.entity.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -23,6 +24,9 @@ public class RoundRobinRepository {
 
     @Inject
     PhaseRepository phaseRepository;
+
+    @Inject
+    TournamentRepository tournamentRepository;
 
     public Tournament startTournament(Tournament tournament, List<Competitor> competitors, int groupNumber) {
         insertPhasesRoundRobin(tournament, competitors, groupNumber, 0);
@@ -153,8 +157,22 @@ public class RoundRobinRepository {
             return 0;
         });
 
-
-
         return competitorDtos;
+    }
+
+    public void setFinished(Tournament tournament) {
+        boolean isFinished = true;
+        List<Phase> phases = phaseRepository.getByTournamentId(tournament.getId());
+        for (Phase p : phases) {
+            List<Node> nodes = nodeRepository.getByPhaseId(p.getId());
+            for (Node n : nodes) {
+                if (!n.getMatch().isFinished()) {
+                    isFinished = false;
+                    break;
+                }
+            }
+        }
+        tournament.setFinished(isFinished);
+        tournamentRepository.modify(tournament.getId(), tournament);
     }
 }

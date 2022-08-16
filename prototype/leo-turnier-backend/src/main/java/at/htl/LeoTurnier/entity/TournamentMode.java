@@ -14,7 +14,13 @@ public class TournamentMode {
     @Column(name = "TM_NAME")
     String name;
 
-    public TournamentMode() {}
+    public TournamentMode() {
+        this("");
+    }
+
+    public TournamentMode(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

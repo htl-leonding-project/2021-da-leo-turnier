@@ -1,8 +1,6 @@
 package at.htl.LeoTurnier.repository;
 
 import at.htl.LeoTurnier.entity.Match;
-import at.htl.LeoTurnier.entity.Phase;
-import at.htl.LeoTurnier.entity.SportType;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -68,6 +66,19 @@ public class MatchRepository implements PanacheRepository<Match> {
                         "and m.competitor2 is not null " +
                         "order by m.isFinished, m.date", Match.class)
                 .setParameter("tournamentId", tournamentId)
+                .getResultList();
+    }
+
+    public List<Match> getByTournamentGroup(Long tournamentId, int groupNumber) {
+        return getEntityManager()
+                .createQuery("select m from Match m join Node n on m.id = n.match.id "  +
+                        "where n.phase.tournament.id = :tournamentId " +
+                        "and m.competitor1 is not null " +
+                        "and m.competitor2 is not null " +
+                        "and n.phase.groupNumber = :groupNumber " +
+                        "order by m.isFinished, m.date", Match.class)
+                .setParameter("tournamentId", tournamentId)
+                .setParameter("groupNumber", groupNumber)
                 .getResultList();
     }
 
