@@ -25,7 +25,7 @@ export class TournamentOverviewComponent implements OnInit {
       'Danach können Sie es nicht mehr bearbeiten!')) {
 
       await this.api.startTournament(id);
-      await new Promise(f => setTimeout(f, 10));
+      await new Promise(f => setTimeout(f, 100));
     }
     window.location.reload();
   }

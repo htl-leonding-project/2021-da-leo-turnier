@@ -8,6 +8,7 @@ import {Node} from '../model/node.model';
 import {SportType} from '../model/sport-type.model';
 import {TournamentMode} from '../model/tournament-mode.model';
 import {TournamentDTO} from '../model/tournamentDTO.model';
+import {KeycloakService} from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ import {TournamentDTO} from '../model/tournamentDTO.model';
 export class TournamentService {
   private host = 'http://localhost:8080/api/';
 
-  constructor(private httpClient: HttpClient, public datePipe: DatePipe) {
+  constructor(private httpClient: HttpClient, public datePipe: DatePipe, private keycloakService: KeycloakService) {
   }
 
   async getTournaments(): Promise<Tournament[]>{
@@ -77,9 +78,18 @@ export class TournamentService {
   }
 
   async startTournament(id: number): Promise<void> {
-    const headers = {Authorization: 'Basic ' + btoa('admin:adminpwd')};
+    const authToken = this.keycloakService.getToken();
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
     console.log(headers);
-    await this.httpClient.get(this.host + 'execution/startTournament?tournamentId=' + id, {headers}).toPromise();
+    await this.httpClient.get(this.host + 'execution/startTournament?tournamentId=' + id, {headers}).subscribe(
+      data => console.log('success', data),
+      error => console.log('oops', error)
+    );
+    await new Promise(f => setTimeout(f, 10));
   }
 
   async getRunningTournaments(): Promise<Tournament[]> {
