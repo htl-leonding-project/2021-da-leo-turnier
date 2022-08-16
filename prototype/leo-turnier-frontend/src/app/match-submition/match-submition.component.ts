@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatchService} from '../services/match.service';
 import {Match} from '../model/match.model';
 import {Competitor} from '../model/competitor.model';
-import {map} from 'rxjs/operators';
-import {Location} from '@angular/common';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -14,6 +12,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class MatchSubmitionComponent implements OnInit {
   id = '';
+  tournamentId = '';
   match = new Match(0, new Competitor(0, 'comp 1'), new Competitor(0, 'comp 2'), 0, 0, false);
 
   submitionForm = new FormGroup({
@@ -22,11 +21,14 @@ export class MatchSubmitionComponent implements OnInit {
   });
 
   constructor(private activatedRouter: ActivatedRoute,
-              private location: Location,
+              private router: Router,
               private api: MatchService) {
     // @ts-ignore
     // tslint:disable-next-line:no-shadowed-variable
     activatedRouter.paramMap.subscribe(map => this.id = map.get('id'));
+    // @ts-ignore
+    // tslint:disable-next-line:no-shadowed-variable
+    activatedRouter.paramMap.subscribe( map => this.tournamentId = map.get('tournamentId'));
   }
 
   async ngOnInit(): Promise<void> {
@@ -45,7 +47,15 @@ export class MatchSubmitionComponent implements OnInit {
     console.log(action);
 
     await this.api.updateMatch(this.match);
+    await new Promise(f => setTimeout(f, 100));
 
-    this.location.back();
+    if (action === 'Finish'){
+      await this.api.finishMatch(this.id);
+      console.log('in');
+    }
+
+    this.router.navigate(['/matches/' + this.tournamentId]).then(() => {
+      window.location.reload();
+    });
   }
 }

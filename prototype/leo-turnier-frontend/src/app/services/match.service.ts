@@ -32,4 +32,17 @@ export class MatchService {
       error => console.log('oops', error)
     );
   }
+
+  async finishMatch(id: string): Promise<void> {
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
+
+    await this.httpClient.get('http://localhost:8080/api/execution/finishMatch?matchId=' + id).subscribe(
+      data => console.log('success', data),
+      error => console.log('oops', error)
+    );
+  }
 }
