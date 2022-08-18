@@ -114,11 +114,17 @@ export class TournamentComponent implements OnInit {
   }
 
   private getCompetitorsWithNoParticipation(allCompetitors: Competitor[]): Competitor[] {
-    if (this.tournamentForm.value.competitors !== null){
-      return allCompetitors.filter(item => !this.tournamentForm.value.competitors.includes(item));
-    }
-    else {
+    if (this.tournamentForm.value.competitors !== null) {
+      // tslint:disable-next-line:only-arrow-functions typedef
+      return allCompetitors.filter(item => !this.dataSource.data.map(function(x) { // @ts-ignore
+        return x.competitor.id; }).includes(item.id));
+    } else {
       return allCompetitors;
     }
+  }
+
+  async deleteParticipation(id: number): Promise<void> {
+    await this.tournamentApi.deleteParticipation(this.id, id);
+    window.location.reload();
   }
 }

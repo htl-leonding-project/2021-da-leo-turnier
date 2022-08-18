@@ -161,8 +161,24 @@ export class TournamentService {
     };
     console.log(headers);
 
-
     this.httpClient.delete(this.host + 'tournament?id=' + id, {headers}).subscribe(
+      data => console.log('succes', data),
+      // tslint:disable-next-line:no-shadowed-variable
+      error => console.log('oops', error)
+    );
+  }
+
+  async deleteParticipation(tournamentId: string, compId: number): Promise<void> {
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
+    console.log(headers);
+
+    console.log(tournamentId + ' ' + compId);
+
+    this.httpClient.delete(this.host + 'participation?tournamentId=' + tournamentId + '&competitorId=' + compId, {headers}).subscribe(
       data => console.log('succes', data),
       // tslint:disable-next-line:no-shadowed-variable
       error => console.log('oops', error)
