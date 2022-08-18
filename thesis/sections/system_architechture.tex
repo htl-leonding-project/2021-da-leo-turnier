@@ -1,0 +1,129 @@
+\section{Verwirklichung der Anforderungen}
+
+\begin{figure}[H]
+    \centering
+    \caption{system architecture}
+    \includegraphics[scale=0.25]{pics/system_architecture.png}
+\end{figure}
+
+
+\section{Verwendete Technologien}
+
+\subsection{Git}
+\includegraphics[scale=0.05]{pics/git.png}
+
+Git ist das mit Abstand am weitesten verbreitete Versionskontrollsystem der Welt. Der Name Git wird aus der britischen 
+Umgangssprache übersetzt und bedeutet "Blödmann.
+\cite{sysarch-git-1}
+Es ist ein Open-Source Projekt, 
+das ursprünglich 2005 von dem Entwickler des Linux Betriebsystem-Kernels entwickelt wurde. Es ist außerdem mit sowohl mit 
+Windows als auch Linux Systemen kompatibel und auch in vielen verschiedenen IDEs integriert. Git ist ein verteiltes Versionskontrollsystem, 
+was bedeutet, dass der Versionsverlauf nicht nur an einem Ort gespeichert ist, wie es bei älteren Versionskontrollsystemen der Fall war, 
+sondern in jeder Arbeitskopie der gesamte Verlauf aller Änderungen im Repository (Aufbewahrungsort) enthalten sind. 
+
+\cite{sysarch-git-2}
+
+\subsubsection{Was ist ein Versionskontrollsystem?}
+
+Ein Versionskontrollsystem wie Git wird in der Softwareentwicklung verwendet, 
+um Änderungen des Quellcodes zu speichern und zu verwalten. 
+Hier gibt es drei Arten von Versionskontrollsystemen:
+\cite{sysarch-git-2}
+\begin{itemize}
+ \item lokale Versionsverwaltung (Local Version Control System - LVCS): 
+\end{itemize}
+Hier werden Dateien lokal einfach nur in ein separates Verzeichnis kopiert.
+\cite{sysarch-git-2}
+\begin{itemize}
+ \item zentrale Versionsverwaltung (Centralized Version Control System - CVCS):
+\end{itemize}
+Hier gibt es einen einen zentralen Server, der alle versionierten Dateien verwaltet und es Personen ermöglicht, 
+Dateien von diesem zentralen Repository abzuholen und auf ihren PC zu übertragen.
+\cite{sysarch-git-2}
+\begin{itemize}
+ \item verteilten Versionsverwaltung (Distributed Version Control System - DVCS):
+\end{itemize}
+Wie weiter oben schon angesprochen ist diese Variante jene, die von Git benutzt wird. Hier gibt es zwar ein zentrales Repository, 
+aber jede Person  hat eine Kopie des Repositories und somit die vollständigen Projektdaten.
+\cite{sysarch-git-2}
+
+\subsubsection{Git Befehle}
+
+Git verwendet zum verwalten eines Repositories das Terminal, hierzu gibt es einige wichtige Befehle. Zuerst kann man mit "git init" ein leeres Repository erstellen 
+oder ein existierendes nochmal initialisieren, alternativ kann man mit "git clone" ein existierendes Repository kopieren. Damit ein File von Git gespeichert werden
+kann, muss man es zunächst mit "git add" zum Repository hinzufügen, das ganze kann dann mit "git rm" wieder rückgängig gemacht werden. Mit "git status" wird der 
+momentane Status aller Files im Repository angezeigt, dass heißt, ob das File neu im Repository ist, ob es seit dem letzten Mal Speichern verändert wurde, oder ob es 
+erst garnicht im Repository vorhanden ist. Nun kann man mit "git commit" den momentanen Status des Repositories als neue Version speichern und mit "git push" an ein "remote" 
+Repository senden. Als letzter wichtiger Befehl gilt noch "git branch", hiermit kann man das Repository in verschiedene "Branches" aufteilen und so neue Features getrennt voneinander
+entwickeln, und diese dann mit "git merge" im Hauptbranch zusammenfügen.
+\cite{sysarch-git-2}
+
+\subsection{GitHub}
+\includegraphics[scale=0.05]{pics/github.png}
+
+Github ist ein Cloud-basiertes Repository Hosting Service, das die verteilte Versionskontrolle von Git zur verfügung stellt. Es wurde 2008 von Chris Wanstrath, P. J. Hyett, 
+Scott Chacon und Tom Preston-Werner gestartet. Zu dem Zeitpunkt war Git noch relativ unbekannt, wesshalb es noch keine anderen Optionen gab. Die Software wurde in der 
+Programmiersprache "Ruby on Rails and Erlang" entwickelt. 
+\cite{sysarch-github-1}
+Das Ziel von Github ist es, eine benutzerfreundliche Oberfläche für Git zur verfügung zu stellen, mit der man auch mit weniger technischem Wissen die Vorteile von Git ausnutzen kann.
+\cite{sysarch-github-2}
+Als Unternehmen verdient GitHub Geld, indem es gehostete private Code-Repositories sowie andere geschäftsorientierte Pläne verkauft, 
+die es Unternehmen erleichtern, Teammitglieder und Sicherheit zu verwalten.
+\cite{sysarch-github-2}
+
+\subsubsection{Github Issies}
+
+
+
+
+\subsection{Intellij IDEA}
+\includegraphics[scale=0.05]{pics/intellijIdeaLogo.png}
+
+
+Zur Entwicklung des Java Backends verwenden wir die IDE Intellij IDEA in der Ultimate Edition vom tschechische 
+Software Unternehmen Jetbrains. Intellij enthält eine Vielzahl an Tools welche das Arbeiten um einiges erleichtern, 
+zum Beispiel einen Direkten Zugang zu Datenbanken aller Art wie die von uns verwendete PostgresSQL Datenbank 
+oder die kompabilität mit allerlei Versionsverwaltungssytemen wie Github oder Bitbucket.
+
+\subsection{WebStorm}
+\includegraphics[scale=0.025]{pics/WebStormLogo.svg.png}
+
+
+Obwohl es möglich wäre mit Intellij ein Angular Projekt zu entwickeln haben wir uns bei der Frontend Entwicklung 
+für die IDE Webstorm entschieden. Diese ist genauso wie Intellij von Jetbrains doch enthält mehr support für die 
+Programmiersprachen JavaScript und TypeScript, sowie einen Built-in Debugger für Client-Side JavaScript und Node.js 
+
+\subsection{Quarkus}
+\includegraphics[scale=0.015]{pics/quarkusLogo.png}
+
+Quarkus ist ein Framework zur Erstellung von Java-Anwendungen mit dem Java speziell für Container optimiert wird. 
+Es bietet eine effektive Plattform für Serverless-, Cloud- und Kubernetes Umgebungen. Der Hersteller Redhat wirbt 
+auch mit schnellen Startzeiten und geringen Speicherplatzverbrauch. Dise erzielt Quarkus dadurch dass es den Code schon Buildvorgangs verabeitet.
+
+\subsection{Maven}
+\includegraphics[scale=0.015]{pics/apacheMavenLogo.svg.png}
+
+Maven ist ein Build Atomation Tool welches hauptsächlich für Java verwendet wird und folgt dem Ansatz Konvention vor Konfiguration. TODO
+
+
+\subsection{Angular}
+\includegraphics[scale=0.02]{pics/angularLogo.svg.png}
+
+Angular ist ein Client-Side JavaScript Framework zur Erstellung von Single-Page-Webapplications. 
+Seine komponentenbasierte Architektur welche View und Logik trennt macht es für den Entwickler leicht 
+Applikationen zu warten und testen. Dabei verwendet Angular TypeScript für den Code-Behind und HTML als Auszeichnungssprache. 
+Die vielen gut integrierten Libraries decken Features wie Routing, Verwaltung von Formulare und Client-Server Kommunikation ab. 
+
+\subsection{PostgreSQL}
+\includegraphics[scale=0.015]{pics/postgresqlLogo.svg.png}
+
+PostgreSQL ist eine objektrelationale Datenbank welche sich durch ihre Stabilität und freie Verfügbarkeit auszeichnet. 
+Sie hält sich dabei sehr eng an den SQL-Standard. Es werden eine Vielzahl von Datentypen und Operatorn unterstützt und 
+Entwickler können auch eigene Datentypen definieren. Ein weitetere großer Vorteil von PostgreSQL ist auch dass es auf 
+jeder Hardware und auf beinahe jedem Betriebsystem läuft. 
+\subsection{Docker}
+\includegraphics[scale=0.05]{pics/dockerLogo.png}
+
+Docker ist eine Software zur Containervirtualisierung . Die Container sind voneinander isoliert und haben ihre eigene Software, 
+Libraries sowie Konfigurationsdatein. Kommunizieren können sie über vorher genau definierte Kanäle. Da alle Container 
+auf dem selben OS-Kernel laufen brauchen sie weniger Resourcen wie eine Virtuele Maschine.
