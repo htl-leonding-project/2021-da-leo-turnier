@@ -58,6 +58,7 @@ export class TournamentComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       this.tournamentForm.setValue({name: tournament.name, sportType: tournament.sportType, tournamentMode: tournament.tournamentMode, startDate: tournament.startDate, endDate: tournament.endDate, competitors: tournament.competitors});
       this.dataSource.data = tournament.competitors;
+      console.log(this.dataSource.data);
     }
     this.filteredSportTypes = this.tournamentForm.valueChanges.pipe(
       startWith(''),
@@ -97,7 +98,6 @@ export class TournamentComponent implements OnInit {
     const allCompetitors: Competitor[] = await this.tournamentApi.getCompetitors();
     console.log(allCompetitors);
     console.log(this.dataSource.data);
-
 
     const dialogRef = this.dialog.open(TournamentDialogComponent, {
       width: '250px',
