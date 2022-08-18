@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Player} from '../model/player.model';
 import {HttpClient} from '@angular/common/http';
 import {DatePipe} from '@angular/common';
+import {KeycloakService} from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import {DatePipe} from '@angular/common';
 export class PlayerService {
   private host = 'http://localhost:8080/api/player';
 
-  constructor(private httpClient: HttpClient, public datePipe: DatePipe) {
+  constructor(private httpClient: HttpClient, public datePipe: DatePipe, private keycloakService: KeycloakService) {
   }
 
   async getPlayers(): Promise<Player[]>{
@@ -27,11 +28,19 @@ export class PlayerService {
     // @ts-ignore
     const player = new Player(null, value.name, this.datePipe.transform(value.birthdate, 'yyyy-MM-dd'), null);
     console.log(JSON.stringify(player));
-    const headers = { 'content-type': 'application/json'};
+
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
+    console.log(headers);
     await this.httpClient.post(this.host, JSON.stringify(player), {headers}).subscribe(
       data => console.log('success', data),
       error => console.log('oops', error)
     );
+
+    await new Promise(f => setTimeout(f, 10));
   }
 
   async updatePlayer(id: string, value: any, team: any): Promise<void>{

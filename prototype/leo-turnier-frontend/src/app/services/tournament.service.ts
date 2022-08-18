@@ -8,6 +8,7 @@ import {Node} from '../model/node.model';
 import {SportType} from '../model/sport-type.model';
 import {TournamentMode} from '../model/tournament-mode.model';
 import {TournamentDTO} from '../model/tournamentDTO.model';
+import {KeycloakService} from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ import {TournamentDTO} from '../model/tournamentDTO.model';
 export class TournamentService {
   private host = 'http://localhost:8080/api/';
 
-  constructor(private httpClient: HttpClient, public datePipe: DatePipe) {
+  constructor(private httpClient: HttpClient, public datePipe: DatePipe, private keycloakService: KeycloakService) {
   }
 
   async getTournaments(): Promise<Tournament[]>{
@@ -53,13 +54,21 @@ export class TournamentService {
     // tslint:disable-next-line:max-line-length
     const tournament = new TournamentDTO(null, value.name, this.datePipe.transform(value.startDate, 'yyyy-MM-dd'), this.datePipe.transform(value.endDate, 'yyyy-MM-dd'), new SportType(value.sportType), value.tournamentMode);
     console.log(JSON.stringify(tournament));
-    const headers = { 'content-type': 'application/json', Authorization: 'Basic admin adminpwd'};
+
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
     console.log(headers);
+
     await this.httpClient.post(this.host + 'tournament', JSON.stringify(tournament), {headers}).subscribe(
       data => console.log('success', data),
       // tslint:disable-next-line:no-shadowed-variable
       error => console.log('oops', error)
     );
+
+    await new Promise(f => setTimeout(f, 10));
   }
 
   async updateTournament(id: string, value: any): Promise<void> {
@@ -67,8 +76,14 @@ export class TournamentService {
     // tslint:disable-next-line:max-line-length
     const tournament = new TournamentDTO(+id, value.name, this.datePipe.transform(value.startDate, 'yyyy-MM-dd'), this.datePipe.transform(value.endDate, 'yyyy-MM-dd'), value.sportType, value.tournamentMode);
     console.log(JSON.stringify(tournament));
-    await new Promise(f => setTimeout(f, 100));
-    const headers = { 'content-type': 'application/json'};
+
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
+    console.log(headers);
+
     await this.httpClient.put(this.host + 'tournament?id=' + id, JSON.stringify(tournament), {headers}).subscribe(
       data => console.log('success', data),
       // tslint:disable-next-line:no-shadowed-variable
@@ -77,9 +92,18 @@ export class TournamentService {
   }
 
   async startTournament(id: number): Promise<void> {
-    const headers = {Authorization: 'Basic ' + btoa('admin:adminpwd')};
+    const authToken = this.keycloakService.getToken();
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
     console.log(headers);
-    await this.httpClient.get(this.host + 'execution/startTournament?tournamentId=' + id, {headers}).toPromise();
+    await this.httpClient.get(this.host + 'execution/startTournament?tournamentId=' + id, {headers}).subscribe(
+      data => console.log('success', data),
+      error => console.log('oops', error)
+    );
+    await new Promise(f => setTimeout(f, 10));
   }
 
   async getRunningTournaments(): Promise<Tournament[]> {
@@ -114,6 +138,14 @@ export class TournamentService {
 
   async addParticipationForCompetitor(tournamentId: number, competitorId: number): Promise<void> {
     console.log(this.host + 'participation?tournamentId=' + tournamentId + '&competitorId=' + competitorId);
+
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
+    console.log(headers);
+
     this.httpClient.post(this.host + 'participation?tournamentId=' + tournamentId + '&competitorId=' + competitorId, null).subscribe(
       (response) => {
         console.log(response);
@@ -122,7 +154,31 @@ export class TournamentService {
   }
 
   async deleteTournament(id: number): Promise<void> {
-    this.httpClient.delete(this.host + 'tournament?id=' + id).subscribe(
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
+    console.log(headers);
+
+    this.httpClient.delete(this.host + 'tournament?id=' + id, {headers}).subscribe(
+      data => console.log('succes', data),
+      // tslint:disable-next-line:no-shadowed-variable
+      error => console.log('oops', error)
+    );
+  }
+
+  async deleteParticipation(tournamentId: string, compId: number): Promise<void> {
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
+    console.log(headers);
+
+    console.log(tournamentId + ' ' + compId);
+
+    this.httpClient.delete(this.host + 'participation?tournamentId=' + tournamentId + '&competitorId=' + compId, {headers}).subscribe(
       data => console.log('succes', data),
       // tslint:disable-next-line:no-shadowed-variable
       error => console.log('oops', error)

@@ -58,6 +58,7 @@ export class TournamentComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       this.tournamentForm.setValue({name: tournament.name, sportType: tournament.sportType, tournamentMode: tournament.tournamentMode, startDate: tournament.startDate, endDate: tournament.endDate, competitors: tournament.competitors});
       this.dataSource.data = tournament.competitors;
+      console.log(this.dataSource.data);
     }
     this.filteredSportTypes = this.tournamentForm.valueChanges.pipe(
       startWith(''),
@@ -98,7 +99,6 @@ export class TournamentComponent implements OnInit {
     console.log(allCompetitors);
     console.log(this.dataSource.data);
 
-
     const dialogRef = this.dialog.open(TournamentDialogComponent, {
       width: '250px',
       data: {competitors: this.getCompetitorsWithNoParticipation(allCompetitors)},
@@ -114,11 +114,17 @@ export class TournamentComponent implements OnInit {
   }
 
   private getCompetitorsWithNoParticipation(allCompetitors: Competitor[]): Competitor[] {
-    if (this.tournamentForm.value.competitors !== null){
-      return allCompetitors.filter(item => !this.tournamentForm.value.competitors.includes(item));
-    }
-    else {
+    if (this.tournamentForm.value.competitors !== null) {
+      // tslint:disable-next-line:only-arrow-functions typedef
+      return allCompetitors.filter(item => !this.dataSource.data.map(function(x) { // @ts-ignore
+        return x.competitor.id; }).includes(item.id));
+    } else {
       return allCompetitors;
     }
+  }
+
+  async deleteParticipation(id: number): Promise<void> {
+    await this.tournamentApi.deleteParticipation(this.id, id);
+    window.location.reload();
   }
 }

@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'team', component: TeamOverviewComponent},
   { path: 'team/:id', component: TeamComponent},
   { path: 'matches/:id', component: MatchOverviewComponent},
-  { path: 'match-submition/:id', component: MatchSubmitionComponent},
+  { path: 'match-submition/:id/:tournamentId', component: MatchSubmitionComponent},
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard]}
 ];
 

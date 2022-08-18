@@ -32,7 +32,7 @@ public class MatchService {
     }
 
     @PUT
-    @RolesAllowed({"admin"})
+    @RolesAllowed({"tournament-organizer"})
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("id") Long id, Match match, @Context UriInfo info) {

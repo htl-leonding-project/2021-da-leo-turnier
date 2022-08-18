@@ -17,6 +17,7 @@ export class TournamentDialogComponent{
     public dialogRef: MatDialogRef<TournamentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {
+    console.log('hellooo');
     console.log(data.competitors);
   }
 
