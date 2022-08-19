@@ -51,6 +51,8 @@ public class EliminationRepository {
             Match nextMatch = node.getNextNode().getMatch();
             if (nextMatch == null) {
                 nextMatch = matchRepository.add(new Match());
+                node.getNextNode().setMatch(nextMatch);
+                nodeRepository.modify(node.getNextNode().getId(), node.getNextNode());
             }
             if (nextMatch.getCompetitor1() == null) {
                 nextMatch.setCompetitor1(winner);
