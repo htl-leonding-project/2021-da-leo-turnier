@@ -9,6 +9,7 @@ import {SportType} from '../model/sport-type.model';
 import {TournamentMode} from '../model/tournament-mode.model';
 import {TournamentDTO} from '../model/tournamentDTO.model';
 import {KeycloakService} from 'keycloak-angular';
+import {Participation} from '../model/participation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -183,5 +184,11 @@ export class TournamentService {
       // tslint:disable-next-line:no-shadowed-variable
       error => console.log('oops', error)
     );
+  }
+
+  async getPlacements(id: string): Promise<Participation[]> {
+    console.log(await this.httpClient.get<Participation[]>(this.host + 'participation?tournamentId=' + id).toPromise());
+
+    return await this.httpClient.get<Participation[]>(this.host + 'participation?tournamentId=' + id).toPromise();
   }
 }

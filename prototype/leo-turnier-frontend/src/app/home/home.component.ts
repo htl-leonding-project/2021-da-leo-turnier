@@ -22,6 +22,16 @@ export class HomeComponent implements OnInit {
     this.dataSource.data = await this.api.getRunningTournaments();
   }
 
+  async showVisuals(element: any): Promise<void> {
+    if (element.tournamentMode.name === 'Elimination'){
+      await this.showTree(element);
+    }
+    if (element.tournamentMode.name === 'Round Robin') {
+      console.log(element);
+      await this.router.navigate(['tournament-table/' + element.id]);
+    }
+  }
+
   async showTree(element: any): Promise<void> {
     const tournament: NgttTournament = {rounds: Array()};
 
