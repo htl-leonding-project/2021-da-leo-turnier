@@ -82,7 +82,7 @@ public class ExecutionRepository {
         Tournament tournament = node.getPhase().getTournament();
         if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
             roundRobinRepository.rankCompetitors(tournament, -1);
-            roundRobinRepository.setFinished(tournament);
+            //roundRobinRepository.setFinished(tournament);
             return node.getMatch();
         } else if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Combination")) {
             if (node.getPhase().getGroupNumber() != -1) {
