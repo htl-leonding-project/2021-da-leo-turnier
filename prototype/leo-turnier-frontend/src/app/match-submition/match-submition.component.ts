@@ -47,11 +47,10 @@ export class MatchSubmitionComponent implements OnInit {
     console.log(action);
 
     await this.api.updateMatch(this.match);
-    await new Promise(f => setTimeout(f, 100));
+    await new Promise(f => setTimeout(f, 10));
 
     if (action === 'Finish'){
       await this.api.finishMatch(this.id);
-      console.log('in');
     }
 
     this.router.navigate(['/matches/' + this.tournamentId]).then(() => {
