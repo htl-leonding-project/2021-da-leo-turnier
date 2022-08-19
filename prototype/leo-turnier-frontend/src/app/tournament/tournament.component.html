@@ -46,7 +46,7 @@
     </div>
   </form>
 </div>
-<div>
+<div *ngIf="id != '0'">
   <h2>Competitors:</h2>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="name">

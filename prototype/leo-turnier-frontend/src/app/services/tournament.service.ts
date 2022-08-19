@@ -91,7 +91,7 @@ export class TournamentService {
     );
   }
 
-  async startTournament(id: number): Promise<void> {
+  async startTournament(id: string): Promise<void> {
     const authToken = this.keycloakService.getToken();
 
     const headers = {
