@@ -9,8 +9,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @ApplicationScoped
@@ -55,7 +53,8 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
         TypedQuery<Competitor> getById = getEntityManager().createQuery(
                 "select pt.competitor " +
                         "from Participation pt " +
-                        "where pt.tournament.id = :tournamentId ", Competitor.class);
+                        "where pt.tournament.id = :tournamentId " +
+                        "order by pt.placement, pt.seed", Competitor.class);
         getById.setParameter("tournamentId", tournamentId);
         return getById.getResultList();
     }

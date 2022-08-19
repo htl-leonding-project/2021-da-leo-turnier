@@ -72,7 +72,8 @@ public class ParticipationRepository implements PanacheRepository<Participation>
         TypedQuery<Participation> getById = getEntityManager().createQuery(
                 "select pt " +
                         "from Participation pt " +
-                        "where pt.tournament.id = :tournamentId ", Participation.class);
+                        "where pt.tournament.id = :tournamentId " +
+                        "order by pt.placement, pt.seed", Participation.class);
         getById.setParameter("tournamentId", tournamentId);
         return getById.getResultList();
     }

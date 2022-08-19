@@ -52,12 +52,12 @@ public class Participation {
     @EmbeddedId
     ParticipationId id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "PT_T_ID")
     @MapsId("tournamentId")
     Tournament tournament;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "PT_C_ID")
     @MapsId("competitorId")
     Competitor competitor;
