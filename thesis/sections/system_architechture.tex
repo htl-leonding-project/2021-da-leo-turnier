@@ -54,11 +54,11 @@ oder ein existierendes nochmal initialisieren, alternativ kann man mit "git clon
 kann, muss man es zunächst mit "git add" zum Repository hinzufügen, das ganze kann dann mit "git rm" wieder rückgängig gemacht werden. Mit "git status" wird der 
 momentane Status aller Files im Repository angezeigt, dass heißt, ob das File neu im Repository ist, ob es seit dem letzten Mal Speichern verändert wurde, oder ob es 
 erst garnicht im Repository vorhanden ist. Nun kann man mit "git commit" den momentanen Status des Repositories als neue Version speichern und mit "git push" an ein "remote" 
-Repository senden. Als letzter wichtiger Befehl gilt noch "git branch", hiermit kann man das Repository in verschiedene "Branches" aufteilen und so neue Features getrennt voneinander
-entwickeln, und diese dann mit "git merge" im Hauptbranch zusammenfügen.
+Repository senden. Als letzter wichtiger Befehl gilt noch "git branch", hiermit kann man das Repository in verschiedene "Branches" aufteilen und so 
+neue Features getrennt voneinander entwickeln, und diese dann mit "git merge" im Hauptbranch zusammenfügen.
 \cite{sysarch-git-2}
 
-\subsection{GitHub}
+\subsection{Github}
 \includegraphics[scale=0.05]{pics/github.png}
 
 Github ist ein Cloud-basiertes Repository Hosting Service, das die verteilte Versionskontrolle von Git zur verfügung stellt. Es wurde 2008 von Chris Wanstrath, P. J. Hyett, 
@@ -71,19 +71,45 @@ Als Unternehmen verdient GitHub Geld, indem es gehostete private Code-Repositori
 die es Unternehmen erleichtern, Teammitglieder und Sicherheit zu verwalten.
 \cite{sysarch-github-2}
 
-\subsubsection{Github Issies}
+\subsubsection{Github Issues}
 
+Github verfügt über einen integrierten issue tracken, mit dem sich Issues auf GitHub verwalten lassen. Ein Issue ist eine 
+Aufgabe im Projekt, die mit dem Titel kurz, und dann in der Beschreibung genauer beschrieben wird, und einem bestimmten Entwickler 
+zugeteilt wird. Ein Issue kann den Status "open" oder "closed" haben, "open" bedeutet, dass die Aufgabe noch nicht erfüllt wurde, und 
+"closed" bedeutet dass die Aufgabe schon erfüllt ist. Github Issues haben gegenüber von anderen issue trackern vorallem einem Vorteil, 
+weil es direkt dort ist, wo auch der Quellcode zu finden ist, jedoch ist es weit nicht so mächtig wie manch andere Optionen, wesshalb 
+sich bei dieser Arbeit nicht für Github Issues entschieden wurde.
+\cite{sysarch-github-3}
 
+\subsubsection{Github Actions}
 
+GitHub Actions ist ein in Github integriertes Tool, um Prozesse in einem Softwareprojekt zu automatisieren. 
+Dadurch kann man Workflows für dein Repository erstellen. Ein Workflow besteht aus einem oder mehreren Jobs, 
+wobei ein Job aus einem oder mehreren Schritten besteht. Man kann festlegen, ob Workflows in einem Container oder in einer virtuellen 
+Maschine ausgeführt werden sollen. Die Ausführung kann unter den gängigen Betriebssystemen Windows, Linux und macOS erfolgen. 
+Workflows werden durch Events wie beispielsweise ein Push auf das Repository ausgelöst und ausgeführt. Wenn ein Workflow ausgeführt wird, 
+arbeitet er alle seine Jobs, sowie Schritte ab und erstellt dir ein umfangreiches Feedback mit Logs und Ausführungszeiten. 
+Das Feedback kann individuell für jeden Schritt angepasst werden. Eine Action wird in der Web-Oberfläche von GitHub erstellt. 
+Praktischerweise kann eine erstellte Action geteilt und wiederverwendet werden.
+\cite{sysarch-github-4}
+
+\subsubsection{Github Packages}
+
+Ein Package ist ein wiederverwendbares Stück Software, das von einer globalen Registry in die lokale Umgebung eines Entwicklers heruntergeladen und 
+in den Anwendungscode integriert werden kann. Da Pakete als wiederverwendbare "Bausteine" fungieren und in der Regel allgemeine Anforderungen erfüllen 
+(z. B. API-Fehlerbehandlung), können sie zur Verkürzung der Entwicklungszeit beitragen. Github Packages ist ein Package Managing Service, 
+der die Veröffentlichung von Packages erleichtert und vollständig in GitHub integriert ist. Alles befindet sich an einem Ort, 
+sodass man zum Suchen und Veröffentlichen von Paketen dieselben Such-, Browsing- und Verwaltungstools verwenden kann wie für Repositories.
+\cite{sysarch-github-5}
 
 \subsection{Intellij IDEA}
 \includegraphics[scale=0.05]{pics/intellijIdeaLogo.png}
 
-
-Zur Entwicklung des Java Backends verwenden wir die IDE Intellij IDEA in der Ultimate Edition vom tschechische 
-Software Unternehmen Jetbrains. Intellij enthält eine Vielzahl an Tools welche das Arbeiten um einiges erleichtern, 
-zum Beispiel einen Direkten Zugang zu Datenbanken aller Art wie die von uns verwendete PostgresSQL Datenbank 
-oder die kompabilität mit allerlei Versionsverwaltungssytemen wie Github oder Bitbucket.
+IntelliJ IDEA ist eine intelligente, kontextsensitive IDE für Java und andere JVM-Sprachen wie Kotlin, Scala und Groovy, die sich für zahlreiche 
+Anwendungsbereiche eignet. Auch bei der Entwicklung von Full-Stack-Webanwendungen hilft IntelliJ IDEA Ultimate mit leistungsstarken integrierten Tools, 
+Unterstützung für JavaScript und verwandte Technologien sowie erweiterte Unterstützung für gängige Frameworks wie Spring, Spring Boot, Jakarta EE, Micronaut, 
+Quarkus oder Helidon. Darüber hinaus kann IntelliJ IDEA mit kostenlosen Plugins von JetBrains erweitern, um die IDE mit anderen Programmiersprachen wie 
+Go, Python, SQL, Ruby und PHP einzusetzen.
 
 \subsection{WebStorm}
 \includegraphics[scale=0.025]{pics/WebStormLogo.svg.png}
