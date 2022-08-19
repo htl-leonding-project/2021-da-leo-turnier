@@ -32,7 +32,7 @@ export class TournamentComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     sportType: new FormControl(),
     tournamentMode: new FormControl('', Validators.required),
-    startDate: new FormControl(''),
+    startDate: new FormControl(),
     endDate: new FormControl(''),
     competitors: new FormControl()
   });
@@ -56,8 +56,11 @@ export class TournamentComponent implements OnInit {
       const tournament = await this.tournamentApi.getTournament(this.id);
       console.log(tournament);
       // tslint:disable-next-line:max-line-length
-      this.tournamentForm.setValue({name: tournament.name, sportType: tournament.sportType, tournamentMode: tournament.tournamentMode, startDate: tournament.startDate, endDate: tournament.endDate, competitors: tournament.competitors});
+      this.tournamentForm.setValue({name: tournament.name, sportType: tournament.sportType, tournamentMode: tournament.tournamentMode, startDate: tournament.startDate ?? null, endDate: tournament.endDate ?? null, competitors: tournament.competitors});
       this.dataSource.data = tournament.competitors;
+      console.log('there');
+      console.log(this.tournamentForm.value);
+      await new Promise(f => setTimeout(f, 100000));
       console.log(this.dataSource.data);
     }
     this.filteredSportTypes = this.tournamentForm.valueChanges.pipe(
