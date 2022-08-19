@@ -82,7 +82,7 @@ public class ParticipationRepository implements PanacheRepository<Participation>
                 "select pt " +
                         "from Participation pt " +
                         "where pt.tournament.id = :tournamentId " +
-                        "order by pt.placement, pt.seed", Participation.class);
+                        "order by pt.placement desc, pt.seed desc", Participation.class);
         getById.setParameter("tournamentId", tournamentId);
         return getById.getResultList();
     }
