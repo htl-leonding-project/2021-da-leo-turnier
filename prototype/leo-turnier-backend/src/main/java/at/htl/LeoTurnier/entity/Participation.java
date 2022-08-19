@@ -76,6 +76,7 @@ public class Participation {
         this.tournament = tournament;
         this.competitor = competitor;
         this.id = new ParticipationId();
+        this.seed = 0;
     }
 
     public Tournament getTournament() {
