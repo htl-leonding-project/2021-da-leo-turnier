@@ -157,18 +157,7 @@ public class EliminationRepository {
         competitors.sort((c1, c2) -> {
             Participation p1 = participationRepository.getById(tournament.getId(), c1.getId());
             Participation p2 = participationRepository.getById(tournament.getId(), c2.getId());
-            if (p1.getSeed() == null && p2.getSeed() == null) {
-                return 0;
-            } else if (p2.getSeed() == null) {
-                return -1;
-            } else if (p1.getSeed() == null) {
-                return 1;
-            } else if (p1.getSeed() < p2.getSeed()) {
-                return -1;
-            } else if (p1.getSeed() > p2.getSeed()) {
-                return 1;
-            }
-            return 0;
+            return p1.compareTo(p2);
         });
     }
 

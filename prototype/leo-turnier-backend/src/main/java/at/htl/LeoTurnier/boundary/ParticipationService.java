@@ -40,15 +40,9 @@ public class ParticipationService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modify(@QueryParam("tournamentId") Long tournamentId, @QueryParam("competitorId") Long competitorId, Participation participation, @Context UriInfo info) {
-        if (repository.getById(tournamentId, competitorId) == null ||
-                participation.getPlacement() == null && participation.getSeed() == null) {
+        participation = repository.modify(tournamentId, competitorId, participation);
+        if (participation == null) {
             return Response.status(204).build();
-        }
-        if (participation.getPlacement() != null) {
-            repository.modifyPlacement(tournamentId, competitorId, participation.getPlacement());
-        }
-        if (participation.getSeed() != null) {
-            repository.modifySeed(tournamentId, competitorId, participation.getSeed());
         }
         return Response.created(info
                 .getAbsolutePathBuilder()

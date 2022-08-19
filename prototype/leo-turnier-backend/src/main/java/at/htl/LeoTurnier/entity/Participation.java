@@ -47,7 +47,7 @@ class ParticipationId implements Serializable {
 
 @Entity
 @Table(name = "PT_PARTICIPATION")
-public class Participation {
+public class Participation implements Comparable<Participation> {
 
     @EmbeddedId
     ParticipationId id;
@@ -63,10 +63,10 @@ public class Participation {
     Competitor competitor;
 
     @Column(name = "PT_PLACEMENT")
-    Integer placement;
+    int placement;
 
     @Column(name = "PT_SEED")
-    Integer seed;
+    int seed;
 
     public Participation() {
         this(null, null);
@@ -94,7 +94,7 @@ public class Participation {
         this.competitor = competitor;
     }
 
-    public Integer getPlacement() {
+    public int getPlacement() {
         return placement;
     }
 
@@ -102,11 +102,26 @@ public class Participation {
         this.placement = placement;
     }
 
-    public Integer getSeed() {
+    public int getSeed() {
         return seed;
     }
 
     public void setSeed(Integer seed) {
         this.seed = seed;
+    }
+
+
+    @Override
+    public int compareTo(Participation p) {
+        if (this.getSeed() > 0 && p.getSeed() == 0) {
+            return -1;
+        } else if (this.getSeed() == 0 && p.getSeed() > 0) {
+            return 1;
+        } else if (this.getSeed() < p.getSeed()) {
+            return -1;
+        } else if (this.getSeed() > p.getSeed()) {
+            return 1;
+        }
+        return 0;
     }
 }

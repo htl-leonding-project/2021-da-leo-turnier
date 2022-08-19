@@ -39,6 +39,15 @@ public class ParticipationRepository implements PanacheRepository<Participation>
         return participation;
     }
 
+    public Participation modify(Long tournamentId, Long competitorId, Participation participation) {
+        Participation toModify = getById(tournamentId, competitorId);
+        if (toModify != null) {
+            toModify.setPlacement(participation.getPlacement());
+            toModify.setSeed(participation.getSeed());
+        }
+        return toModify;
+    }
+
     public Participation modifyPlacement(Long tournamentId, Long competitorId, int placement) {
         Participation toModify = getById(tournamentId, competitorId);
         if (toModify != null) {
