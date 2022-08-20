@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TournamentService} from '../services/tournament.service';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatchService} from '../services/match.service';
 
 @Component({
   selector: 'app-tournament-table',
@@ -14,7 +15,10 @@ export class TournamentTableComponent implements OnInit {
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['competitor', 'placement'];
 
-  constructor(public activatedRouter: ActivatedRoute, private api: TournamentService) {
+  matchDataSource = new MatTableDataSource();
+  matchDisplayedColumns: string[] = ['competitor1', 'score', 'competitor2'];
+
+  constructor(public activatedRouter: ActivatedRoute, private api: TournamentService, private matchApi: MatchService) {
     // @ts-ignore
     activatedRouter.paramMap.subscribe(map => this.id = map.get('id'));
   }
@@ -23,6 +27,7 @@ export class TournamentTableComponent implements OnInit {
     this.tournament = await this.api.getTournament(this.id);
     const placements = await this.api.getPlacements(this.id);
     this.dataSource.data = placements.sort((n1, n2) => n1.placement - n2.placement);
+    this.matchDataSource.data = await this.matchApi.getMatches(this.id);
     console.log(this.dataSource.data);
     console.log(this.tournament);
   }

@@ -1,14 +1,32 @@
-<p>tournament-table works!</p>
-{{tournament.name + ':'}}
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container matColumnDef="competitor">
-    <th mat-header-cell *matHeaderCellDef> Competitor </th>
-    <td mat-cell *matCellDef="let element"> {{element.competitor.name}} </td>
-  </ng-container>
-  <ng-container matColumnDef="placement">
-    <th mat-header-cell *matHeaderCellDef> Placement </th>
-    <td mat-cell *matCellDef="let element"> {{element.placement}} </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<div style="margin: 10px 0 0 10px;">
+  <h1>{{tournament.name + ':'}}{{tournament.sportType.name}}</h1>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="competitor">
+      <th mat-header-cell *matHeaderCellDef> Competitor</th>
+      <td mat-cell *matCellDef="let element"> {{element.competitor.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="placement">
+      <th mat-header-cell *matHeaderCellDef> Placement</th>
+      <td mat-cell *matCellDef="let element"> {{element.placement}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <h2 style="margin-top: 20px">Spiele:</h2>
+  <table mat-table [dataSource]="matchDataSource" class="mat-elevation-z8" style="width: 50%">
+    <ng-container matColumnDef="competitor1">
+      <th mat-header-cell *matHeaderCellDef> Competitor 1 </th>
+      <td mat-cell *matCellDef="let element"> {{element.competitor1.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="score">
+      <th mat-header-cell *matHeaderCellDef> Score </th>
+      <td mat-cell *matCellDef="let element"> {{element.score1}} : {{element.score2}}</td>
+    </ng-container>
+    <ng-container matColumnDef="competitor2">
+      <th mat-header-cell *matHeaderCellDef> Competitor 2 </th>
+      <td mat-cell *matCellDef="let element"> {{element.competitor2.name}} </td>
+    </ng-container>
+      <tr mat-header-row *matHeaderRowDef="matchDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: matchDisplayedColumns;"></tr>
+  </table>
+</div>
