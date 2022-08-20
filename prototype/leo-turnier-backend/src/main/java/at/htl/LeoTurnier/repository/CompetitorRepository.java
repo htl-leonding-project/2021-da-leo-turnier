@@ -54,7 +54,7 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
                 "select pt.competitor " +
                         "from Participation pt " +
                         "where pt.tournament.id = :tournamentId " +
-                        "order by pt.placement desc, pt.seed desc", Competitor.class);
+                        "order by pt.placement, pt.seed", Competitor.class);
         getById.setParameter("tournamentId", tournamentId);
         return getById.getResultList();
     }
