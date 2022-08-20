@@ -60,16 +60,11 @@ public class CompetitorRepository implements PanacheRepository<Competitor> {
     }
 
     public List<Competitor> getAll() {
-        List<Competitor> competitors = listAll();
-        competitors.sort(((o1, o2) -> {
-            if (o1.getId() < o2.getId()) {
-                return -1;
-            } else if (o1.getId() > o2.getId()) {
-                return 1;
-            }
-            return 0;
-        }));
-        return competitors;
+        TypedQuery<Competitor> getById = getEntityManager().createQuery(
+                "select c " +
+                        "from Competitor c " +
+                        "order by c.id", Competitor.class);
+        return getById.getResultList();
     }
 
     public Competitor delete(Long id) {

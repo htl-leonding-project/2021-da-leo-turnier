@@ -97,7 +97,11 @@ public class ParticipationRepository implements PanacheRepository<Participation>
     }
 
     public List<Participation> getAll() {
-        return listAll();
+        TypedQuery<Participation> getById = getEntityManager().createQuery(
+                "select pt " +
+                        "from Participation pt " +
+                        "order by pt.placement, pt.seed", Participation.class);
+        return getById.getResultList();
     }
 
     public Participation delete(Long tournamentId, Long competitorId) {
