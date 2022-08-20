@@ -102,7 +102,7 @@ public class RoundRobinRepository {
                         participationRepository.getById(tournament.getId(),
                                 previousCompetitorDto.getId()).getPlacement());
             } else {
-                participationRepository.modifyPlacement(tournament.getId(), competitorDtos.get(i).getId(), i);
+                participationRepository.modifyPlacement(tournament.getId(), competitorDtos.get(i).getId(), i + 1);
             }
         }
     }
@@ -146,13 +146,13 @@ public class RoundRobinRepository {
 
         competitorDtos.sort((c1, c2) -> {
             if (c1.getWins() > c2.getWins()) {
-                return 1;
+                return -1;
             } else if (c1.getWins() < c2.getWins()) {
-                return -1;
-            } else if (c1.getPoints() > c2.getPoints()) {
                 return 1;
-            } else if (c1.getPoints() < c2.getPoints()) {
+            } else if (c1.getPoints() > c2.getPoints()) {
                 return -1;
+            } else if (c1.getPoints() < c2.getPoints()) {
+                return 1;
             }
             return 0;
         });
