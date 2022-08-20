@@ -1,4 +1,5 @@
 \section{Git}
+\setauthor{Hain Lukas}
 \includegraphics[scale=0.075]{pics/logos/gitLogo.png}
 
 Git ist das mit Abstand am weitesten verbreitete Versionskontrollsystem der Welt. Der Name Git wird aus der britischen 
@@ -18,20 +19,17 @@ Ein Versionskontrollsystem wie Git wird in der Softwareentwicklung verwendet,
 um Änderungen des Quellcodes zu speichern und zu verwalten. 
 Hier gibt es drei Arten von Versionskontrollsystemen:
 \cite{sysarch-git-2}
-\begin{itemize}
- \item lokale Versionsverwaltung (Local Version Control System - LVCS): 
-\end{itemize}
+
+\subsubsection{lokale Versionsverwaltung (Local Version Control System - LVCS)}
 Hier werden Dateien lokal einfach nur in ein separates Verzeichnis kopiert.
 \cite{sysarch-git-2}
-\begin{itemize}
- \item zentrale Versionsverwaltung (Centralized Version Control System - CVCS):
-\end{itemize}
+
+\subsubsection{zentrale Versionsverwaltung (Centralized Version Control System - CVCS)}
 Hier gibt es einen einen zentralen Server, der alle versionierten Dateien verwaltet und es Personen ermöglicht, 
 Dateien von diesem zentralen Repository abzuholen und auf ihren PC zu übertragen.
 \cite{sysarch-git-2}
-\begin{itemize}
- \item verteilten Versionsverwaltung (Distributed Version Control System - DVCS):
-\end{itemize}
+
+\subsubsection{verteilten Versionsverwaltung (Distributed Version Control System - DVCS)}
 Wie weiter oben schon angesprochen ist diese Variante jene, die von Git benutzt wird. Hier gibt es zwar ein zentrales Repository, 
 aber jede Person  hat eine Kopie des Repositories und somit die vollständigen Projektdaten.
 \cite{sysarch-git-2}
@@ -48,6 +46,7 @@ neue Features getrennt voneinander entwickeln, und diese dann mit "git merge" im
 \cite{sysarch-git-2}
 
 \section{Github}
+\setauthor{Hain Lukas}
 \includegraphics[scale=0.075]{pics/logos/githubLogo.png}
 
 Github ist ein Cloud-basiertes Repository Hosting Service, das die verteilte Versionskontrolle von Git zur verfügung stellt. Es wurde 2008 von Chris Wanstrath, P. J. Hyett, 
@@ -92,6 +91,7 @@ sodass man zum Suchen und Veröffentlichen von Paketen dieselben Such-, Browsing
 \cite{sysarch-github-5}
 
 \section{Intellij IDEA}
+\setauthor{Hain Lukas}
 \includegraphics[scale=0.05]{pics/logos/intellijIdeaLogo.png}
 
 IntelliJ IDEA ist eine intelligente, kontextsensitive IDE für Java und andere JVM-Sprachen wie Kotlin, Scala und Groovy, die sich für zahlreiche 
@@ -106,21 +106,18 @@ Go, Python, SQL, Ruby und PHP einzusetzen.
 Eine IDE (Integrated Development Environment) oder integrierte Entwicklungsumgebung ist Software für die Anwendungsentwicklung, 
 die gängige Entwicklertools in einer zentralen grafischen Oberfläche vereint. Eine typische IDE besteht aus folgenden Komponenten:
 \cite{sysarch-intellij-2}
-\begin{itemize}
- \item Quellcode-Editor 
-\end{itemize}
+
+\subsubsection{Quellcode-Editor }
 Ein Texteditor, der eine Programmierung von Software-Code mit folgenden Features unterstützt: 
 Syntaxhervorhebung mit visuellen Hinweisen, sprachspezifische Autovervollständigung und eine Bug-Prüfung, während der Code geschrieben wird.
 \cite{sysarch-intellij-2}
-\begin{itemize}
- \item Automatisierung lokaler Builds
-\end{itemize}
+
+\subsubsection{Automatisierung lokaler Builds}
 Dienstprogramme, mit denen sich einfache wiederholbare Aufgaben im Rahmen der Entwicklung lokaler Software-Builds zur Nutzung durch 
 die Entwickler automatisieren lassen, wie beispielsweise die Kompilierung von Quell- in Binärcode, dessen Paketierung und die Ausführung automatischer Tests.
 \cite{sysarch-intellij-2}
-\begin{itemize}
- \item Debugger
-\end{itemize}
+
+\subsubsection{Debugger}
 Ein Programm zur Prüfung anderer Programme, mit dem sich die Position von Bugs im Originalcode grafisch anzeigen lässt.
 \cite{sysarch-intellij-2}
 
@@ -149,7 +146,7 @@ Die IDE bietet spezielle Unterstützung unter anderem für Quarkus, Spring, Spri
 
 
 \section{WebStorm}
-\includegraphics[scale=0.025]{pics/logos/WebStormLogo.svg.png}
+\includegraphics[scale=0.025]{pics/logos/WebStormLogo.png}
 
 
 Obwohl es möglich wäre mit Intellij ein Angular Projekt zu entwickeln haben wir uns bei der Frontend Entwicklung 
@@ -158,6 +155,7 @@ Programmiersprachen JavaScript und TypeScript, sowie einen Built-in Debugger fü
 
 
 \section{Java}
+\setauthor{Hain Lukas}
 \includegraphics[scale=0.015]{pics/logos/javaLogo.png}
 
 Java ist nicht nur eine Programmiersprache, sondern ebenso ein Laufzeitsystem, was Oracle durch den Begriff Java Platform verdeutlichen will. 
@@ -190,6 +188,7 @@ generiert wurde, wird von der "Java Virtual Mashine" oder JVM ausgeführt, der i
 
 
 \section{Quarkus}
+\setauthor{Hain Lukas}
 \includegraphics[scale=0.015]{pics/logos/quarkusLogo.png}
 
 Quarkus ist ein Kubernetes-natives Full-Stack Java Framework für JVMs (Java Virtual Machines) und native Kompilierung, mit dem Java speziell für Container optimiert wird. 
@@ -197,16 +196,67 @@ Es bietet eine effektive Plattform für Serverless-, Cloud- und Kubernetes-Umgeb
 sowie für Apache Kafka, RESTEasy (JAX-RS), Hibernate ORM (JPA), Spring, Infinispan, Camel und viele mehr konzipiert.
 Die Dependency-Injection-Lösung von Quarkus basiert auf CDI (Contexts and Dependency Injection) und bietet ein Framework, mit dessen Hilfe die Funktionalität 
 erweitert und ein Framework konfiguriert, gebootet und in Ihre Anwendung integriert werden kann. 
+Quarkus wurde als benutzerfreundliches Tool konzipiert und integriert Funktionen, die keine oder nur wenig Konfiguration erfordern.
+Entwickler können die passenden Java Frameworks für ihre Anwendungen auswählen, die dann im JVM-Modus laufen oder kompiliert und im nativen Modus ausgeführt werden können.
+Das ganz auf Entwickler abgestimmte Quarkus integriert außerdem folgende Funktionen:
+\begin{itemize}
+    \item Live-Codierung zur umgehenden Prüfung der Auswirkungen von Code-Änderungen sowie eine schnelle Problembehebung
+    \item Einheitliche imperative und reaktive Programmierung mit einem eingebetteten gemanagten Event Bus
+    \item Einheitliche Konfiguration
+    \item Einfaches Generieren nativer Programmdateien
+\end{itemize}
+Ob man die Anwendungen auf einer Public Cloud oder in einem intern gehosteten Kubernetes-Cluster hosten, Eigenschaften wie ein schneller 
+Start sowie ein niedriger Speicherverbrauch sind wichtig, um die Gesamtkosten für das Hosting niedrig zu halten.
+Quarkus wurde auf Basis einer Container-first-Philosophie entwickelt und soll so einen niedrigen Speicherverbrauch und schnelle Startzeiten auf folgende Weise ermöglichen:
+\begin{itemize}
+    \item Erstklassiger Support für Graal/SubstrateVM
+    \item Metadaten-Verarbeitung gleichzeitig mit dem Build
+    \item Reduzierung der Reflektionsnutzung
+    \item Preboot nativer Images
+\end{itemize}
+Bei der Anwendungsentwicklung mit Quarkus wird im Vergleich zum traditionellen Java nur ein Zehntel des Speichers belegt. Dazu bietet es bis zu 300 Mal 
+schnellere Startzeiten. Beide Aspekte ermöglichen eine deutliche Reduzierung der Kosten für Cloud-Ressourcen.
+Quarkus ist so konzipiert, dass bei der Anwendungsentwicklung der bewährte imperative Code problemlos mit dem nicht-blockierenden reaktiven Code kombiniert werden kann.
+Dies erweist sich als nützlich sowohl für Java-Entwickler, die an das imperative Modell gewöhnt sind und auch dabei bleiben möchten, und all diejenigen, die einen cloudnativen/reaktiven Ansatz bevorzugen.
+Das Quarkus-Entwicklungsmodell lässt sich flexibel an alle zu erstellenden Anwendungstypen anpassen.
+Quarkus ist eine effiziente Lösung zur Ausführung von Java in dieser neuen Welt von Serverless-Architekturen, Microservices, Containern, Kubernetes, 
+Function-as-a-Service (FaaS) und Clouds, weil es für all diese Technologien entwickelt wurde.
 \cite{sysarch-quarkus-1}
 
-\section{Maven}
-\includegraphics[scale=0.015]{pics/logos/apacheMavenLogo.svg.png}
+\subsection{RESTEasy JAX-RS}
 
-Maven ist ein Build Atomation Tool welches hauptsächlich für Java verwendet wird und folgt dem Ansatz Konvention vor Konfiguration. TODO
+JAX-RS ist eine JCP-Spezifikation, die eine Java-API für RESTful Web Services über das HTTP-Protokoll bereitstellt. Resteasy ist eine portable Implementierung dieser Spezifikation, 
+die in jedem Servlet-Container laufen kann. Eine engere Integration mit JBoss Application Server ist ebenfalls verfügbar, um die Benutzererfahrung in dieser Umgebung zu verbessern. 
+Während JAX-RS nur eine serverseitige Spezifikation ist, hat Resteasy JAX-RS durch das RESTEasy JAX-RS Client Framework innovativ auf den Client übertragen. 
+Dieses clientseitige Framework ermöglicht es, ausgehende HTTP-Anfragen mit Hilfe von JAX-RS-Annotationen und Schnittstellen-Proxys auf Remote-Server abzubilden.
+\cite{sysarch-quarkus-2}
 
+\subsection{Hibernate ORM}
+
+Bei Hibernate handelt es sich um ein Framework zur Abbildung von Objekten auf relationalen Datenbanken für die Programmiersprache Java - es wird auch als Object Relational Mapping Tool bezeichnet. 
+Hibernate ist in der Programmiersprache Java implementiert und steht als Open Source zur freien Verfügung. Hibernate nutzt das Konzept der Reflexion, um so zur Laufzeit einer Software sogenannte 
+Meta- Informationen über die Struktur von Objekten und die zugrunde liegenden Klassen zu ermitteln, die dann auf die Tabellen einer Datenbank abgebildet werden.
+\cite{sysarch-quarkus-3}
+
+\section{Apache Maven}
+\setauthor{Hain Lukas}
+\includegraphics[scale=0.015]{pics/logos/apacheMavenLogo.png}
+
+Maven ist ein Build-Tool der Apache Software Foundation für die Projektverwaltung. Entwickler können damit Java-Projekte automatisieren. Maven ist ein Teil der Apache Software Foundation und wird von dieser gehostet. 
+Das Tool ist aus einem Teil des Jakarta-Projekts hervorgegangen. Maven vereinfacht den Softwareerstellungsprozess, bietet ein einheitliches System für die Entwicklerarbeit, hochwertige Projektinformationen, 
+Richtlinien für das Festlegen von Best Practices und erleichtert die Migration zu neuen Funktionen durch mehr Transparenz. Maven beschreibt sowohl, wie Software gebaut wird, als auch deren Abhängigkeiten. 
+Apache hilft sowohl bei der Verwaltung von Projekten und dient als Tool zum Verständnis. Es hilft also dabei, den Zustand eines Projekts sehr schnell darzustellen.
+Das Programm wird von Entwicklern und Projektmanagern von Java-Anwendungsprojekten verwendet. Das Tool kann nützlich sein, um den aktuellen Zustand eines Projektes 
+auf einem Blick für technisch weniger versierte Personen, wie Führungspersönlichkeiten und Investoren, zusammenzufassen. Maven basiert auf dem Objektmodell. 
+Projekte werden als eine Pom.xml-Datei gespeichert. Das Tool verwaltet Projekt-Builds, Reporting und Dokumentation aus der zentralen XML-Informationsbasis. 
+Mit seiner Standard-Plug-in-Architektur kann Maven über Standard-Input mit so gut wie jeder Anwendung zusammenarbeiten.
+Maven vereinfacht den Prozess für das Erstellen von Java-Anwendungen erheblich, da Nutzer den Status des Projektes viel einfacher einschätzen können.
+Der Name Maven kommt aus dem Jiddischen und bedeutet Akkumulator von Wissen. Obwohl Maven das Entwickeln von Software anhand von Konventionen ermöglicht, 
+sind reproduzierbare Builds derzeit kein Feature. Die Entwickler arbeiten aber daran. 
+\cite{sysarch-maven-1}
 
 \section{Angular}
-\includegraphics[scale=0.02]{pics/logos/angularLogo.svg.png}
+\includegraphics[scale=0.02]{pics/logos/angularLogo.png}
 
 Angular ist ein Client-Side JavaScript Framework zur Erstellung von Single-Page-Webapplications. 
 Seine komponentenbasierte Architektur welche View und Logik trennt macht es für den Entwickler leicht 
@@ -214,15 +264,88 @@ Applikationen zu warten und testen. Dabei verwendet Angular TypeScript für den 
 Die vielen gut integrierten Libraries decken Features wie Routing, Verwaltung von Formulare und Client-Server Kommunikation ab. 
 
 \section{PostgreSQL}
-\includegraphics[scale=0.015]{pics/logos/postgresqlLogo.svg.png}
+\setauthor{Hain Lukas}
+\includegraphics[scale=0.015]{pics/logos/postgresqlLogo.png}
 
-PostgreSQL ist eine objektrelationale Datenbank welche sich durch ihre Stabilität und freie Verfügbarkeit auszeichnet. 
-Sie hält sich dabei sehr eng an den SQL-Standard. Es werden eine Vielzahl von Datentypen und Operatorn unterstützt und 
-Entwickler können auch eigene Datentypen definieren. Ein weitetere großer Vorteil von PostgreSQL ist auch dass es auf 
-jeder Hardware und auf beinahe jedem Betriebsystem läuft. 
+Dieses DBMS (Datenbank-Managementsystem) bietet eine liberale Lizenz, flexiblen Umgang mit Datentypen, ist skalierbar und vielseitig nutzbar.
+Der Definition nach ist PostgreSQL ein „objektrelationales“ Datenbank-Managementsystem (DBMS). Es ist Open Source und orientiert sich sehr eng am SQL-Standard. Bestehende SQL-Anwendungen 
+können durch den ANSI-SQL-Standards ohne großen Aufwand integriert werden. Die Funktionsweise entspricht dem klassischen Client-Server-Prinzip, bei dem unterschiedliche Clients Anfragen an den Datenbankserver senden.
+In der Praxis ist es mit PostgreSQL möglich, komplexere Anwendungen und Workloads zu entwickeln und zu betreiben als mit anderen Lösungen. 
+Es unterstützt eine Vielzahl Datentypen und Operatoren. Entwickler können hier bei Bedarf eigene Datentypen definieren. PostgreSQL ist nicht nur für Webanwendungen sehr gut geeignet, es kann auch große Enterprise-Datenbanken abbilden. 
+PostgreSQL findet auch in Desktop-Systemen Einsatz: Es ist das Datenbanksystem von Linux und macOS. Diese Systeme liefern das Datenbanksystem standardmäßig mit.
+\cite{sysarch-postgresql-1}
+
+\subsection{Vorteile}
+
+\subsubsection{Offene Lizenz}
+Einer der größten Vorteile von PostgreSQL ist die offene Lizenz. Es ist unter der eigenen PostgreSQL-Lizenz veröffentlicht. Generell fallen dabei keine Lizenzkosten an. 
+Diese liberale Lizenz erlaubt es, das System beliebig zu vertreiben. Änderungen müssen nicht der Community zur Verfügung gestellt werden. Die Verwendung von PostgreSQL hat 
+keine nachgelagerten Auswirkungen darauf, wie Weiterentwicklungen und darauf basierende Lösungen verwendet werden dürfen oder veröffentlicht werden müssen.
+\cite{sysarch-postgresql-1}
+
+\subsubsection{Großes Potenzial}
+
+Die Datenbankgröße ist nicht durch das System begrenzt, sondern einzig durch den zur Verfügung stehenden Speicher. Da Postgres flexibel und kompatibel aufgebaut ist, 
+können eine Vielzahl an Anwendungen auf diese Datenbanklösung bauen. Dazu bietet PostgreSQL die Möglichkeit, 
+Trigger einzusetzen und bietet Schnittstellen zu vielen verschiedenen Programmiersprachen, was den Einsatzzweck und die Zusammenarbeit mit unterschiedlichsten Anwendungen potenziell vielfältig macht.
+\cite{sysarch-postgresql-1}
+
+\subsubsection{Sichere Replikation}
+
+Ein weiterer wichtiger Punkt ist die detaillierte Zugriffskontrolle und sichere Datenreplikation. In der Praxis ist je nach Anwendungsfall asynchrone oder synchrone Replikation möglich: 
+Synchrone Replikation, um sicherzustellen, dass kritische Transaktionen auf beiden Servern ausgeführt wurden. Asynchrone Replikation für maximale Geschwindigkeit bei weniger kritischen Transaktionen. 
+Ein weiterer Vorteil ist die freie Wahl der Hardware und des Server-OS. PostgreSQL kann auf diversen Linux-Distributionen, BSD, Windows oder macOS 
+gehostet werden.
+\cite{sysarch-postgresql-1}
+
 \section{Docker}
+\setauthor{Hain Lukas}
 \includegraphics[scale=0.05]{pics/logos/dockerLogo.png}
 
-Docker ist eine Software zur Containervirtualisierung . Die Container sind voneinander isoliert und haben ihre eigene Software, 
-Libraries sowie Konfigurationsdatein. Kommunizieren können sie über vorher genau definierte Kanäle. Da alle Container 
-auf dem selben OS-Kernel laufen brauchen sie weniger Resourcen wie eine Virtuele Maschine.
+Die Docker-Technologie verwendet den Linux Kernel und seine Funktionen wie Cgroups und namespaces, um Prozesse zu isolieren, damit diese unabhängig voneinander ausgeführt werden können. 
+Diese Unabhängigkeit ist der Zweck der Container – die Fähigkeit, mehrere Prozesse und Apps getrennt voneinander betreiben zu können. 
+So wird die Infrastruktur besser genutzt und gleichzeitig die Sicherheit bewahrt, die sich aus der Arbeit mit getrennten Systemen ergibt.
+Containertools, einschließlich Docker, arbeiten mit einem Image-basierten Bereitstellungsmodell. Das macht es einfacher, eine Anwendung oder ein Paket von Services mit all deren 
+Abhängigkeiten in mehreren Umgebungen gemeinsam zu nutzen. Docker automatisiert außerdem die Bereitstellung der Anwendung 
+(oder Kombinationen von Prozessen, die eine Anwendung darstellen) innerhalb dieser Container-Umgebung. Diese Tools bauen auf Linux-Containern auf 
+und geben den Nutzern so nie dagewesenen Zugriff auf Anwendungen. Sie ermöglichen eine deutlich schnellere Bereitstellung und Kontrolle von Versionen sowie deren Verbreitung.
+\cite{sysarch-docker-1}
+
+\subsection{Vorteile}
+
+\subsubsection{Modularität}
+
+Der Docker-Ansatz für die Containerisierung konzentriert sich darauf, nur einen Teil der Anwendung für eine Reparatur oder Aktualisierung außer Betrieb zu nehmen, 
+ohne dass die gesamte Anwendung außer Betrieb genommen werden muss. Zusätzlich zu diesem auf Microservices basierenden Ansatz können Sie Prozesse 
+in mehreren Apps gemeinsam verwenden – so ähnlich wie bei einer serviceorientierten Architektur (SOA).
+\cite{sysarch-docker-1}
+
+\subsubsection{Layer und Image-Versionskontrolle}
+
+Jedes Docker-Image besteht aus einer Reihe von Layern. Diese Layer werden in einem einzelnen Image vereint. Wenn sich das Image ändert, wird ein Layer erstellt. 
+Jedes Mal, wenn ein Nutzer einen Befehl wie run oder copy eingibt, wird ein neuer Layer erstellt. Mit Docker werden diese Layer für neuer Container wiederverwendet, 
+was die Entwicklung enorm beschleunigt. Zwischenzeitliche Änderungen werden von den Images gemeinsam verwendet, was die Geschwindigkeit, Größe und Effizienz weiter verbessert. 
+Versionskontrolle ist ein fester Bestandteil des Layering. Bei jeder neuen hat man im Prinzip ein eingebautes Änderungsprotokoll und damit volle Kontrolle über die Container-Images.
+\cite{sysarch-docker-1}
+
+\subsubsection{Rollback}
+
+Das Beste am Layering ist wahrscheinlich das Rollback, also das Zurücksetzen auf die vorherige Version. Jedes Image hat Layers. Wenn man mit der aktuellen Iteration eines Image nicht zufrieden ist, kann man einfach
+auf die vorherige Version zurücksetzen. Dieser Ansatz unterstützt eine agile Entwicklung und sorgt, was die Tools angeht, 
+für eine kontinuierliche Integration und Bereitstellung (Continuous Integration/Continuous Deployment - CI/CD).
+\cite{sysarch-docker-1}
+
+\subsubsection{Schnelle Bereitstellung}
+
+Neue Hardware bereitzustellen und zum Laufen zu bringen, dauerte normalerweise Tage und war mit einem enormen Aufwand verbunden. Mit Docker-basierten Containern kann die Bereitstellung auf Sekunden reduziert werden. 
+Indem man für jeden Prozess einen Container erstellt, kann man ähnliche Prozesse schnell mit neuen Apps teilen. Und da zum Hinzufügen oder Verschieben eines Containers das 
+Betriebssystem nicht gebootet werden muss, sind die Bereitstellungszeiten wesentlich kürzer. Darüber hinaus kann man bei dieser Entwicklungsgeschwindigkeit 
+einfach und kosteneffizient Daten erstellen und die von den Containern erzeugten Daten ohne Bedenken löschen.
+Die Docker-Technologie ist also ein granularer, kontrollierbarer, auf Microservices basierter Ansatz, der deutlich effizienter ist.
+\cite{sysarch-docker-1}
+
+\subsection{Einschränkungen}
+
+Docker für sich allein ist für die Verwaltung einzelner Container bestens geeignet. Wenn man beginnt, mehr und mehr Container und containerisierte Apps zu verwenden, 
+die in Hunderte von Bestandteilen zerlegt sind, können die Verwaltung und Orchestrierung sehr schwierig werden. Irgendwann muss man einen Schritt zurückgehen und Container gruppieren, 
+um Dienste wie Vernetzung, Sicherheit, Telemetrie usw. in den Containern bereitzustellen.
