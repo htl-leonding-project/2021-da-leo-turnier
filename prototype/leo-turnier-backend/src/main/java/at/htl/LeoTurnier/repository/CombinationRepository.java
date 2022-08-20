@@ -4,11 +4,11 @@ package at.htl.LeoTurnier.repository;
 import at.htl.LeoTurnier.dto.CompetitorDto;
 import at.htl.LeoTurnier.entity.Competitor;
 import at.htl.LeoTurnier.entity.Tournament;
-import org.apache.http.impl.conn.DefaultRoutePlanner;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @ApplicationScoped
 public class CombinationRepository {
@@ -81,7 +81,7 @@ public class CombinationRepository {
                             participationRepository.getById(tournament.getId(),
                                     previousCompetitorDto.getId()).getPlacement());
                 } else {
-                    participationRepository.modifyPlacement(tournament.getId(), competitorDtos.get(u).getId(), u + numOfGroups);
+                    participationRepository.modifyPlacement(tournament.getId(), competitorDtos.get(u).getId(), u + numOfGroups + 1);
                 }
             }
         }
