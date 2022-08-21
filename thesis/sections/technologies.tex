@@ -1,16 +1,15 @@
 \section{Git}
 \setauthor{Hain Lukas}
-\includegraphics[scale=0.075]{pics/logos/gitLogo.png}
 
 Git ist das mit Abstand am weitesten verbreitete Versionskontrollsystem der Welt. Der Name Git wird aus der britischen 
 Umgangssprache übersetzt und bedeutet "Blödmann.
 \cite{sysarch-git-1}
+
 Es ist ein Open-Source Projekt, 
 das ursprünglich 2005 von dem Entwickler des Linux Betriebsystem-Kernels entwickelt wurde. Es ist außerdem mit sowohl mit 
 Windows als auch Linux Systemen kompatibel und auch in vielen verschiedenen IDEs integriert. Git ist ein verteiltes Versionskontrollsystem, 
 was bedeutet, dass der Versionsverlauf nicht nur an einem Ort gespeichert ist, wie es bei älteren Versionskontrollsystemen der Fall war, 
 sondern in jeder Arbeitskopie der gesamte Verlauf aller Änderungen im Repository (Aufbewahrungsort) enthalten sind. 
-
 \cite{sysarch-git-2}
 
 \subsection{Was ist ein Versionskontrollsystem?}
@@ -45,16 +44,41 @@ Repository senden. Als letzter wichtiger Befehl gilt noch "git branch", hiermit 
 neue Features getrennt voneinander entwickeln, und diese dann mit "git merge" im Hauptbranch zusammenfügen.
 \cite{sysarch-git-2}
 
+\subsection{Leistung}
+
+Bei reiner Betrachtung der Leistungsmerkmale von Git, fällt auf, wie stark diese im Vergleich zu vielen Alternativen sind. Für die Commits neuer 
+Änderungen, Branching, Merging und den Vergleich älterer Versionen wurde auf optimale Performance geachtet. Die in Git implementierten Algorithmen schöpfen 
+aus umfassenden Kenntnissen häufiger Attribute echter Quellcode-Dateibäume, deren Modifizierung im Laufe der Zeit und den entsprechenden Zugriffsmustern.
+\cite{sysarch-git-1}
+
+\subsection{Sicherheit}
+
+Bei der Konzipierung von Git gehörte die Integrität des verwalteten Quellcodes zu den obersten Prioritäten. Der Inhalt der Dateien sowie die wahren Beziehungen 
+zwischen den Dateien und Verzeichnissen, Versionen, Tags und Commits – alle diese Objekte im Git-Repository werden mit einem kryptografisch sicheren Hashing-Algorithmus namens SHA1 gesichert. 
+Auf diese Weise sind der Code und der Änderungsverlauf gegen versehentliche als auch vorsätzliche Änderungen geschützt und die vollständige Verfolgbarkeit des Verlaufs wird sichergestellt.
+\cite{sysarch-git-1}
+
+\subsection{Flexibilität}
+
+Eines der wichtigsten Designziele von Git ist die Flexibilität. Git ist in mehrerer Hinsicht flexibel: in seinem Support verschiedener nicht-linearer Entwicklungs-Workflows, 
+in seiner Effizienz sowohl bei kleinen als auch großen Projekten und in seiner Kompatibilität mit vielen bestehenden Systemen und Protokollen.
+\cite{sysarch-git-1}
+
+\subsection{Warum Git?}
+
+Git verfügt über die Funktionen, Performance, Sicherheit und Flexibilität, die den Anforderungen der meisten Teams und einzelnen Entwicklern entsprechen. 
+Auf diese Attribute von Git wurde oben schon eingegangen. In direkter Gegenüberstellung mit den meisten anderen Alternativen schneidet Git sehr gut ab.
+\cite{sysarch-git-1}
+
 \section{Github}
 \setauthor{Hain Lukas}
-\includegraphics[scale=0.075]{pics/logos/githubLogo.png}
 
 Github ist ein Cloud-basiertes Repository Hosting Service, das die verteilte Versionskontrolle von Git zur verfügung stellt. Es wurde 2008 von Chris Wanstrath, P. J. Hyett, 
 Scott Chacon und Tom Preston-Werner gestartet. Zu dem Zeitpunkt war Git noch relativ unbekannt, wesshalb es noch keine anderen Optionen gab. Die Software wurde in der 
 Programmiersprache "Ruby on Rails and Erlang" entwickelt. 
 \cite{sysarch-github-1}
+
 Das Ziel von Github ist es, eine benutzerfreundliche Oberfläche für Git zur verfügung zu stellen, mit der man auch mit weniger technischem Wissen die Vorteile von Git ausnutzen kann.
-\cite{sysarch-github-2}
 Als Unternehmen verdient GitHub Geld, indem es gehostete private Code-Repositories sowie andere geschäftsorientierte Pläne verkauft, 
 die es Unternehmen erleichtern, Teammitglieder und Sicherheit zu verwalten.
 \cite{sysarch-github-2}
@@ -92,7 +116,6 @@ sodass man zum Suchen und Veröffentlichen von Paketen dieselben Such-, Browsing
 
 \section{Intellij IDEA}
 \setauthor{Hain Lukas}
-\includegraphics[scale=0.05]{pics/logos/intellijIdeaLogo.png}
 
 IntelliJ IDEA ist eine intelligente, kontextsensitive IDE für Java und andere JVM-Sprachen wie Kotlin, Scala und Groovy, die sich für zahlreiche 
 Anwendungsbereiche eignet. Auch bei der Entwicklung von Full-Stack-Webanwendungen hilft IntelliJ IDEA Ultimate mit integrierten Tools, 
@@ -146,17 +169,18 @@ Die IDE bietet spezielle Unterstützung unter anderem für Quarkus, Spring, Spri
 
 
 \section{WebStorm}
-\includegraphics[scale=0.025]{pics/logos/WebStormLogo.png}
+\setauthor{Ecker Benjamin}
 
 
 Obwohl es möglich wäre mit Intellij ein Angular Projekt zu entwickeln haben wir uns bei der Frontend Entwicklung 
 für die IDE Webstorm entschieden. Diese ist genauso wie Intellij von Jetbrains doch enthält mehr support für die 
 Programmiersprachen JavaScript und TypeScript, sowie einen Built-in Debugger für Client-Side JavaScript und Node.js 
 
+TODO
+
 
 \section{Java}
 \setauthor{Hain Lukas}
-\includegraphics[scale=0.015]{pics/logos/javaLogo.png}
 
 Java ist nicht nur eine Programmiersprache, sondern ebenso ein Laufzeitsystem, was Oracle durch den Begriff Java Platform verdeutlichen will. 
 So gibt es neben der Programmiersprache Java durchaus andere Sprachen, die eine Java-Laufzeitumgebung ausführen, etwa diverse Skriptsprachen wie 
@@ -182,20 +206,26 @@ Als nächstes wird das Programm kompiliert. Der Name des Java Compilers ist "jav
 ist Platform-unabhängiger Code namens "Byte Code". Das File, das vom Compiler generiert wurde, hat die Endung ".class". Als letztes wird das Programm ausgeführt. Der Bytecode, der vom Compiler 
 generiert wurde, wird von der "Java Virtual Mashine" oder JVM ausgeführt, der input an die JVM ist der Bytecode aus dem ".class" File, der Output ist Maschinenode, bestehend aus 0 und 1, und wird von der CPU ausgeführt.
 \cite{sysarch-java-2}
-\begin{spacing}{1}
-\includegraphics[scale=0.6]{pics/java-life-cycle.jpg}
-\end{spacing}
+\begin{figure}[H]
+    \centering
+    \caption{Java Life Cycle}
+    \includegraphics[scale=0.6]{pics/java-life-cycle.jpg}
+\end{figure}
 
+\section{TypeScript}
+\setauthor{Ecker Benjamin}
+
+TODO
 
 \section{Quarkus}
 \setauthor{Hain Lukas}
-\includegraphics[scale=0.015]{pics/logos/quarkusLogo.png}
 
 Quarkus ist ein Kubernetes-natives Full-Stack Java Framework für JVMs (Java Virtual Machines) und native Kompilierung, mit dem Java speziell für Container optimiert wird. 
 Es bietet eine effektive Plattform für Serverless-, Cloud- und Kubernetes-Umgebungen. Quarkus wurde speziell für beliebte Java-Standards, Frameworks und Libraries wie Eclipse MicroProfile und Spring
 sowie für Apache Kafka, RESTEasy (JAX-RS), Hibernate ORM (JPA), Spring, Infinispan, Camel und viele mehr konzipiert.
 Die Dependency-Injection-Lösung von Quarkus basiert auf CDI (Contexts and Dependency Injection) und bietet ein Framework, mit dessen Hilfe die Funktionalität 
 erweitert und ein Framework konfiguriert, gebootet und in Ihre Anwendung integriert werden kann. 
+
 Quarkus wurde als benutzerfreundliches Tool konzipiert und integriert Funktionen, die keine oder nur wenig Konfiguration erfordern.
 Entwickler können die passenden Java Frameworks für ihre Anwendungen auswählen, die dann im JVM-Modus laufen oder kompiliert und im nativen Modus ausgeführt werden können.
 Das ganz auf Entwickler abgestimmte Quarkus integriert außerdem folgende Funktionen:
@@ -223,15 +253,17 @@ Quarkus ist eine effiziente Lösung zur Ausführung von Java in dieser neuen Wel
 Function-as-a-Service (FaaS) und Clouds, weil es für all diese Technologien entwickelt wurde.
 \cite{sysarch-quarkus-1}
 
-\subsection{RESTEasy JAX-RS}
+\subsection{RESTEasy}
 
-JAX-RS ist eine JCP-Spezifikation, die eine Java-API für RESTful Web Services über das HTTP-Protokoll bereitstellt. Resteasy ist eine portable Implementierung dieser Spezifikation, 
-die in jedem Servlet-Container laufen kann. Eine engere Integration mit JBoss Application Server ist ebenfalls verfügbar, um die Benutzererfahrung in dieser Umgebung zu verbessern. 
-Während JAX-RS nur eine serverseitige Spezifikation ist, hat Resteasy JAX-RS durch das RESTEasy JAX-RS Client Framework innovativ auf den Client übertragen. 
-Dieses clientseitige Framework ermöglicht es, ausgehende HTTP-Anfragen mit Hilfe von JAX-RS-Annotationen und Schnittstellen-Proxys auf Remote-Server abzubilden.
+RESTEasy ist ein JBoss/Red Hat-Projekt, das verschiedene Frameworks zur Verfügung stellt, die bei der Erstellung von RESTful Web Services und RESTful Java-Anwendungen unterstützen. 
+Es ist eine Implementierung der Jakarta RESTful Web Services, einer Spezifikation der Eclipse Foundation, die eine Java-API für RESTful Web Services über das HTTP-Protokoll bereitstellt.
+Darüber hinaus implementiert RESTEasy auch die MicroProfile REST Client Spezifikation API.
+
+RESTEasy kann in jedem Servlet-Container ausgeführt werden, aber eine engere Integration mit WildFly Application Server und Quarkus 
+ist ebenfalls verfügbar, um die Benutzerfreundlichkeit in diesen Umgebungen zu verbessern.
 \cite{sysarch-quarkus-2}
 
-\subsection{Hibernate ORM}
+\subsection{Hibernate ORM with Panache}
 
 Bei Hibernate handelt es sich um ein Framework zur Abbildung von Objekten auf relationalen Datenbanken für die Programmiersprache Java - es wird auch als Object Relational Mapping Tool bezeichnet. 
 Hibernate ist in der Programmiersprache Java implementiert und steht als Open Source zur freien Verfügung. Hibernate nutzt das Konzept der Reflexion, um so zur Laufzeit einer Software sogenannte 
@@ -240,7 +272,6 @@ Meta- Informationen über die Struktur von Objekten und die zugrunde liegenden K
 
 \section{Apache Maven}
 \setauthor{Hain Lukas}
-\includegraphics[scale=0.015]{pics/logos/apacheMavenLogo.png}
 
 Maven ist ein Build-Tool der Apache Software Foundation für die Projektverwaltung. Entwickler können damit Java-Projekte automatisieren. Maven ist ein Teil der Apache Software Foundation und wird von dieser gehostet. 
 Das Tool ist aus einem Teil des Jakarta-Projekts hervorgegangen. Maven vereinfacht den Softwareerstellungsprozess, bietet ein einheitliches System für die Entwicklerarbeit, hochwertige Projektinformationen, 
@@ -248,7 +279,9 @@ Richtlinien für das Festlegen von Best Practices und erleichtert die Migration 
 Apache hilft sowohl bei der Verwaltung von Projekten und dient als Tool zum Verständnis. Es hilft also dabei, den Zustand eines Projekts sehr schnell darzustellen.
 Das Programm wird von Entwicklern und Projektmanagern von Java-Anwendungsprojekten verwendet. Das Tool kann nützlich sein, um den aktuellen Zustand eines Projektes 
 auf einem Blick für technisch weniger versierte Personen, wie Führungspersönlichkeiten und Investoren, zusammenzufassen. Maven basiert auf dem Objektmodell. 
-Projekte werden als eine Pom.xml-Datei gespeichert. Das Tool verwaltet Projekt-Builds, Reporting und Dokumentation aus der zentralen XML-Informationsbasis. 
+Projekte werden als eine Pom.xml-Datei gespeichert. 
+
+Das Tool verwaltet Projekt-Builds, Reporting und Dokumentation aus der zentralen XML-Informationsbasis. 
 Mit seiner Standard-Plug-in-Architektur kann Maven über Standard-Input mit so gut wie jeder Anwendung zusammenarbeiten.
 Maven vereinfacht den Prozess für das Erstellen von Java-Anwendungen erheblich, da Nutzer den Status des Projektes viel einfacher einschätzen können.
 Der Name Maven kommt aus dem Jiddischen und bedeutet Akkumulator von Wissen. Obwohl Maven das Entwickeln von Software anhand von Konventionen ermöglicht, 
@@ -256,16 +289,22 @@ sind reproduzierbare Builds derzeit kein Feature. Die Entwickler arbeiten aber d
 \cite{sysarch-maven-1}
 
 \section{Angular}
-\includegraphics[scale=0.02]{pics/logos/angularLogo.png}
+\setauthor{Ecker Benjamin}
 
 Angular ist ein Client-Side JavaScript Framework zur Erstellung von Single-Page-Webapplications. 
 Seine komponentenbasierte Architektur welche View und Logik trennt macht es für den Entwickler leicht 
 Applikationen zu warten und testen. Dabei verwendet Angular TypeScript für den Code-Behind und HTML als Auszeichnungssprache. 
 Die vielen gut integrierten Libraries decken Features wie Routing, Verwaltung von Formulare und Client-Server Kommunikation ab. 
 
+TODO
+
+\section{Nginx}
+\setauthor{Ecker Benjamin}
+
+TODO
+
 \section{PostgreSQL}
 \setauthor{Hain Lukas}
-\includegraphics[scale=0.015]{pics/logos/postgresqlLogo.png}
 
 Dieses DBMS (Datenbank-Managementsystem) bietet eine liberale Lizenz, flexiblen Umgang mit Datentypen, ist skalierbar und vielseitig nutzbar.
 Der Definition nach ist PostgreSQL ein „objektrelationales“ Datenbank-Managementsystem (DBMS). Es ist Open Source und orientiert sich sehr eng am SQL-Standard. Bestehende SQL-Anwendungen 
@@ -300,7 +339,6 @@ gehostet werden.
 
 \section{Docker}
 \setauthor{Hain Lukas}
-\includegraphics[scale=0.05]{pics/logos/dockerLogo.png}
 
 Die Docker-Technologie verwendet den Linux Kernel und seine Funktionen wie Cgroups und namespaces, um Prozesse zu isolieren, damit diese unabhängig voneinander ausgeführt werden können. 
 Diese Unabhängigkeit ist der Zweck der Container – die Fähigkeit, mehrere Prozesse und Apps getrennt voneinander betreiben zu können. 
@@ -349,3 +387,51 @@ Die Docker-Technologie ist also ein granularer, kontrollierbarer, auf Microservi
 Docker für sich allein ist für die Verwaltung einzelner Container bestens geeignet. Wenn man beginnt, mehr und mehr Container und containerisierte Apps zu verwenden, 
 die in Hunderte von Bestandteilen zerlegt sind, können die Verwaltung und Orchestrierung sehr schwierig werden. Irgendwann muss man einen Schritt zurückgehen und Container gruppieren, 
 um Dienste wie Vernetzung, Sicherheit, Telemetrie usw. in den Containern bereitzustellen.
+\cite{sysarch-docker-1}
+
+\section{KeyCloak}
+\setauthor{Hain Lukas}
+
+Keycloak ist eine Open-Source-Lösung für Identity und Access Management (IAM), die auf die Entwicklung moderner Anwendungen und Services ausgerichtet ist.
+\cite{sysarch-keycloak-1}
+
+\subsection{Single Sign-on und Single Sign-out}
+
+Möchte man mehrere Applikationen oder Dienste verwenden, so sind in der Regel bei jeder Applikation separate Logins erforderlich. Beim Single Sign-on (SSO) geht es jedoch darum, 
+dass nur eine einzige Authentifizierung notwendig ist (beim ersten Zugriff auf eine der Applikationen). Dies geschieht dadurch, dass die Applikation die Benutzerin bzw. 
+den Benutzer auf eine zentrale Keycloak-Instanz weiterleitet, welche die Login-Maske für die angesprochene Applikation ausgibt und in der Folge die Authentifizierung durchführt.
+Nach erfolgreicher Anmeldung wird zur Applikation weitergeleitet. Werden anschließend andere Software-Systeme im SSO-Verbund verwendet, dann weiß Keycloak, dass die Benutzerin bzw. 
+der Benutzer bereits authentifiziert ist und fordert keine weitere Anmeldung mehr. Zusätzlich verfügt Keycloak auch über eine Kerberos-Bridge, sodass die Anmeldung am Arbeitsrechner 
+für die Authentifizierung ausreicht. Darüber hinaus unterstützt Keycloak auch ein Single Sign-out: Nach der Abmeldung erfolgt das automatische Ausloggen aus allen Applikationen im SSO-Verbund.
+\cite{sysarch-keycloak-2}
+
+\subsection{Unterstützung von Standardprotokollen}
+
+Keycloak unterstützt Standardprotokolle wie OAuth 2.0 (nur Autorisierung) und das darauf basierende OpenID Connect (Autorisierung und Authentifizierung). 
+Daneben wird mit SAML 2.0 ein weiteres Standardprotokoll unterstützt, welches ähnliche Anforderungen wie OpenID Connect (OIDC) abdeckt. 
+Im Gegensatz zu OIDC existiert SAML jedoch schon länger, basiert auf XML und setzt zum Erreichen von Integrität und Vertraulichkeit digitale Signaturen und entsprechende Zertifikate ein.
+\cite{sysarch-keycloak-2}
+
+\subsection{Account Management Console}
+
+Ein Self-Service-Portal ermöglicht es Benutzern, ihre Daten jederzeit selbst zu verwalten. Keycloak bietet ein solches Portal unter dem Namen „Account Management Console“ an. 
+So können z. B. Passwortänderungen selbständig durchgeführt werden, ohne von Administratoren abhängig zu sein.
+\cite{sysarch-keycloak-2}
+
+\subsection{Admin Console}
+
+Die Admin Console umfasst im Wesentlichen die Konfiguration von:
+\begin{itemize}
+    \item Realms (jeweils abgegrenzte Bereiche, für die die anderen in dieser Aufzählung genannten Aspekte einzeln konfiguriert bzw. verwaltet werden können)
+    \item Clients (Applikationen und Dienste)
+    \item Benutzerdatenquellen (siehe User Federation)
+    \item weiteren Identity Providern (siehe Identity Brokering und Social Login)
+    \item die Verwaltung von lokal in Keycloak angelegten Benutzern, Benutzern aus anderen Datenquellen, Benutzergruppen und Rollen
+\end{itemize}
+\cite{sysarch-keycloak-2}
+
+\subsection{Client-Adapter}
+
+Clients kommunizieren über die angebotenen Standardprotokolle mit Keycloak. Damit diese Kommunikation nicht für jeden Client – evtl. sogar redundant – selbst implementiert werden muss, 
+gibt es für eine Vielzahl an Technologien und Frameworks fertige Client-Adapter, die sich einfach in die eigene Anwendung integrieren lassen und die Kommunikation mit Keycloak übernehmen. 
+\cite{sysarch-keycloak-2}
