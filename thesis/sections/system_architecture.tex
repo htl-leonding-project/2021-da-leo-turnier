@@ -3,7 +3,7 @@
 
 \begin{figure}[H]
     \includegraphics[scale=0.30]{pics/system_architecture.png}
-    \caption{system architecture}
+    \caption{System Architecture}
 \end{figure}
 
 Die Diplomarbeit ist Aufgeteilt in Frontend und Backend. 
@@ -12,8 +12,8 @@ Die Diplomarbeit ist Aufgeteilt in Frontend und Backend.
 \setauthor{Hain Lukas}
 
 Im Backend befindet sich eine Quarkus Applikation. Sie wurde in Java geschrieben und verwaltet mithilfe von "Hibernate ORM with Panache" Turnierdaten in einer PostgreSQL Datenbank.
-Diese Daten werden dem Frontend mithilfe von "RESTEasy" zur Verfügung gestellt. Außerdem befindet sich im Backend ein KeyCloak Server, der Userdaten in einer weiteren PostgreSQL Datenbank 
-verwaltet. Die Quarkus Applikation, der KeyCloak Server und die beiden PostgreSQL Datenbanken werden in jeweils einem Docker Container ausgeführt.
+Diese Daten werden dem Frontend mithilfe von "RESTEasy" zur Verfügung gestellt. Außerdem befindet sich im Backend ein KeyCloak Server,auf den die Quarkus Applikation mithilfe von "Quarkus OIDC" zugreift. 
+KeyCloak verwaltet Userdaten in einer weiteren PostgreSQL Datenbank. Die Quarkus Applikation, der KeyCloak Server und die beiden PostgreSQL Datenbanken werden in jeweils einem Docker Container ausgeführt.
 
 \subsection{Frontend}
 \setauthor{Ecker Benjamin}
