@@ -15,6 +15,7 @@ export class TournamentTreeComponent implements OnInit, AfterViewInit {
   public tournament: NgttTournament;
 
   public name = '';
+  public type = '';
 
   constructor(private api: TournamentService, public router: Router, private elementRef: ElementRef) {
 
@@ -22,10 +23,12 @@ export class TournamentTreeComponent implements OnInit, AfterViewInit {
     const nav: Navigation = this.router.getCurrentNavigation();
 
     if (nav.extras && nav.extras.state && nav.extras.state.tournament && nav.extras.state.name) {
-      console.log('ctor');
       console.log(JSON.parse(nav.extras.state.tournament));
       this.tournament = JSON.parse(nav.extras.state.tournament);
       this.name = nav.extras.state.name;
+      if (nav.extras.state.type){
+        this.type = nav.extras.state.type;
+      }
     }
   }
 

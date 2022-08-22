@@ -14,7 +14,7 @@ import {Node} from '../model/node.model';
 export class HomeComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['name', 'actions'];
+  displayedColumns: string[] = ['name', 'sportType', 'startDate', 'endDate', 'actions'];
 
   constructor(private api: TournamentService, public router: Router) { }
 
@@ -102,6 +102,7 @@ export class HomeComponent implements OnInit {
       console.log('Tournament');
       console.log(tournament);
     }
-    await this.router.navigate(['tournament-tree'], { state: {tournament: JSON.stringify(tournament), name: element.name}});
+    await this.router.navigate(['tournament-tree'],
+      { state: {tournament: JSON.stringify(tournament), name: element.name, type: element.sportType.name}});
   }
 }
