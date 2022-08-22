@@ -49,7 +49,7 @@ public class RoundRobinRepository {
                     .filter(c -> c.equals(standing))
                     .map(c -> competitorRepository.getById(c.getId()))
                     .collect(Collectors.toList());
-            int startingPhaseNumber = phaseRepository.getMaxPhaseNumberForGroup(tournament.getId(), groupNumber);
+            int startingPhaseNumber = phaseRepository.getMaxPhaseNumberForGroup(tournament.getId(), groupNumber) + 1;
             insertPhasesRoundRobin(tournament, tiedCompetitors, groupNumber, startingPhaseNumber);
             insertNodesAndMatchesRoundRobin(tournament, tiedCompetitors, groupNumber, startingPhaseNumber);
         }
