@@ -1,7 +1,7 @@
 \section{Java}
 \setauthor{Hain Lukas}
 
-Die Web-API des Backends wurde in der Programmiersprache Java entwickelt.
+Das Backend dieser Applikation wurde in der Programmiersprache Java entwickelt.
 Java ist nicht nur eine Programmiersprache, sondern ebenso ein Laufzeitsystem, was Oracle durch den Begriff Java Platform verdeutlichen will. 
 So gibt es neben der Programmiersprache Java durchaus andere Sprachen, die eine Java-Laufzeitumgebung ausführen, etwa diverse Skriptsprachen wie 
 Groovy, JRuby, Jython, Kotlin oder Scala. Skriptsprachen auf der Java-Plattform werden immer populärer; sie etablieren eine andere Syntax, nutzen aber die JVM und die Bibliotheken.
@@ -69,7 +69,7 @@ Meta- Informationen über die Struktur von Objekten und die zugrunde liegenden K
 
 \subsection{Apache Maven}
 
-Als Build-Tool wird in der Quarkus Applikation Apache Maven verwendet. Maven wurde von der Apache Software Foundation für die Projektverwaltung entwickelt. 
+Als Build-Tool wird im Quarkus Backend Apache Maven verwendet. Maven wurde von der Apache Software Foundation für die Projektverwaltung entwickelt. 
 Entwickler können damit Java-Projekte automatisieren. Maven ist ein Teil der Apache Software Foundation und wird von dieser gehostet. 
 Das Tool ist aus einem Teil des Jakarta-Projekts hervorgegangen. Maven vereinfacht den Softwareerstellungsprozess, bietet ein einheitliches System für die Entwicklerarbeit, hochwertige Projektinformationen, 
 Richtlinien für das Festlegen von Best Practices und erleichtert die Migration zu neuen Funktionen durch mehr Transparenz. Maven beschreibt sowohl, wie Software gebaut wird, als auch deren Abhängigkeiten. 
@@ -169,6 +169,8 @@ gibt es für eine Vielzahl an Technologien und Frameworks fertige Client-Adapter
 \section{Docker}
 \setauthor{Hain Lukas}
 
+Um die Applikation unabhängig von Betriebsystem benutzen zu können, werden das Quarkus Backend, das Frontend, der KeyCloak Server sowie 
+eine PostgreSQL Datenbank für Turnierdaten und eine für Userdaten jeweils in Docker Containern ausgeführt.
 Die Docker-Technologie verwendet den Linux Kernel und seine Funktionen wie Cgroups und namespaces, um Prozesse zu isolieren, damit diese unabhängig voneinander ausgeführt werden können. 
 Diese Unabhängigkeit ist der Zweck der Container – die Fähigkeit, mehrere Prozesse und Apps getrennt voneinander betreiben zu können. 
 So wird die Infrastruktur besser genutzt und gleichzeitig die Sicherheit bewahrt, die sich aus der Arbeit mit getrennten Systemen ergibt.
@@ -218,10 +220,13 @@ die in Hunderte von Bestandteilen zerlegt sind, können die Verwaltung und Orche
 um Dienste wie Vernetzung, Sicherheit, Telemetrie usw. in den Containern bereitzustellen.
 \cite{sysarch-docker-1}
 
-\section{Git}
+\section{Entwicklingsinfrastruktur}
+
+\subsection{Git}
 \setauthor{Hain Lukas}
 
-Git ist das mit Abstand am weitesten verbreitete Versionskontrollsystem der Welt. Der Name Git wird aus der britischen 
+Als Versionskontrollsystem wird von den Diplomanten Git verwendet.
+Es ist das mit Abstand am weitesten verbreitete Versionskontrollsystem der Welt. Der Name Git wird aus der britischen 
 Umgangssprache übersetzt und bedeutet "Blödmann".
 \cite{sysarch-git-1}
 
@@ -232,28 +237,33 @@ was bedeutet, dass der Versionsverlauf nicht nur an einem Ort gespeichert ist, w
 sondern in jeder Arbeitskopie der gesamte Verlauf aller Änderungen im Repository (Aufbewahrungsort) enthalten sind. 
 \cite{sysarch-git-2}
 
-\subsection{Was ist ein Versionskontrollsystem?}
+\subsubsection{Was ist ein Versionskontrollsystem?}
 
 Ein Versionskontrollsystem wie Git wird in der Softwareentwicklung verwendet, 
 um Änderungen des Quellcodes zu speichern und zu verwalten. 
 Hier gibt es drei Arten von Versionskontrollsystemen:
 \cite{sysarch-git-2}
 
-\subsubsection{lokale Versionsverwaltung (Local Version Control System - LVCS)}
-Hier werden Dateien lokal einfach nur in ein separates Verzeichnis kopiert.
-\cite{sysarch-git-2}
+\begin{itemize}
+    \item lokale Versionsverwaltung (Local Version Control System - LVCS)
 
-\subsubsection{zentrale Versionsverwaltung (Centralized Version Control System - CVCS)}
-Hier gibt es einen einen zentralen Server, der alle versionierten Dateien verwaltet und es Personen ermöglicht, 
-Dateien von diesem zentralen Repository abzuholen und auf ihren PC zu übertragen.
-\cite{sysarch-git-2}
+    Mit dieser Architektur werden Dateien lokal einfach nur in ein separates Verzeichnis kopiert.
+    \cite{sysarch-git-2}
 
-\subsubsection{verteilten Versionsverwaltung (Distributed Version Control System - DVCS)}
-Wie weiter oben schon angesprochen ist diese Variante jene, die von Git benutzt wird. Hier gibt es zwar ein zentrales Repository, 
-aber jede Person  hat eine Kopie des Repositories und somit die vollständigen Projektdaten.
-\cite{sysarch-git-2}
+    \item zentrale Versionsverwaltung (Centralized Version Control System - CVCS)
+    
+    Hier gibt es einen einen zentralen Server, der alle versionierten Dateien verwaltet und es Personen ermöglicht, 
+    Dateien von diesem zentralen Repository abzuholen und auf ihren PC zu übertragen.
+    \cite{sysarch-git-2}
 
-\subsection{Git Befehle}
+    \item verteilten Versionsverwaltung (Distributed Version Control System - DVCS)
+    
+    Wie weiter oben schon angesprochen ist diese Variante jene, die von Git benutzt wird. Hier gibt es zwar ein zentrales Repository, 
+    aber jede Person  hat eine Kopie des Repositories und somit die vollständigen Projektdaten.
+    \cite{sysarch-git-2}
+\end{itemize}
+
+\subsubsection{Git Befehle}
 
 Git verwendet zum verwalten eines Repositories das Terminal, hierzu gibt es einige wichtige Befehle. Zuerst kann man mit "git init" ein leeres Repository erstellen 
 oder ein existierendes nochmal initialisieren, alternativ kann man mit "git clone" ein existierendes Repository kopieren. Damit ein File von Git gespeichert werden
@@ -264,35 +274,36 @@ Repository senden. Als letzter wichtiger Befehl gilt noch "git branch", hiermit 
 neue Features getrennt voneinander entwickeln, und diese dann mit "git merge" im Hauptbranch zusammenfügen.
 \cite{sysarch-git-2}
 
-\subsection{Leistung}
+\subsubsection{Leistung}
 
 Bei reiner Betrachtung der Leistungsmerkmale von Git, fällt auf, wie stark diese im Vergleich zu vielen Alternativen sind. Für die Commits neuer 
 Änderungen, Branching, Merging und den Vergleich älterer Versionen wurde auf optimale Performance geachtet. Die in Git implementierten Algorithmen schöpfen 
 aus umfassenden Kenntnissen häufiger Attribute echter Quellcode-Dateibäume, deren Modifizierung im Laufe der Zeit und den entsprechenden Zugriffsmustern.
 \cite{sysarch-git-1}
 
-\subsection{Sicherheit}
+\subsubsection{Sicherheit}
 
 Bei der Konzipierung von Git gehörte die Integrität des verwalteten Quellcodes zu den obersten Prioritäten. Der Inhalt der Dateien sowie die wahren Beziehungen 
 zwischen den Dateien und Verzeichnissen, Versionen, Tags und Commits – alle diese Objekte im Git-Repository werden mit einem kryptografisch sicheren Hashing-Algorithmus namens SHA1 gesichert. 
 Auf diese Weise sind der Code und der Änderungsverlauf gegen versehentliche als auch vorsätzliche Änderungen geschützt und die vollständige Verfolgbarkeit des Verlaufs wird sichergestellt.
 \cite{sysarch-git-1}
 
-\subsection{Flexibilität}
+\subsubsection{Flexibilität}
 
 Eines der wichtigsten Designziele von Git ist die Flexibilität. Git ist in mehrerer Hinsicht flexibel: in seinem Support verschiedener nicht-linearer Entwicklungs-Workflows, 
 in seiner Effizienz sowohl bei kleinen als auch großen Projekten und in seiner Kompatibilität mit vielen bestehenden Systemen und Protokollen.
 \cite{sysarch-git-1}
 
-\subsection{Warum Git?}
+\subsubsection{Warum Git?}
 
 Git verfügt über die Funktionen, Performance, Sicherheit und Flexibilität, die den Anforderungen der meisten Teams und einzelnen Entwicklern entsprechen. 
 Auf diese Attribute von Git wurde oben schon eingegangen. In direkter Gegenüberstellung mit den meisten anderen Alternativen schneidet Git sehr gut ab.
 \cite{sysarch-git-1}
 
-\section{Github}
+\subsection{Github}
 \setauthor{Hain Lukas}
 
+Um gemeinsam agil an der Applikation arbeiten zu können, wird von den Diplomanten Github benutzt.
 Github ist ein Cloud-basiertes Repository Hosting Service, das die verteilte Versionskontrolle von Git zur verfügung stellt. Es wurde 2008 von Chris Wanstrath, P. J. Hyett, 
 Scott Chacon und Tom Preston-Werner gestartet. Zu dem Zeitpunkt war Git noch relativ unbekannt, wesshalb es noch keine anderen Optionen gab. Die Software wurde in der 
 Programmiersprache "Ruby on Rails" und "Erlang" entwickelt. 
@@ -303,19 +314,10 @@ Als Unternehmen verdient GitHub Geld, indem es gehostete private Code-Repositori
 die es Unternehmen erleichtern, Teammitglieder und Sicherheit zu verwalten.
 \cite{sysarch-github-2}
 
-\subsection{Github Issues}
+\subsubsection{Github Actions}
 
-Github verfügt über einen integrierten issue tracken, mit dem sich Issues auf GitHub verwalten lassen. Ein Issue ist eine 
-Aufgabe im Projekt, die mit dem Titel kurz, und dann in der Beschreibung genauer beschrieben wird, und einem bestimmten Entwickler 
-zugeteilt wird. Ein Issue kann den Status "open" oder "closed" haben, "open" bedeutet, dass die Aufgabe noch nicht erfüllt wurde, und 
-"closed" bedeutet dass die Aufgabe schon erfüllt ist. Github Issues haben gegenüber von anderen issue trackern vorallem einem Vorteil, 
-weil es direkt dort ist, wo auch der Quellcode zu finden ist, jedoch ist es weit nicht so mächtig wie manch andere Optionen, wesshalb 
-sich bei dieser Arbeit nicht für Github Issues entschieden wurde.
-\cite{sysarch-github-3}
-
-\subsection{Github Actions}
-
-GitHub Actions ist ein in Github integriertes Tool, um Prozesse in einem Softwareprojekt zu automatisieren. 
+GitHub Actions ist ein in Github integriertes Tool, um Prozesse in einem Softwareprojekt zu automatisieren, 
+und wird von den Diplomanten beim Deployment der Applikation benutzt. 
 Dadurch kann man Workflows für dein Repository erstellen. Ein Workflow besteht aus einem oder mehreren Jobs, 
 wobei ein Job aus einem oder mehreren Schritten besteht. Man kann festlegen, ob Workflows in einem Container oder in einer virtuellen 
 Maschine ausgeführt werden sollen. Die Ausführung kann unter den gängigen Betriebssystemen Windows, Linux und macOS erfolgen. 
@@ -325,7 +327,9 @@ Das Feedback kann individuell für jeden Schritt angepasst werden. Eine Action w
 Praktischerweise kann eine erstellte Action geteilt und wiederverwendet werden.
 \cite{sysarch-github-4}
 
-\subsection{Github Packages}
+Der Workflow in dieser Applikation ist dafür verantwortlich, das Frontend sowie das Backend zu Builden, und anschließend auf die Github Packages Registry zu deployen.
+
+\subsubsection{Github Packages}
 
 Ein Package ist ein wiederverwendbares Stück Software, das von einer globalen Registry in die lokale Umgebung eines Entwicklers heruntergeladen und 
 in den Anwendungscode integriert werden kann. Da Pakete als wiederverwendbare "Bausteine" fungieren und in der Regel allgemeine Anforderungen erfüllen 
@@ -338,7 +342,7 @@ sodass man zum Suchen und Veröffentlichen von Paketen dieselben Such-, Browsing
 \setauthor{Hain Lukas}
 
 IntelliJ IDEA ist eine intelligente, kontextsensitive IDE für Java und andere JVM-Sprachen wie Kotlin, Scala und Groovy, die sich für zahlreiche 
-Anwendungsbereiche eignet. Auch bei der Entwicklung von Full-Stack-Webanwendungen hilft IntelliJ IDEA Ultimate mit integrierten Tools, 
+Anwendungsbereiche eignet, diese Applikation mit eingeschlossen. Auch bei der Entwicklung von Full-Stack-Webanwendungen hilft IntelliJ IDEA Ultimate mit integrierten Tools, 
 Unterstützung für JavaScript und verwandte Technologien sowie erweiterte Unterstützung für gängige Frameworks wie Spring, Spring Boot, Jakarta EE, Micronaut, 
 Quarkus oder Helidon. Darüber hinaus kann IntelliJ IDEA mit Plugins von JetBrains erweitern, um die IDE mit anderen Programmiersprachen wie 
 Go, Python, SQL, Ruby und PHP einzusetzen. 
