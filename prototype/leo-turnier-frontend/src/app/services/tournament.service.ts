@@ -204,7 +204,5 @@ export class TournamentService {
       // tslint:disable-next-line:no-shadowed-variable
       error => console.log('oops', error)
     );
-
-    await new Promise(f => setTimeout(f, 1000000));
   }
 }

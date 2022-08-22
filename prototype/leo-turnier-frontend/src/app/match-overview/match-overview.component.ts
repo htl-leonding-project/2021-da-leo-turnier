@@ -31,11 +31,13 @@ export class MatchOverviewComponent implements OnInit {
       // tslint:disable-next-line:no-unused-expression
       match.finished === true));
     console.log(tournament);
-    if (!this.dataSource.data.some(match => // @ts-ignore
-      // tslint:disable-next-line:no-unused-expression
-      match.finished === false)){
-      console.log('in');
-      this.tieBreakers = true;
+    if (!tournament.isFinished){
+      if (!this.dataSource.data.some(match => // @ts-ignore
+        // tslint:disable-next-line:no-unused-expression
+        match.finished === false)){
+        console.log('in');
+        this.tieBreakers = true;
+      }
     }
   }
 

@@ -24,4 +24,4 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<button mat-raised-button color="accent" style="margin: 20px" (click)="startTieBreakers()">Start Tie-Breakers</button>
+<button mat-raised-button *ngIf="tieBreakers" color="accent" style="margin: 20px" (click)="startTieBreakers()">Start Tie-Breakers</button>
