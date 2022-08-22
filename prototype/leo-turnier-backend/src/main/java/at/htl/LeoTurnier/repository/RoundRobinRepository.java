@@ -182,8 +182,8 @@ public class RoundRobinRepository {
                     break;
                 }
             }
-            tournament.setFinished(isFinished);
-            tournamentRepository.modify(tournament.getId(), tournament);
         }
+        tournament.setFinished(isFinished);
+        tournamentRepository.modify(tournament.getId(), tournament);
     }
 }
