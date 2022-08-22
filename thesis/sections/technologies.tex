@@ -1,3 +1,176 @@
+\section{Java}
+\setauthor{Hain Lukas}
+
+Die Web-API des Backends wurde in der Programmiersprache Java entwickelt.
+Java ist nicht nur eine Programmiersprache, sondern ebenso ein Laufzeitsystem, was Oracle durch den Begriff Java Platform verdeutlichen will. 
+So gibt es neben der Programmiersprache Java durchaus andere Sprachen, die eine Java-Laufzeitumgebung ausführen, etwa diverse Skriptsprachen wie 
+Groovy, JRuby, Jython, Kotlin oder Scala. Skriptsprachen auf der Java-Plattform werden immer populärer; sie etablieren eine andere Syntax, nutzen aber die JVM und die Bibliotheken.
+Zu der Programmiersprache und JVM kommt ein Satz von Standardbibliotheken für Datenstrukturen, Zeichenkettenverarbeitung, Datum/Zeit-Verarbeitung, grafische Oberflächen, 
+Ein-/Ausgabe, Netzwerkoperationen und mehr. Das bildet die Basis für höherwertige Dienste wie Datenbankanbindungen oder Webservices. Integraler Bestandteil der Standardbibliothek 
+seit Java 1.0 sind weiterhin Threads. Sie sind leicht zu erzeugende Ausführungsstränge, die unabhängig voneinander arbeiten können. 
+Mittlerweile unterstützen alle populären Betriebssysteme diese »leichtgewichtigen Prozesse« von Haus aus, sodass die JVM diese parallelen Programmteile nicht nachbilden muss, 
+sondern auf das Betriebssystem verweisen kann. Auf den neuen Multi-Core-Prozessoren sorgt das Betriebssystem für eine optimale Ausnutzung der Rechenleistung, da Threads wirklich nebenläufig arbeiten können.
+\cite{sysarch-java-1}
+
+Die Programmiersprache alleine reicht allerdings für eine Web-API noch nicht aus, desshalb wird in der Applikation das Quarkus Framework mit den 
+Libraries RESTEasy und Hibernate ORM verwendet.
+
+(würde es nicht mehr sinn machen, wenn die Überleitung dann im nächsten Kapitel steht?)
+
+
+\section{Quarkus}
+\setauthor{Hain Lukas}
+
+Quarkus ist ein Kubernetes-natives Full-Stack Java Framework für JVMs (Java Virtual Machines) und native Kompilierung, mit dem Java speziell für Container optimiert wird. 
+Es bietet eine effektive Plattform für Serverless-, Cloud- und Kubernetes-Umgebungen. Quarkus wurde speziell für 
+beliebte Java-Standards, Frameworks und Libraries wie RESTEasy (JAX-RS) und Hibernate ORM (JPA), die wie oben erwähntin der Applikation verwendet werden, 
+sowie für Apache Kafka, Eclipse MicroProfile, Spring, Spring, Infinispan, Camel und viele mehr konzipiert.
+Die Dependency-Injection-Lösung von Quarkus basiert auf CDI (Contexts and Dependency Injection) und bietet ein Framework, mit dessen Hilfe die Funktionalität 
+erweitert und ein Framework konfiguriert, gebootet und in Ihre Anwendung integriert werden kann. 
+
+Quarkus wurde als benutzerfreundliches Tool konzipiert und integriert Funktionen, die keine oder nur wenig Konfiguration erfordern.
+Entwickler können die passenden Java Frameworks für ihre Anwendungen auswählen, die dann im JVM-Modus laufen oder kompiliert und im nativen Modus ausgeführt werden können.
+Das ganz auf Entwickler abgestimmte Quarkus integriert außerdem folgende Funktionen:
+\begin{itemize}
+    \item Live-Codierung zur umgehenden Prüfung der Auswirkungen von Code-Änderungen sowie eine schnelle Problembehebung
+    \item Einheitliche imperative und reaktive Programmierung mit einem eingebetteten gemanagten Event Bus
+    \item Einheitliche Konfiguration
+    \item Einfaches Generieren nativer Programmdateien
+\end{itemize}
+Ob man die Anwendungen auf einer Public Cloud oder in einem intern gehosteten Kubernetes-Cluster hosten, Eigenschaften wie ein schneller 
+Start sowie ein niedriger Speicherverbrauch sind wichtig, um die Gesamtkosten für das Hosting niedrig zu halten.
+Quarkus wurde auf Basis einer Container-first-Philosophie entwickelt und soll so einen niedrigen Speicherverbrauch und schnelle Startzeiten auf folgende Weise ermöglichen:
+\begin{itemize}
+    \item Erstklassiger Support für Graal/SubstrateVM
+    \item Metadaten-Verarbeitung gleichzeitig mit dem Build
+    \item Reduzierung der Reflektionsnutzung
+    \item Preboot nativer Images
+\end{itemize}
+Bei der Anwendungsentwicklung mit Quarkus wird im Vergleich zum traditionellen Java nur ein Zehntel des Speichers belegt. Dazu bietet es bis zu 300 Mal 
+schnellere Startzeiten. Beide Aspekte ermöglichen eine deutliche Reduzierung der Kosten für Cloud-Ressourcen.
+Quarkus ist so konzipiert, dass bei der Anwendungsentwicklung der bewährte imperative Code problemlos mit dem nicht-blockierenden reaktiven Code kombiniert werden kann.
+Dies erweist sich als nützlich sowohl für Java-Entwickler, die an das imperative Modell gewöhnt sind und auch dabei bleiben möchten, und all diejenigen, die einen cloudnativen/reaktiven Ansatz bevorzugen.
+Das Quarkus-Entwicklungsmodell lässt sich flexibel an alle zu erstellenden Anwendungstypen anpassen.
+Quarkus ist eine effiziente Lösung zur Ausführung von Java in dieser neuen Welt von Serverless-Architekturen, Microservices, Containern, Kubernetes, 
+Function-as-a-Service (FaaS) und Clouds, weil es für all diese Technologien entwickelt wurde.
+\cite{sysarch-quarkus-1}
+
+\subsection{RESTEasy}
+
+RESTEasy ist ein JBoss/Red Hat-Projekt, das verschiedene Frameworks zur Verfügung stellt, die bei der Erstellung von RESTful Web Services und RESTful Java-Anwendungen unterstützen. 
+Es ist eine Implementierung der Jakarta RESTful Web Services, einer Spezifikation der Eclipse Foundation, die eine Java-API für RESTful Web Services über das HTTP-Protokoll bereitstellt.
+Darüber hinaus implementiert RESTEasy auch die MicroProfile REST Client Spezifikation API.
+
+RESTEasy kann in jedem Servlet-Container ausgeführt werden, aber eine engere Integration mit WildFly Application Server und Quarkus 
+ist ebenfalls verfügbar, um die Benutzerfreundlichkeit in diesen Umgebungen zu verbessern.
+\cite{sysarch-quarkus-2}
+
+\subsection{Hibernate ORM with Panache}
+
+Bei Hibernate handelt es sich um ein Framework zur Abbildung von Objekten auf relationalen Datenbanken für die Programmiersprache Java - es wird auch als Object Relational Mapping Tool bezeichnet. 
+Hibernate ist in der Programmiersprache Java implementiert und steht als Open Source zur freien Verfügung. Hibernate nutzt das Konzept der Reflexion, um so zur Laufzeit einer Software sogenannte 
+Meta- Informationen über die Struktur von Objekten und die zugrunde liegenden Klassen zu ermitteln, die dann auf die Tabellen einer Datenbank abgebildet werden.
+\cite{sysarch-quarkus-3}
+
+\subsection{Apache Maven}
+
+Als Build-Tool wird in der Quarkus Applikation Apache Maven verwendet. Maven wurde von der Apache Software Foundation für die Projektverwaltung entwickelt. 
+Entwickler können damit Java-Projekte automatisieren. Maven ist ein Teil der Apache Software Foundation und wird von dieser gehostet. 
+Das Tool ist aus einem Teil des Jakarta-Projekts hervorgegangen. Maven vereinfacht den Softwareerstellungsprozess, bietet ein einheitliches System für die Entwicklerarbeit, hochwertige Projektinformationen, 
+Richtlinien für das Festlegen von Best Practices und erleichtert die Migration zu neuen Funktionen durch mehr Transparenz. Maven beschreibt sowohl, wie Software gebaut wird, als auch deren Abhängigkeiten. 
+Apache hilft sowohl bei der Verwaltung von Projekten und dient als Tool zum Verständnis. Es hilft also dabei, den Zustand eines Projekts sehr schnell darzustellen.
+Das Programm wird von Entwicklern und Projektmanagern von Java-Anwendungsprojekten verwendet. Das Tool kann nützlich sein, um den aktuellen Zustand eines Projektes 
+auf einem Blick für technisch weniger versierte Personen, wie Führungspersönlichkeiten und Investoren, zusammenzufassen. Maven basiert auf dem Objektmodell. 
+Projekte werden als eine Pom.xml-Datei gespeichert. 
+
+Das Tool verwaltet Projekt-Builds, Reporting und Dokumentation aus der zentralen XML-Informationsbasis. 
+Mit seiner Standard-Plug-in-Architektur kann Maven über Standard-Input mit so gut wie jeder Anwendung zusammenarbeiten.
+Maven vereinfacht den Prozess für das Erstellen von Java-Anwendungen erheblich, da Nutzer den Status des Projektes viel einfacher einschätzen können.
+Der Name Maven kommt aus dem Jiddischen und bedeutet Akkumulator von Wissen. Obwohl Maven das Entwickeln von Software anhand von Konventionen ermöglicht, 
+sind reproduzierbare Builds derzeit kein Feature. Die Entwickler arbeiten aber daran. 
+\cite{sysarch-maven-1}
+
+\section{PostgreSQL}
+\setauthor{Hain Lukas}
+
+Die Datenbank der Wahl ist in dieser Diplomarbeit die PostgreSQL Datenbank, da die Diplomanten im Unterricht bereits erfahrung damit angesammelt haben.
+Dieses DBMS (Datenbank-Managementsystem) bietet eine liberale Lizenz, flexiblen Umgang mit Datentypen, ist skalierbar und vielseitig nutzbar.
+Der Definition nach ist PostgreSQL ein „objektrelationales“ Datenbank-Managementsystem (DBMS). Es ist Open Source und orientiert sich sehr eng am SQL-Standard. Bestehende SQL-Anwendungen 
+können durch den ANSI-SQL-Standards ohne großen Aufwand integriert werden. Die Funktionsweise entspricht dem klassischen Client-Server-Prinzip, bei dem unterschiedliche Clients Anfragen an den Datenbankserver senden.
+In der Praxis ist es mit PostgreSQL möglich, komplexere Anwendungen und Workloads zu entwickeln und zu betreiben als mit anderen Lösungen. 
+Es unterstützt eine Vielzahl Datentypen und Operatoren. Entwickler können hier bei Bedarf eigene Datentypen definieren. PostgreSQL ist nicht nur für Webanwendungen sehr gut geeignet, es kann auch große Enterprise-Datenbanken abbilden. 
+PostgreSQL findet auch in Desktop-Systemen Einsatz: Es ist das Datenbanksystem von Linux und macOS. Diese Systeme liefern das Datenbanksystem standardmäßig mit.
+\cite{sysarch-postgresql-1}
+
+\subsection{Offene Lizenz}
+PostgreSQL hat eine Offene Lizenz. Es ist unter der eigenen PostgreSQL-Lizenz veröffentlicht. Generell fallen dabei keine Lizenzkosten an. 
+Diese liberale Lizenz erlaubt es, das System beliebig zu vertreiben. Änderungen müssen nicht der Community zur Verfügung gestellt werden. Die Verwendung von PostgreSQL hat 
+keine nachgelagerten Auswirkungen darauf, wie Weiterentwicklungen und darauf basierende Lösungen verwendet werden dürfen oder veröffentlicht werden müssen.
+\cite{sysarch-postgresql-1}
+
+\subsection{Großes Potenzial}
+
+Die Datenbankgröße ist nicht durch das System begrenzt, sondern nur durch den zur Verfügung stehenden Speicher. Da Postgres flexibel und kompatibel aufgebaut ist, 
+können eine Vielzahl an Anwendungen auf diese Datenbanklösung bauen. Dazu bietet PostgreSQL die Möglichkeit, 
+Trigger einzusetzen und bietet Schnittstellen zu vielen verschiedenen Programmiersprachen, was den Einsatzzweck und die Zusammenarbeit mit unterschiedlichsten Anwendungen potenziell vielfältig macht.
+\cite{sysarch-postgresql-1}
+
+\subsection{Sichere Replikation}
+
+Ein weiterer Punkt ist die detaillierte Zugriffskontrolle und sichere Datenreplikation. In der Praxis ist je nach Anwendungsfall asynchrone oder synchrone Replikation möglich: 
+Synchrone Replikation, um sicherzustellen, dass kritische Transaktionen auf beiden Servern ausgeführt wurden. Asynchrone Replikation für maximale Geschwindigkeit bei weniger kritischen Transaktionen. 
+Ein weiterer Vorteil ist die freie Wahl der Hardware und des Server-OS. PostgreSQL kann auf diversen Linux-Distributionen, BSD, Windows oder macOS 
+gehostet werden.
+\cite{sysarch-postgresql-1}
+
+\section{KeyCloak}
+\setauthor{Hain Lukas}
+
+Keycloak ist eine Open-Source-Lösung für Identity und Access Management (IAM), die auf die Entwicklung moderner Anwendungen und Services ausgerichtet ist.
+\cite{sysarch-keycloak-1}
+
+\subsection{Single Sign-on und Single Sign-out}
+
+Möchte man mehrere Applikationen oder Dienste verwenden, so sind in der Regel bei jeder Applikation separate Logins erforderlich. Beim Single Sign-on (SSO) geht es jedoch darum, 
+dass nur eine einzige Authentifizierung notwendig ist (beim ersten Zugriff auf eine der Applikationen). Dies geschieht dadurch, dass die Applikation die Benutzerin bzw. 
+den Benutzer auf eine zentrale Keycloak-Instanz weiterleitet, welche die Login-Maske für die angesprochene Applikation ausgibt und in der Folge die Authentifizierung durchführt.
+Nach erfolgreicher Anmeldung wird zur Applikation weitergeleitet. Werden anschließend andere Software-Systeme im SSO-Verbund verwendet, dann weiß Keycloak, dass die Benutzerin bzw. 
+der Benutzer bereits authentifiziert ist und fordert keine weitere Anmeldung mehr. Zusätzlich verfügt Keycloak auch über eine Kerberos-Bridge, sodass die Anmeldung am Arbeitsrechner 
+für die Authentifizierung ausreicht. Darüber hinaus unterstützt Keycloak auch ein Single Sign-out: Nach der Abmeldung erfolgt das automatische Ausloggen aus allen Applikationen im SSO-Verbund.
+\cite{sysarch-keycloak-2}
+
+\subsection{Unterstützung von Standardprotokollen}
+
+Keycloak unterstützt Standardprotokolle wie OAuth 2.0 (nur Autorisierung) und das darauf basierende OpenID Connect (Autorisierung und Authentifizierung). 
+Daneben wird mit SAML 2.0 ein weiteres Standardprotokoll unterstützt, welches ähnliche Anforderungen wie OpenID Connect (OIDC) abdeckt. 
+Im Gegensatz zu OIDC existiert SAML jedoch schon länger, basiert auf XML und setzt zum Erreichen von Integrität und Vertraulichkeit digitale Signaturen und entsprechende Zertifikate ein.
+\cite{sysarch-keycloak-2}
+
+\subsection{Account Management Console}
+
+Ein Self-Service-Portal ermöglicht es Benutzern, ihre Daten jederzeit selbst zu verwalten. Keycloak bietet ein solches Portal unter dem Namen „Account Management Console“ an. 
+So können z. B. Passwortänderungen selbständig durchgeführt werden, ohne von Administratoren abhängig zu sein.
+\cite{sysarch-keycloak-2}
+
+\subsection{Admin Console}
+
+Die Admin Console umfasst im Wesentlichen die Konfiguration von:
+\begin{itemize}
+    \item Realms (jeweils abgegrenzte Bereiche, für die die anderen in dieser Aufzählung genannten Aspekte einzeln konfiguriert bzw. verwaltet werden können)
+    \item Clients (Applikationen und Dienste)
+    \item Benutzerdatenquellen (siehe User Federation)
+    \item weiteren Identity Providern (siehe Identity Brokering und Social Login)
+    \item die Verwaltung von lokal in Keycloak angelegten Benutzern, Benutzern aus anderen Datenquellen, Benutzergruppen und Rollen
+\end{itemize}
+\cite{sysarch-keycloak-2}
+
+\subsection{Client-Adapter}
+
+Clients kommunizieren über die angebotenen Standardprotokolle mit Keycloak. Damit diese Kommunikation nicht für jeden Client – evtl. sogar redundant – selbst implementiert werden muss, 
+gibt es für eine Vielzahl an Technologien und Frameworks fertige Client-Adapter, die sich einfach in die eigene Anwendung integrieren lassen und die Kommunikation mit Keycloak übernehmen. 
+\cite{sysarch-keycloak-2}
+
+
 \section{Git}
 \setauthor{Hain Lukas}
 
@@ -178,115 +351,10 @@ Programmiersprachen JavaScript und TypeScript, sowie einen Built-in Debugger fü
 
 TODO
 
-
-\section{Java}
-\setauthor{Hain Lukas}
-
-Java ist nicht nur eine Programmiersprache, sondern ebenso ein Laufzeitsystem, was Oracle durch den Begriff Java Platform verdeutlichen will. 
-So gibt es neben der Programmiersprache Java durchaus andere Sprachen, die eine Java-Laufzeitumgebung ausführen, etwa diverse Skriptsprachen wie 
-Groovy, JRuby, Jython, Kotlin oder Scala. Skriptsprachen auf der Java-Plattform werden immer populärer; sie etablieren eine andere Syntax, nutzen aber die JVM und die Bibliotheken.
-Zu der Programmiersprache und JVM kommt ein Satz von Standardbibliotheken für Datenstrukturen, Zeichenkettenverarbeitung, Datum/Zeit-Verarbeitung, grafische Oberflächen, 
-Ein-/Ausgabe, Netzwerkoperationen und mehr. Das bildet die Basis für höherwertige Dienste wie Datenbankanbindungen oder Webservices. Integraler Bestandteil der Standardbibliothek 
-seit Java 1.0 sind weiterhin Threads. Sie sind leicht zu erzeugende Ausführungsstränge, die unabhängig voneinander arbeiten können. 
-Mittlerweile unterstützen alle populären Betriebssysteme diese »leichtgewichtigen Prozesse« von Haus aus, sodass die JVM diese parallelen Programmteile nicht nachbilden muss, 
-sondern auf das Betriebssystem verweisen kann. Auf den neuen Multi-Core-Prozessoren sorgt das Betriebssystem für eine optimale Ausnutzung der Rechenleistung, da Threads wirklich nebenläufig arbeiten können.
-\cite{sysarch-java-1}
-
-\subsection{Java Life Cycle}
-
-Der Life Cycle (Lebenszyklus) eines Java Programms gibt an, was genau mit dem Programm passiert, wie es vom Quellcode, den man in der IDE eingibt, zum Maschinenode wird, der aus 0 und 1 besteht.
-Es gibt 3 Hauptphasen im Lebenszyklus:
-\begin{itemize}
-    \item Bearbeitung des Programms
-    \item Kompilierung des Quellcodes
-    \item Ausführung des Byte Codes
-\end{itemize}
-Zuerst wird der Code in die IDE bzw. den Editor eingegeben, wenn man damit fertig ist, wird der Code in einem oder mehreren Files gespeichert. Diese Files haben die Endung ".java". 
-Als nächstes wird das Programm kompiliert. Der Name des Java Compilers ist "javac". Der Input an den Compiler ist der Java Quellcode aus den ".java" Files, der Output des Compilers 
-ist Platform-unabhängiger Code namens "Byte Code". Das File, das vom Compiler generiert wurde, hat die Endung ".class". Als letztes wird das Programm ausgeführt. Der Bytecode, der vom Compiler 
-generiert wurde, wird von der "Java Virtual Mashine" oder JVM ausgeführt, der input an die JVM ist der Bytecode aus dem ".class" File, der Output ist Maschinenode, bestehend aus 0 und 1, und wird von der CPU ausgeführt.
-\cite{sysarch-java-2}
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.6]{pics/java-life-cycle.jpg}
-    \caption{Java Life Cycle}
-\end{figure}
-
 \section{TypeScript}
 \setauthor{Ecker Benjamin}
 
 TODO
-
-\section{Quarkus}
-\setauthor{Hain Lukas}
-
-Quarkus ist ein Kubernetes-natives Full-Stack Java Framework für JVMs (Java Virtual Machines) und native Kompilierung, mit dem Java speziell für Container optimiert wird. 
-Es bietet eine effektive Plattform für Serverless-, Cloud- und Kubernetes-Umgebungen. Quarkus wurde speziell für beliebte Java-Standards, Frameworks und Libraries wie Eclipse MicroProfile und Spring
-sowie für Apache Kafka, RESTEasy (JAX-RS), Hibernate ORM (JPA), Spring, Infinispan, Camel und viele mehr konzipiert.
-Die Dependency-Injection-Lösung von Quarkus basiert auf CDI (Contexts and Dependency Injection) und bietet ein Framework, mit dessen Hilfe die Funktionalität 
-erweitert und ein Framework konfiguriert, gebootet und in Ihre Anwendung integriert werden kann. 
-
-Quarkus wurde als benutzerfreundliches Tool konzipiert und integriert Funktionen, die keine oder nur wenig Konfiguration erfordern.
-Entwickler können die passenden Java Frameworks für ihre Anwendungen auswählen, die dann im JVM-Modus laufen oder kompiliert und im nativen Modus ausgeführt werden können.
-Das ganz auf Entwickler abgestimmte Quarkus integriert außerdem folgende Funktionen:
-\begin{itemize}
-    \item Live-Codierung zur umgehenden Prüfung der Auswirkungen von Code-Änderungen sowie eine schnelle Problembehebung
-    \item Einheitliche imperative und reaktive Programmierung mit einem eingebetteten gemanagten Event Bus
-    \item Einheitliche Konfiguration
-    \item Einfaches Generieren nativer Programmdateien
-\end{itemize}
-Ob man die Anwendungen auf einer Public Cloud oder in einem intern gehosteten Kubernetes-Cluster hosten, Eigenschaften wie ein schneller 
-Start sowie ein niedriger Speicherverbrauch sind wichtig, um die Gesamtkosten für das Hosting niedrig zu halten.
-Quarkus wurde auf Basis einer Container-first-Philosophie entwickelt und soll so einen niedrigen Speicherverbrauch und schnelle Startzeiten auf folgende Weise ermöglichen:
-\begin{itemize}
-    \item Erstklassiger Support für Graal/SubstrateVM
-    \item Metadaten-Verarbeitung gleichzeitig mit dem Build
-    \item Reduzierung der Reflektionsnutzung
-    \item Preboot nativer Images
-\end{itemize}
-Bei der Anwendungsentwicklung mit Quarkus wird im Vergleich zum traditionellen Java nur ein Zehntel des Speichers belegt. Dazu bietet es bis zu 300 Mal 
-schnellere Startzeiten. Beide Aspekte ermöglichen eine deutliche Reduzierung der Kosten für Cloud-Ressourcen.
-Quarkus ist so konzipiert, dass bei der Anwendungsentwicklung der bewährte imperative Code problemlos mit dem nicht-blockierenden reaktiven Code kombiniert werden kann.
-Dies erweist sich als nützlich sowohl für Java-Entwickler, die an das imperative Modell gewöhnt sind und auch dabei bleiben möchten, und all diejenigen, die einen cloudnativen/reaktiven Ansatz bevorzugen.
-Das Quarkus-Entwicklungsmodell lässt sich flexibel an alle zu erstellenden Anwendungstypen anpassen.
-Quarkus ist eine effiziente Lösung zur Ausführung von Java in dieser neuen Welt von Serverless-Architekturen, Microservices, Containern, Kubernetes, 
-Function-as-a-Service (FaaS) und Clouds, weil es für all diese Technologien entwickelt wurde.
-\cite{sysarch-quarkus-1}
-
-\subsection{RESTEasy}
-
-RESTEasy ist ein JBoss/Red Hat-Projekt, das verschiedene Frameworks zur Verfügung stellt, die bei der Erstellung von RESTful Web Services und RESTful Java-Anwendungen unterstützen. 
-Es ist eine Implementierung der Jakarta RESTful Web Services, einer Spezifikation der Eclipse Foundation, die eine Java-API für RESTful Web Services über das HTTP-Protokoll bereitstellt.
-Darüber hinaus implementiert RESTEasy auch die MicroProfile REST Client Spezifikation API.
-
-RESTEasy kann in jedem Servlet-Container ausgeführt werden, aber eine engere Integration mit WildFly Application Server und Quarkus 
-ist ebenfalls verfügbar, um die Benutzerfreundlichkeit in diesen Umgebungen zu verbessern.
-\cite{sysarch-quarkus-2}
-
-\subsection{Hibernate ORM with Panache}
-
-Bei Hibernate handelt es sich um ein Framework zur Abbildung von Objekten auf relationalen Datenbanken für die Programmiersprache Java - es wird auch als Object Relational Mapping Tool bezeichnet. 
-Hibernate ist in der Programmiersprache Java implementiert und steht als Open Source zur freien Verfügung. Hibernate nutzt das Konzept der Reflexion, um so zur Laufzeit einer Software sogenannte 
-Meta- Informationen über die Struktur von Objekten und die zugrunde liegenden Klassen zu ermitteln, die dann auf die Tabellen einer Datenbank abgebildet werden.
-\cite{sysarch-quarkus-3}
-
-\section{Apache Maven}
-\setauthor{Hain Lukas}
-
-Maven ist ein Build-Tool der Apache Software Foundation für die Projektverwaltung. Entwickler können damit Java-Projekte automatisieren. Maven ist ein Teil der Apache Software Foundation und wird von dieser gehostet. 
-Das Tool ist aus einem Teil des Jakarta-Projekts hervorgegangen. Maven vereinfacht den Softwareerstellungsprozess, bietet ein einheitliches System für die Entwicklerarbeit, hochwertige Projektinformationen, 
-Richtlinien für das Festlegen von Best Practices und erleichtert die Migration zu neuen Funktionen durch mehr Transparenz. Maven beschreibt sowohl, wie Software gebaut wird, als auch deren Abhängigkeiten. 
-Apache hilft sowohl bei der Verwaltung von Projekten und dient als Tool zum Verständnis. Es hilft also dabei, den Zustand eines Projekts sehr schnell darzustellen.
-Das Programm wird von Entwicklern und Projektmanagern von Java-Anwendungsprojekten verwendet. Das Tool kann nützlich sein, um den aktuellen Zustand eines Projektes 
-auf einem Blick für technisch weniger versierte Personen, wie Führungspersönlichkeiten und Investoren, zusammenzufassen. Maven basiert auf dem Objektmodell. 
-Projekte werden als eine Pom.xml-Datei gespeichert. 
-
-Das Tool verwaltet Projekt-Builds, Reporting und Dokumentation aus der zentralen XML-Informationsbasis. 
-Mit seiner Standard-Plug-in-Architektur kann Maven über Standard-Input mit so gut wie jeder Anwendung zusammenarbeiten.
-Maven vereinfacht den Prozess für das Erstellen von Java-Anwendungen erheblich, da Nutzer den Status des Projektes viel einfacher einschätzen können.
-Der Name Maven kommt aus dem Jiddischen und bedeutet Akkumulator von Wissen. Obwohl Maven das Entwickeln von Software anhand von Konventionen ermöglicht, 
-sind reproduzierbare Builds derzeit kein Feature. Die Entwickler arbeiten aber daran. 
-\cite{sysarch-maven-1}
 
 \section{Angular}
 \setauthor{Ecker Benjamin}
@@ -303,39 +371,16 @@ TODO
 
 TODO
 
-\section{PostgreSQL}
-\setauthor{Hain Lukas}
+\section{MockLab}
 
-Dieses DBMS (Datenbank-Managementsystem) bietet eine liberale Lizenz, flexiblen Umgang mit Datentypen, ist skalierbar und vielseitig nutzbar.
-Der Definition nach ist PostgreSQL ein „objektrelationales“ Datenbank-Managementsystem (DBMS). Es ist Open Source und orientiert sich sehr eng am SQL-Standard. Bestehende SQL-Anwendungen 
-können durch den ANSI-SQL-Standards ohne großen Aufwand integriert werden. Die Funktionsweise entspricht dem klassischen Client-Server-Prinzip, bei dem unterschiedliche Clients Anfragen an den Datenbankserver senden.
-In der Praxis ist es mit PostgreSQL möglich, komplexere Anwendungen und Workloads zu entwickeln und zu betreiben als mit anderen Lösungen. 
-Es unterstützt eine Vielzahl Datentypen und Operatoren. Entwickler können hier bei Bedarf eigene Datentypen definieren. PostgreSQL ist nicht nur für Webanwendungen sehr gut geeignet, es kann auch große Enterprise-Datenbanken abbilden. 
-PostgreSQL findet auch in Desktop-Systemen Einsatz: Es ist das Datenbanksystem von Linux und macOS. Diese Systeme liefern das Datenbanksystem standardmäßig mit.
-\cite{sysarch-postgresql-1}
+MockLab ist ein Service der eine API "mockt" sprich einen Mockup zu deutsch eine Atrappe erstellt, sollte die richtige API noch nicht vorhanden bzw. zurzeit nicht lauffähig sein.
+Damit ist die Frontend-Entwicklung nicht so stark vom Backend abhängig und eine Fehlerquelle kann durch die immer korrekten Daten des Mockups leichter erfasst werden.
+\cite{sysarch-mocklab-1}
 
-\subsection{Vorteile}
-
-\subsubsection{Offene Lizenz}
-Einer der größten Vorteile von PostgreSQL ist die offene Lizenz. Es ist unter der eigenen PostgreSQL-Lizenz veröffentlicht. Generell fallen dabei keine Lizenzkosten an. 
-Diese liberale Lizenz erlaubt es, das System beliebig zu vertreiben. Änderungen müssen nicht der Community zur Verfügung gestellt werden. Die Verwendung von PostgreSQL hat 
-keine nachgelagerten Auswirkungen darauf, wie Weiterentwicklungen und darauf basierende Lösungen verwendet werden dürfen oder veröffentlicht werden müssen.
-\cite{sysarch-postgresql-1}
-
-\subsubsection{Großes Potenzial}
-
-Die Datenbankgröße ist nicht durch das System begrenzt, sondern einzig durch den zur Verfügung stehenden Speicher. Da Postgres flexibel und kompatibel aufgebaut ist, 
-können eine Vielzahl an Anwendungen auf diese Datenbanklösung bauen. Dazu bietet PostgreSQL die Möglichkeit, 
-Trigger einzusetzen und bietet Schnittstellen zu vielen verschiedenen Programmiersprachen, was den Einsatzzweck und die Zusammenarbeit mit unterschiedlichsten Anwendungen potenziell vielfältig macht.
-\cite{sysarch-postgresql-1}
-
-\subsubsection{Sichere Replikation}
-
-Ein weiterer wichtiger Punkt ist die detaillierte Zugriffskontrolle und sichere Datenreplikation. In der Praxis ist je nach Anwendungsfall asynchrone oder synchrone Replikation möglich: 
-Synchrone Replikation, um sicherzustellen, dass kritische Transaktionen auf beiden Servern ausgeführt wurden. Asynchrone Replikation für maximale Geschwindigkeit bei weniger kritischen Transaktionen. 
-Ein weiterer Vorteil ist die freie Wahl der Hardware und des Server-OS. PostgreSQL kann auf diversen Linux-Distributionen, BSD, Windows oder macOS 
-gehostet werden.
-\cite{sysarch-postgresql-1}
+\subsection{Angular Material}
+Angular Material ist eine Library für User Interface Components wie Cards, Inputs und Data Tables welche eine Standard Angular-App sofort aufwerten könnne.
+Die Website bietet dazu noch einen guten Überblick der Vielzahl an Möglichkeiten der Components und mithilfe vom Online Live Editor Stackblitz kann diese sofort im Web testen. 
+\cite{sysarch-angularMaterial-1} 
 
 \section{Docker}
 \setauthor{Hain Lukas}
@@ -388,50 +433,3 @@ Docker für sich allein ist für die Verwaltung einzelner Container bestens geei
 die in Hunderte von Bestandteilen zerlegt sind, können die Verwaltung und Orchestrierung sehr schwierig werden. Irgendwann muss man einen Schritt zurückgehen und Container gruppieren, 
 um Dienste wie Vernetzung, Sicherheit, Telemetrie usw. in den Containern bereitzustellen.
 \cite{sysarch-docker-1}
-
-\section{KeyCloak}
-\setauthor{Hain Lukas}
-
-Keycloak ist eine Open-Source-Lösung für Identity und Access Management (IAM), die auf die Entwicklung moderner Anwendungen und Services ausgerichtet ist.
-\cite{sysarch-keycloak-1}
-
-\subsection{Single Sign-on und Single Sign-out}
-
-Möchte man mehrere Applikationen oder Dienste verwenden, so sind in der Regel bei jeder Applikation separate Logins erforderlich. Beim Single Sign-on (SSO) geht es jedoch darum, 
-dass nur eine einzige Authentifizierung notwendig ist (beim ersten Zugriff auf eine der Applikationen). Dies geschieht dadurch, dass die Applikation die Benutzerin bzw. 
-den Benutzer auf eine zentrale Keycloak-Instanz weiterleitet, welche die Login-Maske für die angesprochene Applikation ausgibt und in der Folge die Authentifizierung durchführt.
-Nach erfolgreicher Anmeldung wird zur Applikation weitergeleitet. Werden anschließend andere Software-Systeme im SSO-Verbund verwendet, dann weiß Keycloak, dass die Benutzerin bzw. 
-der Benutzer bereits authentifiziert ist und fordert keine weitere Anmeldung mehr. Zusätzlich verfügt Keycloak auch über eine Kerberos-Bridge, sodass die Anmeldung am Arbeitsrechner 
-für die Authentifizierung ausreicht. Darüber hinaus unterstützt Keycloak auch ein Single Sign-out: Nach der Abmeldung erfolgt das automatische Ausloggen aus allen Applikationen im SSO-Verbund.
-\cite{sysarch-keycloak-2}
-
-\subsection{Unterstützung von Standardprotokollen}
-
-Keycloak unterstützt Standardprotokolle wie OAuth 2.0 (nur Autorisierung) und das darauf basierende OpenID Connect (Autorisierung und Authentifizierung). 
-Daneben wird mit SAML 2.0 ein weiteres Standardprotokoll unterstützt, welches ähnliche Anforderungen wie OpenID Connect (OIDC) abdeckt. 
-Im Gegensatz zu OIDC existiert SAML jedoch schon länger, basiert auf XML und setzt zum Erreichen von Integrität und Vertraulichkeit digitale Signaturen und entsprechende Zertifikate ein.
-\cite{sysarch-keycloak-2}
-
-\subsection{Account Management Console}
-
-Ein Self-Service-Portal ermöglicht es Benutzern, ihre Daten jederzeit selbst zu verwalten. Keycloak bietet ein solches Portal unter dem Namen „Account Management Console“ an. 
-So können z. B. Passwortänderungen selbständig durchgeführt werden, ohne von Administratoren abhängig zu sein.
-\cite{sysarch-keycloak-2}
-
-\subsection{Admin Console}
-
-Die Admin Console umfasst im Wesentlichen die Konfiguration von:
-\begin{itemize}
-    \item Realms (jeweils abgegrenzte Bereiche, für die die anderen in dieser Aufzählung genannten Aspekte einzeln konfiguriert bzw. verwaltet werden können)
-    \item Clients (Applikationen und Dienste)
-    \item Benutzerdatenquellen (siehe User Federation)
-    \item weiteren Identity Providern (siehe Identity Brokering und Social Login)
-    \item die Verwaltung von lokal in Keycloak angelegten Benutzern, Benutzern aus anderen Datenquellen, Benutzergruppen und Rollen
-\end{itemize}
-\cite{sysarch-keycloak-2}
-
-\subsection{Client-Adapter}
-
-Clients kommunizieren über die angebotenen Standardprotokolle mit Keycloak. Damit diese Kommunikation nicht für jeden Client – evtl. sogar redundant – selbst implementiert werden muss, 
-gibt es für eine Vielzahl an Technologien und Frameworks fertige Client-Adapter, die sich einfach in die eigene Anwendung integrieren lassen und die Kommunikation mit Keycloak übernehmen. 
-\cite{sysarch-keycloak-2}
