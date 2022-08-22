@@ -1,6 +1,7 @@
 package at.htl.LeoTurnier.repository;
 
 import at.htl.LeoTurnier.entity.Phase;
+import at.htl.LeoTurnier.entity.Tournament;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -74,6 +75,10 @@ public class PhaseRepository implements PanacheRepository<Phase> {
     }
 
     public int getNumOfGroups(Long tournamentId) {
+        Tournament tournament = tournamentRepository.getById(tournamentId);
+        if (!tournament.getTournamentMode().getName().equals("Combination")) {
+            return 1;
+        }
         return (int) getEntityManager()
                 .createQuery("select count(distinct p.groupNumber) from Phase p " +
                         "where p.groupNumber <> -1 " +

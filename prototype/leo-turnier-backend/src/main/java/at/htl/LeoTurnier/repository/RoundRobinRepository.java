@@ -172,18 +172,15 @@ public class RoundRobinRepository {
                 }
             }
         }
-
-        for (int i = 0; i < phaseRepository.getNumOfGroups(tournament.getId()); i++) {
-            List<CompetitorDto> competitorDtos = getCompetitorsSorted(tournament, i);
-            for (int u = 0; u < competitorDtos.size() - 1; u++) {
-                CompetitorDto curr = competitorDtos.get(u);
-                if (curr.equals(competitorDtos.get(u + 1))) {
-                    isFinished = false;
-                    break;
-                }
+        List<CompetitorDto> competitorDtos = getCompetitorsSorted(tournament, -1);
+        for (int u = 0; u < competitorDtos.size() - 1; u++) {
+            CompetitorDto curr = competitorDtos.get(u);
+            if (curr.equals(competitorDtos.get(u + 1))) {
+                isFinished = false;
+                break;
             }
         }
         tournament.setFinished(isFinished);
-        tournamentRepository.modify(tournament.getId(), tournament);
+        tournamentRepository.modify(tournament.getId(),tournament);
     }
 }
