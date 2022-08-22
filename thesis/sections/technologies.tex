@@ -12,15 +12,10 @@ Mittlerweile unterstützen alle populären Betriebssysteme diese »leichtgewicht
 sondern auf das Betriebssystem verweisen kann. Auf den neuen Multi-Core-Prozessoren sorgt das Betriebssystem für eine optimale Ausnutzung der Rechenleistung, da Threads wirklich nebenläufig arbeiten können.
 \cite{sysarch-java-1}
 
-Die Programmiersprache alleine reicht allerdings für eine Web-API noch nicht aus, desshalb wird in der Applikation das Quarkus Framework mit den 
-Libraries RESTEasy und Hibernate ORM verwendet.
-
-(würde es nicht mehr sinn machen, wenn die Überleitung dann im nächsten Kapitel steht?)
-
-
 \section{Quarkus}
 \setauthor{Hain Lukas}
 
+Die Programmiersprache alleine reicht allerdings für eine Web-API noch nicht aus, desshalb wird in der Applikation das Quarkus Framework mit den Libraries RESTEasy und Hibernate ORM verwendet.
 Quarkus ist ein Kubernetes-natives Full-Stack Java Framework für JVMs (Java Virtual Machines) und native Kompilierung, mit dem Java speziell für Container optimiert wird. 
 Es bietet eine effektive Plattform für Serverless-, Cloud- und Kubernetes-Umgebungen. Quarkus wurde speziell für 
 beliebte Java-Standards, Frameworks und Libraries wie RESTEasy (JAX-RS) und Hibernate ORM (JPA), die wie oben erwähntin der Applikation verwendet werden, 
@@ -126,6 +121,7 @@ gehostet werden.
 \section{KeyCloak}
 \setauthor{Hain Lukas}
 
+Zum verwalten von Userdaten wird in dieser Applikation ein KeyCloak Server verwendet.
 Keycloak ist eine Open-Source-Lösung für Identity und Access Management (IAM), die auf die Entwicklung moderner Anwendungen und Services ausgerichtet ist.
 \cite{sysarch-keycloak-1}
 
@@ -170,6 +166,57 @@ Clients kommunizieren über die angebotenen Standardprotokolle mit Keycloak. Dam
 gibt es für eine Vielzahl an Technologien und Frameworks fertige Client-Adapter, die sich einfach in die eigene Anwendung integrieren lassen und die Kommunikation mit Keycloak übernehmen. 
 \cite{sysarch-keycloak-2}
 
+\section{Docker}
+\setauthor{Hain Lukas}
+
+Die Docker-Technologie verwendet den Linux Kernel und seine Funktionen wie Cgroups und namespaces, um Prozesse zu isolieren, damit diese unabhängig voneinander ausgeführt werden können. 
+Diese Unabhängigkeit ist der Zweck der Container – die Fähigkeit, mehrere Prozesse und Apps getrennt voneinander betreiben zu können. 
+So wird die Infrastruktur besser genutzt und gleichzeitig die Sicherheit bewahrt, die sich aus der Arbeit mit getrennten Systemen ergibt.
+Containertools, einschließlich Docker, arbeiten mit einem Image-basierten Bereitstellungsmodell. Das macht es einfacher, eine Anwendung oder ein Paket von Services mit all deren 
+Abhängigkeiten in mehreren Umgebungen gemeinsam zu nutzen. Docker automatisiert außerdem die Bereitstellung der Anwendung 
+(oder Kombinationen von Prozessen, die eine Anwendung darstellen) innerhalb dieser Container-Umgebung. Diese Tools bauen auf Linux-Containern auf 
+und geben den Nutzern so nie dagewesenen Zugriff auf Anwendungen. Sie ermöglichen eine deutlich schnellere Bereitstellung und Kontrolle von Versionen sowie deren Verbreitung.
+\cite{sysarch-docker-1}
+
+\subsection{Vorteile}
+
+\subsubsection{Modularität}
+
+Der Docker-Ansatz für die Containerisierung konzentriert sich darauf, nur einen Teil der Anwendung für eine Reparatur oder Aktualisierung außer Betrieb zu nehmen, 
+ohne dass die gesamte Anwendung außer Betrieb genommen werden muss. Zusätzlich zu diesem auf Microservices basierenden Ansatz können Sie Prozesse 
+in mehreren Apps gemeinsam verwenden – so ähnlich wie bei einer serviceorientierten Architektur (SOA).
+\cite{sysarch-docker-1}
+
+\subsubsection{Layer und Image-Versionskontrolle}
+
+Jedes Docker-Image besteht aus einer Reihe von Layern. Diese Layer werden in einem einzelnen Image vereint. Wenn sich das Image ändert, wird ein Layer erstellt. 
+Jedes Mal, wenn ein Nutzer einen Befehl wie run oder copy eingibt, wird ein neuer Layer erstellt. Mit Docker werden diese Layer für neuer Container wiederverwendet, 
+was die Entwicklung enorm beschleunigt. Zwischenzeitliche Änderungen werden von den Images gemeinsam verwendet, was die Geschwindigkeit, Größe und Effizienz weiter verbessert. 
+Versionskontrolle ist ein fester Bestandteil des Layering. Bei jeder neuen hat man im Prinzip ein eingebautes Änderungsprotokoll und damit volle Kontrolle über die Container-Images.
+\cite{sysarch-docker-1}
+
+\subsubsection{Rollback}
+
+Das Beste am Layering ist wahrscheinlich das Rollback, also das Zurücksetzen auf die vorherige Version. Jedes Image hat Layers. Wenn man mit der aktuellen Iteration eines Image nicht zufrieden ist, kann man einfach
+auf die vorherige Version zurücksetzen. Dieser Ansatz unterstützt eine agile Entwicklung und sorgt, was die Tools angeht, 
+für eine kontinuierliche Integration und Bereitstellung (Continuous Integration/Continuous Deployment - CI/CD).
+\cite{sysarch-docker-1}
+
+\subsubsection{Schnelle Bereitstellung}
+
+Neue Hardware bereitzustellen und zum Laufen zu bringen, dauerte normalerweise Tage und war mit einem enormen Aufwand verbunden. Mit Docker-basierten Containern kann die Bereitstellung auf Sekunden reduziert werden. 
+Indem man für jeden Prozess einen Container erstellt, kann man ähnliche Prozesse schnell mit neuen Apps teilen. Und da zum Hinzufügen oder Verschieben eines Containers das 
+Betriebssystem nicht gebootet werden muss, sind die Bereitstellungszeiten wesentlich kürzer. Darüber hinaus kann man bei dieser Entwicklungsgeschwindigkeit 
+einfach und kosteneffizient Daten erstellen und die von den Containern erzeugten Daten ohne Bedenken löschen.
+Die Docker-Technologie ist also ein granularer, kontrollierbarer, auf Microservices basierter Ansatz, der deutlich effizienter ist.
+\cite{sysarch-docker-1}
+
+\subsection{Einschränkungen}
+
+Docker für sich allein ist für die Verwaltung einzelner Container bestens geeignet. Wenn man beginnt, mehr und mehr Container und containerisierte Apps zu verwenden, 
+die in Hunderte von Bestandteilen zerlegt sind, können die Verwaltung und Orchestrierung sehr schwierig werden. Irgendwann muss man einen Schritt zurückgehen und Container gruppieren, 
+um Dienste wie Vernetzung, Sicherheit, Telemetrie usw. in den Containern bereitzustellen.
+\cite{sysarch-docker-1}
 
 \section{Git}
 \setauthor{Hain Lukas}
@@ -381,55 +428,3 @@ Damit ist die Frontend-Entwicklung nicht so stark vom Backend abhängig und eine
 Angular Material ist eine Library für User Interface Components wie Cards, Inputs und Data Tables welche eine Standard Angular-App sofort aufwerten könnne.
 Die Website bietet dazu noch einen guten Überblick der Vielzahl an Möglichkeiten der Components und mithilfe vom Online Live Editor Stackblitz kann diese sofort im Web testen. 
 \cite{sysarch-angularMaterial-1} 
-
-\section{Docker}
-\setauthor{Hain Lukas}
-
-Die Docker-Technologie verwendet den Linux Kernel und seine Funktionen wie Cgroups und namespaces, um Prozesse zu isolieren, damit diese unabhängig voneinander ausgeführt werden können. 
-Diese Unabhängigkeit ist der Zweck der Container – die Fähigkeit, mehrere Prozesse und Apps getrennt voneinander betreiben zu können. 
-So wird die Infrastruktur besser genutzt und gleichzeitig die Sicherheit bewahrt, die sich aus der Arbeit mit getrennten Systemen ergibt.
-Containertools, einschließlich Docker, arbeiten mit einem Image-basierten Bereitstellungsmodell. Das macht es einfacher, eine Anwendung oder ein Paket von Services mit all deren 
-Abhängigkeiten in mehreren Umgebungen gemeinsam zu nutzen. Docker automatisiert außerdem die Bereitstellung der Anwendung 
-(oder Kombinationen von Prozessen, die eine Anwendung darstellen) innerhalb dieser Container-Umgebung. Diese Tools bauen auf Linux-Containern auf 
-und geben den Nutzern so nie dagewesenen Zugriff auf Anwendungen. Sie ermöglichen eine deutlich schnellere Bereitstellung und Kontrolle von Versionen sowie deren Verbreitung.
-\cite{sysarch-docker-1}
-
-\subsection{Vorteile}
-
-\subsubsection{Modularität}
-
-Der Docker-Ansatz für die Containerisierung konzentriert sich darauf, nur einen Teil der Anwendung für eine Reparatur oder Aktualisierung außer Betrieb zu nehmen, 
-ohne dass die gesamte Anwendung außer Betrieb genommen werden muss. Zusätzlich zu diesem auf Microservices basierenden Ansatz können Sie Prozesse 
-in mehreren Apps gemeinsam verwenden – so ähnlich wie bei einer serviceorientierten Architektur (SOA).
-\cite{sysarch-docker-1}
-
-\subsubsection{Layer und Image-Versionskontrolle}
-
-Jedes Docker-Image besteht aus einer Reihe von Layern. Diese Layer werden in einem einzelnen Image vereint. Wenn sich das Image ändert, wird ein Layer erstellt. 
-Jedes Mal, wenn ein Nutzer einen Befehl wie run oder copy eingibt, wird ein neuer Layer erstellt. Mit Docker werden diese Layer für neuer Container wiederverwendet, 
-was die Entwicklung enorm beschleunigt. Zwischenzeitliche Änderungen werden von den Images gemeinsam verwendet, was die Geschwindigkeit, Größe und Effizienz weiter verbessert. 
-Versionskontrolle ist ein fester Bestandteil des Layering. Bei jeder neuen hat man im Prinzip ein eingebautes Änderungsprotokoll und damit volle Kontrolle über die Container-Images.
-\cite{sysarch-docker-1}
-
-\subsubsection{Rollback}
-
-Das Beste am Layering ist wahrscheinlich das Rollback, also das Zurücksetzen auf die vorherige Version. Jedes Image hat Layers. Wenn man mit der aktuellen Iteration eines Image nicht zufrieden ist, kann man einfach
-auf die vorherige Version zurücksetzen. Dieser Ansatz unterstützt eine agile Entwicklung und sorgt, was die Tools angeht, 
-für eine kontinuierliche Integration und Bereitstellung (Continuous Integration/Continuous Deployment - CI/CD).
-\cite{sysarch-docker-1}
-
-\subsubsection{Schnelle Bereitstellung}
-
-Neue Hardware bereitzustellen und zum Laufen zu bringen, dauerte normalerweise Tage und war mit einem enormen Aufwand verbunden. Mit Docker-basierten Containern kann die Bereitstellung auf Sekunden reduziert werden. 
-Indem man für jeden Prozess einen Container erstellt, kann man ähnliche Prozesse schnell mit neuen Apps teilen. Und da zum Hinzufügen oder Verschieben eines Containers das 
-Betriebssystem nicht gebootet werden muss, sind die Bereitstellungszeiten wesentlich kürzer. Darüber hinaus kann man bei dieser Entwicklungsgeschwindigkeit 
-einfach und kosteneffizient Daten erstellen und die von den Containern erzeugten Daten ohne Bedenken löschen.
-Die Docker-Technologie ist also ein granularer, kontrollierbarer, auf Microservices basierter Ansatz, der deutlich effizienter ist.
-\cite{sysarch-docker-1}
-
-\subsection{Einschränkungen}
-
-Docker für sich allein ist für die Verwaltung einzelner Container bestens geeignet. Wenn man beginnt, mehr und mehr Container und containerisierte Apps zu verwenden, 
-die in Hunderte von Bestandteilen zerlegt sind, können die Verwaltung und Orchestrierung sehr schwierig werden. Irgendwann muss man einen Schritt zurückgehen und Container gruppieren, 
-um Dienste wie Vernetzung, Sicherheit, Telemetrie usw. in den Containern bereitzustellen.
-\cite{sysarch-docker-1}
