@@ -191,4 +191,18 @@ export class TournamentService {
 
     return await this.httpClient.get<Participation[]>(this.host + 'participation?tournamentId=' + id).toPromise();
   }
+
+  async startTieBreakers(id: string): Promise<void> {
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
+
+    await this.httpClient.get(this.host + 'execution/startTieBreakers?tournamentId=' + id, {headers}).subscribe(
+      data => console.log('succes', data),
+      // tslint:disable-next-line:no-shadowed-variable
+      error => console.log('oops', error)
+    );
+  }
 }

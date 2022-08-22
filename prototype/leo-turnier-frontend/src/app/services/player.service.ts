@@ -40,7 +40,7 @@ export class PlayerService {
       error => console.log('oops', error)
     );
 
-    await new Promise(f => setTimeout(f, 10));
+    await new Promise(f => setTimeout(f, 100));
   }
 
   async updatePlayer(id: string, value: any, team: any): Promise<void>{

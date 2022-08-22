@@ -3,6 +3,7 @@ import {DatePipe} from '@angular/common';
 import {Team} from '../model/team.model';
 import {Player} from '../model/player.model';
 import {Injectable} from '@angular/core';
+import {KeycloakService} from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import {Injectable} from '@angular/core';
 export class TeamService {
   private host = 'http://localhost:8080/api/team';
 
-  constructor(private httpClient: HttpClient, public datePipe: DatePipe) {
+  constructor(private httpClient: HttpClient, public datePipe: DatePipe, private keycloakService: KeycloakService) {
   }
 
   async getTeams(): Promise<Team[]>{
@@ -38,7 +39,11 @@ export class TeamService {
     // @ts-ignore
     const team = new Team(null, value.name, value.players);
     console.log(JSON.stringify(team));
-    const headers = { 'content-type': 'application/json'};
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
     await this.httpClient.post(this.host, JSON.stringify(team), {headers}).subscribe(
       data => console.log('success', data),
       error => console.log('oops', error)
@@ -49,7 +54,11 @@ export class TeamService {
     // @ts-ignore
     const team = new Player(value.id, value.name, value.players);
     console.log(JSON.stringify(team));
-    const headers = { 'content-type': 'application/json'};
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
     await this.httpClient.put(this.host + '?id=' + id, JSON.stringify(team), {headers}).subscribe(
       data => console.log('success', data),
       error => console.log('oops', error)
@@ -57,7 +66,12 @@ export class TeamService {
   }
 
   async deleteTeam(id: number): Promise<void> {
-    this.httpClient.delete(this.host + '?id=' + id).subscribe(
+    const authToken = this.keycloakService.getToken();
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    };
+    this.httpClient.delete(this.host + '?id=' + id, {headers}).subscribe(
       data => console.log('success', data),
       error => console.log('oops', error)
     );

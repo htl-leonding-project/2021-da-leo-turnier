@@ -47,7 +47,7 @@ export class MatchSubmitionComponent implements OnInit {
     console.log(action);
 
     await this.api.updateMatch(this.match);
-    await new Promise(f => setTimeout(f, 10));
+    await new Promise(f => setTimeout(f, 100));
 
     if (action === 'Finish'){
       await this.api.finishMatch(this.id);

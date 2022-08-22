@@ -10,6 +10,7 @@ export class Tournament {
               public sportType: SportType,
               public tournamentMode: TournamentMode,
               public competitors: Competitor[],
-              public isTournamentRunning: boolean) {
+              public isTournamentRunning: boolean,
+              public isFinished: boolean) {
   }
 }
