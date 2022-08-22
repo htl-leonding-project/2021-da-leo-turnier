@@ -1,7 +1,6 @@
 package at.htl.LeoTurnier.repository;
 
 import at.htl.LeoTurnier.entity.Phase;
-import at.htl.LeoTurnier.entity.Player;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -85,7 +84,7 @@ public class PhaseRepository implements PanacheRepository<Phase> {
 
     public int getMaxPhaseNumberForGroup(Long tournamentId, int groupNumber) {
         Integer max = getEntityManager()
-                .createQuery("select max(p.groupNumber) from Phase p " +
+                .createQuery("select max(p.phaseNumber) from Phase p " +
                         "where p.groupNumber = :groupNumber " +
                         "and p.tournament.id = :tournamentId", Integer.class)
                 .setParameter("groupNumber", groupNumber)

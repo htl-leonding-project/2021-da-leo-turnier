@@ -7,7 +7,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -62,6 +61,7 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
             toModify.setEndDate(tournament.getEndDate());
             toModify.setTournamentMode(tournament.getTournamentMode());
             toModify.setSportType(tournament.getSportType());
+            toModify.setFinished(tournament.isFinished());
         }
         return toModify;
     }
