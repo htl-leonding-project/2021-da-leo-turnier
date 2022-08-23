@@ -402,11 +402,6 @@ Programmiersprachen JavaScript und TypeScript, sowie einen Built-in Debugger fü
 
 TODO
 
-\section{TypeScript}
-\setauthor{Ecker Benjamin}
-
-TODO
-
 \section{Angular}
 \setauthor{Ecker Benjamin}
 
@@ -415,9 +410,23 @@ Seine komponentenbasierte Architektur welche View und Logik trennt macht es für
 Applikationen zu warten und testen. Dabei verwendet Angular TypeScript für den Code-Behind und HTML als Auszeichnungssprache. 
 Die vielen gut integrierten Libraries decken Features wie Routing, Verwaltung von Formulare und Client-Server Kommunikation ab. 
 
-TODO
+\subsection{Angular Material}
+Angular Material ist eine Library für User Interface Components wie Cards, Inputs und Data Tables welche eine Standard Angular-App sofort aufwerten könnne.
+Die Website bietet dazu noch einen guten Überblick der Vielzahl an Möglichkeiten der Components und mithilfe vom Online Live Editor Stackblitz kann diese sofort im Web testen. 
+\cite{sysarch-angularMaterial-1}
 
-\section{Nginx}
+\subsection{TypeScript}
+\setauthor{Ecker Benjamin}
+
+Wie der Name schon verrät setzt TypeScript anders als die übliche Variante JavaScript auf strikte Typen und macht somit den Code lesbarer und verständlicher.
+Wird in JavaScript eine Variable erstellt lässt nur der Name ahnen was im Programm damit passiert, denn es ist nicht notwendig einen Typen zu deklarieren.
+In TypeScript jedoch muss jede Variable vorher mit einem Typ verseht werden und sollte dies nicht passieren schmeißt der Compiler sofort eine Fehlermeldung.
+Anders als bei anderen Programmiersprache kann es trotz Fehlern zu einem lauffähigen Programm kommen da der Compiler zwar auf Fehler aufmerksam macht, aber
+trotzdem eine JavaScript-Datei erstellt. In den Anfängen von TypeScript gab es noch viele weiter Mehrwerte gegenüber JavaScript, allerdings befinden sich heute
+beide Programmiersprachen auf dem selben Stand.
+\cite{sysarch-typeScript-1}
+
+\subsection{Nginx}
 \setauthor{Ecker Benjamin}
 
 TODO
@@ -426,9 +435,4 @@ TODO
 
 MockLab ist ein Service der eine API "mockt" sprich einen Mockup zu deutsch eine Atrappe erstellt, sollte die richtige API noch nicht vorhanden bzw. zurzeit nicht lauffähig sein.
 Damit ist die Frontend-Entwicklung nicht so stark vom Backend abhängig und eine Fehlerquelle kann durch die immer korrekten Daten des Mockups leichter erfasst werden.
-\cite{sysarch-mocklab-1}
-
-\subsection{Angular Material}
-Angular Material ist eine Library für User Interface Components wie Cards, Inputs und Data Tables welche eine Standard Angular-App sofort aufwerten könnne.
-Die Website bietet dazu noch einen guten Überblick der Vielzahl an Möglichkeiten der Components und mithilfe vom Online Live Editor Stackblitz kann diese sofort im Web testen. 
-\cite{sysarch-angularMaterial-1} 
+\cite{sysarch-mocklab-1} 
