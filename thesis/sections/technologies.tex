@@ -441,3 +441,39 @@ Dabei steuert ein Master-Prozess mehrere Worker-Prozesse, während diese die eig
 MockLab ist ein Service der eine API "mockt" sprich einen Mockup zu deutsch eine Atrappe erstellt, sollte die richtige API noch nicht vorhanden bzw. zurzeit nicht lauffähig sein.
 Damit ist die Frontend-Entwicklung nicht so stark vom Backend abhängig und eine Fehlerquelle kann durch die immer korrekten Daten des Mockups leichter erfasst werden.
 \cite{sysarch-mocklab-1} 
+
+\subsection{Tutorial}
+Um mit MockLab zu starten muss zuerst ein Account erstellt werden, oder man loggt sich mit seinem Github Account ein.
+Einmal eingeloggt werden schon alle erstellenten Mock API's angezeigt bzw. beim ersten mal nur die Example Mock API.
+
+Um eine neue Mock API zu erstellen einfach auf den \includegraphics[scale=0.5]{pics/mocklab-tutorial/new-mock-api-button.png} Button in der Nav-Bar klicken.
+
+\newpage
+Erstellen wir mal eine API die uns eine Fußballmannschaft zurückliefern soll.
+\bigskip
+
+\includegraphics[scale=0.5]{pics/mocklab-tutorial/create-mock-api.PNG}
+
+Die Standard Einstellungen müssten soweit passen, also erstellen wir gleich unseren Stub.
+Einfach links auf den \includegraphics[scale=0.5]{pics/mocklab-tutorial/new-stub-button.PNG}
+klicken und danach in der Menü-Leiste auf \includegraphics[scale=0.5]{pics/mocklab-tutorial/new-button.PNG}
+
+Nennen wir den Stub einfach mal Fußballmannschaft und definieren einen sinvollen Pfad für einen GET-Request.
+\bigskip
+
+\includegraphics[scale=0.5]{pics/mocklab-tutorial/request.PNG}
+
+\newpage
+
+Dann müssen wir natürlich noch eine Response für unseren Stub erstellen und antworten einfach mal mit einer
+JSON-Datei von Paris-Saint-Germain.
+\bigskip
+
+\includegraphics[scale=0.5]{pics/mocklab-tutorial/response.PNG}
+
+Und siehe schon haben wir eine funktionierde Mockup die Daten beispielsweise für eine Frontend-Entwicklung
+bereitstellt.
+\begin{figure}[h]
+    \includegraphics[scale=0.5]{pics/mocklab-tutorial/postman.PNG}
+    \caption{Postman Request}
+\end{figure}
