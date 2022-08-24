@@ -15,32 +15,56 @@ der jeweiligen Phase zugeordnet werden.
 \section{Quarkus Backend}
 \setauthor{Hain Lukas}
 
+\subsection{Ordnerstruktur}
+
 \begin{figure}[H]
     \includegraphics[scale=0.8]{pics/quarkus_file_structure.png}
     \caption{Quarkus Ordnerstruktur}
 \end{figure}
 
-(Ist dieser Teil zu Basic?)
+Nach dem erstellen eines Quarkus Projektes ist ein Großteil der Ordnerstruktur bereits im vorhinein gegeben. Das wichtigste File im Projekt befindet sich ganz im äußersten Ordner, nämlich das "pom.xml" File. 
 
-Nach dem erstellen eines Quarkus Projektes ist ein Großteil der Ordnerstruktur bereits im vorhinein gegeben. Das wichtigste File im Projekt befindet sich ganz im äußersten Ordner, nämlich das "pom.xml" File. Hier werden 
-nicht nur die Metadaten des Projekts angegeben, sondern auch die Dependencies, also alle externen Libraries, die die Applikation benötigt. 
+\begin{figure}[H]
+    \includegraphics[scale=0.6]{pics/pom.xml.png}
+    \caption{pom.xml}
+\end{figure}
+
+Hier werden nicht nur die Metadaten des Projekts angegeben, sondern auch die Dependencies, also alle externen Libraries, die die Applikation benötigt. 
+
 Im "src" Ordner befinden sich ein "main" und ein "test" Ordner. Im "main" Ordner befindet sich der ganze Quellcode der Applikation, und im "test" Ordner befindet sich der Code, der den Quellcode auf seine richtigkeit prüft.
 Im "main" Ordner befindet sich nun ein "docker" Ordner, auf den später noch eingegangen wird, ein "java" Ordner, in dem sich die Java Klassen der Applikation befindet, und ein "resources" Ordner, in dem weitere Files zu finden sind, 
-auf die der Java Code eventuell zugreifen kann.
+auf die der Java Code eventuell zugreifen kann. Außerdem befindet sich im "resources" Ordner das "application.properties" File, in dem verschiedene Quarkus Konfigurationen zu finden sind.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.6]{pics/application.properties.png}
+    \caption{application.properties}
+\end{figure}
+
+Die Konfigurationen sind aufgeteilt in Datasource (Datenbank), HTTP (Endpoints) und KeyCloak Konfigurationen. 
+
+(Ist der Teil unten zu Basic?) (Der Teil unten gehört noch zur "Quarkus Ordnerstruktur" Abbildung, kann sein dass das etwas unklar ist, wie könnte ich das am besten machen?)
 
 Die Java Klassen im "java" Ordner sind weiters in 4 verschiedene Ordner aufgeteilt. Im "entity" Ordner befinden sich alle Entitätsklassen der Applikation, also jene, die das Datenmodell (siehe Kapitel 6.1 Datenmodell) wiederspiegeln.
 Die Klassen im "repository" sind die Schnittstelle zwischen der Quarkus Applikation und der Datenbank. Sie sind für die CRUD Operationen verantwortlich, also das Speichern, Auslesen, Verändern oder Löschen von Daten nach dem Schema der Entitätsklassen.
 Außerdem befindet sich hier die Logik hinter den Turnieren. Die Klassen im "boundary" sind die Schnittstelle zum Frontend. Sie nehmen Requests, also Anforderungen, von außen an, 
-führen die jeweilige Methode aus den Repository Klassen aus und liefern dann eine Response, also eine Antwort, zurück. Zuletzt gibt es noch die Klassen in "dto" Ordner, diese sind Klassen, in denen Daten gespeichert werden können, die für die Logik in den 
-Repository Klassen benötigt wird, jedoch nicht unbedingt Teil des Datenmodells sind.
+führen die jeweilige Methode aus den Repository Klassen aus und liefern dann eine Response, also eine Antwort, zurück. Zuletzt gibt es noch die Klassen in "dto" Ordner, diese sind Klassen, 
+in denen Daten gespeichert werden können, die für die Logik in den Repository Klassen benötigt wird, jedoch nicht unbedingt Teil des Datenmodells sind.
 
-TODO: screenshot tournament
+\subsection{Entitätsklassen}
 
-Oben abgebildet ist eine der Entitätsklassen dieser Applikation, nämlich die Tournament Klasse. Ganz oben, über der Klasse, ist die Annotation "@Entity" zu finden, um sicherzustellen, dass die Klasse von JPA als Entitätsklasse erkannt wird, und das Library dafür eine Tabelle erstellt.
-Darunter befindet sich die "@Table" Annotation, die der Tabelle in der Datenbank ihren Namen gibt. Das Schema der Namensgebung von Tabellen lautet wie folgt: am Anfang steht immer die Abkürzung für den Tabellennamen, in diesem Fall ist das "T", danach kommt ein Unterstrich, 
-gefolgt von dem Namen der Entitätsklasse in Großbuchstaben. In der Klasse selbst befinden sich nun die Klassenvariablen, welche von der Annotation "@Column" ihren Namen in der Datenbank verleiht. Das Schema der Namensgebung ist ähnlich, wie das der Tabellen: Anfangs die Abkürzung des Tabellennamens, 
-dann ein Unterstrich als Trennung, gefolgt vom Namen der Klassenvariable, ebenfalls in Großbuchstaben. Die ID hat eine extra annotation, nämlich "@Id", das bedeutet dass sie der Primärschlüssel der Entitätsklasse ist. Außerdem steht bei den Variablen "tournamentmode" und "sportType" noch die "@ManyToOne" Annotation. 
-Diese Felder werden dann in der Datenbank zu den Fremdschlüsseln auf andere Tabellen. Hier lautet das Namensschema wie folgt: Zuerst die Abkürzung der eigenen Klasse, dann der Name des Primärschlussels aus der Tabelle, auf die der Fremdschlüssel zeigt, wieder, getrennt durch einen Unterstrich.
+\begin{figure}[H]
+    \includegraphics[scale=0.8]{pics/entity_class.png}
+    \caption{Entitätsklasse}
+\end{figure}
+
+Oben abgebildet ist eine der Entitätsklassen dieser Applikation, nämlich die Tournament Klasse. Ganz oben, über der Klasse, ist die Annotation "@Entity" zu finden, um sicherzustellen, dass die Klasse von JPA als Entitätsklasse erkannt wird, 
+und das Library dafür eine Tabelle erstellt. Darunter befindet sich die "@Table" Annotation, die der Tabelle in der Datenbank ihren Namen gibt. Das Schema der Namensgebung von Tabellen lautet wie folgt: 
+am Anfang steht immer die Abkürzung für den Tabellennamen, in diesem Fall ist das "T", danach kommt ein Unterstrich, gefolgt von dem Namen der Entitätsklasse in Großbuchstaben. 
+In der Klasse selbst befinden sich nun die Klassenvariablen, welche von der Annotation "@Column" ihren Namen in der Datenbank verleiht. Das Schema der Namensgebung ist ähnlich, wie das der Tabellen: 
+Anfangs die Abkürzung des Tabellennamens, dann ein Unterstrich als Trennung, gefolgt vom Namen der Klassenvariable, ebenfalls in Großbuchstaben. Die ID hat eine extra annotation, nämlich "@Id", 
+das bedeutet dass sie der Primärschlüssel der Entitätsklasse ist. Außerdem steht bei den Variablen "tournamentmode" und "sportType" noch die "@ManyToOne" Annotation. 
+Diese Felder werden dann in der Datenbank zu den Fremdschlüsseln auf andere Tabellen. Hier lautet das Namensschema wie folgt: Zuerst die Abkürzung der eigenen Klasse, 
+dann der Name des Primärschlussels aus der Tabelle, auf die der Fremdschlüssel zeigt, wieder, getrennt durch einen Unterstrich.
 Es gibt 4 Verschiedene Annotationen, die eine Beziehung zu anderen Tabellen herstellen:
 
 \begin{itemize}
@@ -50,8 +74,90 @@ Es gibt 4 Verschiedene Annotationen, die eine Beziehung zu anderen Tabellen hers
     \item @ManyToMany
 \end{itemize}
 
-Die erste Mengenangabe steht immer für die eigene Klasse, die zweite steht für die andere Klasse. Diese braucht in diesem Fall natürlich auch die "@Entity" Annotation sowie einen Primärschlüssel. Bei "@OneToOne" und "@ManyToOne" wird in der Datenbank der Fremdschlüssel in der eigenen Tabelle erstellt, 
-bei "@OneToMany" wird der Fremdschlüssel in der anderen Tabelle erstellt (hier muss die Variable, bei der die Annotation steht, auch eine Collection sein), und bei "@ManyToMany" wird eine Assotiationstabelle erstellt, in der sich dann 2 Fremdschlüssel befinden: 
+(wie könnte ich unten noch zu der "anderen" Klasse sagen?)
+
+Die erste Mengenangabe steht immer für die eigene Klasse, die zweite steht für die andere Klasse. Diese braucht in diesem Fall natürlich auch die "@Entity" Annotation sowie einen Primärschlüssel. 
+Bei "@OneToOne" und "@ManyToOne" wird in der Datenbank der Fremdschlüssel in der eigenen Tabelle erstellt, bei "@OneToMany" wird der Fremdschlüssel in der anderen Tabelle 
+erstellt (hier muss die Variable, bei der die Annotation steht, auch eine Collection sein), und bei "@ManyToMany" wird eine Assotiationstabelle erstellt, in der sich dann 2 Fremdschlüssel befinden: 
 einmal der au die Tabelle der eigenen Klasse, und einmal die der naderen Klasse.
 
 Unter den Klassen befinden sich dann standardmäßig noch der Constructor sowie die Getter und Setter.
+
+\subsection{Repositoryklassen}
+
+\begin{figure}[H]
+    \includegraphics[scale=0.8]{pics/repository_class.png}
+    \caption{Repositoryklasse}
+\end{figure}
+
+Wie oben schon erwähnt sind die Repositoryklassen die Schnittstelle zwischen Quarkus Backend und Datenbank. Außer ein paar Ausnahmen befinden sich hier nur die CRUD (Create - Read - Update - Delete) Operationen, 
+als Create Operation fungiert hier die "add" Methode, als Read Operationen die "get" Methoden (getById, getByCompetitorId, getAll), als Update Operation die "modify" Methode und als Delete Operationen die "delete" und "clear". 
+Über der Klasse befinden sich die Annotation "@ApplicationScoped" und "@Transactional". "@ApplicationScoped" ermöglicht es anderen Repositoryklassen, mithilfe von "@Inject" eine Instanz dieser Klasse zu injezieren, genau so, 
+wie es diese Klasse weiter unten auch tut. Es wird zum Beispiel in der "add" Methode "TournamentRepository" Klasse (siehe Abbildung "add Methode aus TournamentRepository" unten) die 
+der "SportTypeRepository" Klasse benötigt, da sich in der "Tournament" Klasse ein Fremdschlüssel auf die "SportType" Klasse befindet. Sollte also die Sportart, 
+auf die dieser Fremdschlüssel zeigt, in der Datenbank nicht existieren, kommt es zu einer SQLException, wesshalb in der add Mehode von "TournamentRepository", 
+bevor das Turnier selbst mit "persist" gespeichert wird, nocht die Sportart mithilfe der add Methode der "SportTypeRepository" Klasse in der Datenbank. 
+
+\begin{figure}[H]
+    \includegraphics[scale=0.8]{pics/repository_add_function.png}
+    \caption{add Methode aus TournamentRepository}
+\end{figure}
+
+Das gleiche passiert bei der "modify" Methode, wenn der Fremdschlüssel auf eine Sportart zeigt, die noch nicht existiert.
+
+"@Transactional" wird verwendet, um in jeder Methode dieser Klasse vor den Ausführen eine neue Transaktion zu erstellen, und diese danach zu commiten. 
+Wenn Daten in der Datenbank gespeichert, modifiziert oder gelöscht werden, werden diese Änderungen erst dann wirklich in die Datenbank übernommen, wenn eine Transaktion commitet wurde.
+
+\subsection{Serviceklassen}
+
+\begin{figure}[H]
+    \includegraphics[scale=0.6]{pics/service_class.png}
+    \caption{Serviceklasse}
+\end{figure}
+
+Die Serviceklassen sind die Schnittstelle zum Frontend, diesem stellen sie durch Endpoints, welche von Requests angesprochen werden, Daten aus der Datenbank zur Verfügung. 
+Über der Klasse wird mithilfe der Annotation "@Path" der URL Path zu den Endpoints dieser Klasse festgestellt. In der Klasse selbst wird zuerst eine Instanz des dazugehörigen Repositories injeziert. 
+Danach folgt für jede CRUD Operation ein Endpoint. Es gibt verschiedene Arten von Endpoints, in dieser Applikation werden hauptsächlich 4 verwendet:
+
+\begin{itemize}
+    \item "@POST" bei Create Operationen
+    \item "@PUT" bei Update Operationen
+    \item "@GET" bei Read Operationen
+    \item "@DELETE" bei Delete Operationen
+\end{itemize}
+
+"@RolesAllowed" gibt an, welche Rollen zugriff auf diesen Enpoint haben. Darauf wird im Kapitel KeyCloak noch genauer eingegangen. "@Consumes" und "@Produces" geben an, 
+welche Art von Content in den Requests (@Consumes) bzw. den Responses (@Produces) übergeben werden soll. Außerdem wäre es noch möglich, den URL Path zu einem bestimmten Endpoint zu ändern, 
+und zwar wieder mit der "@Path" Annotation. Bei den Parametern der Methoden gibt es manche mit der Annotation "@QueryParam", diese Annotation gibt an, dass dieser Parameter von der 
+Request in der URL definiert wird. Zum Beispiel sieht die URL einer Request auf den GET Endpoint wie folgt aus:
+
+\textbf{http://localhost:8080/api/tournament?id=1} 
+
+Der Hostname ist in diesem Quarkus Backend "localhost", der Port 8080, der Root Path "api" wurde im "application.properties" File festgelegt, und der Path "tournament" wie erwähnt mit der "@Path" Annotation. 
+Nach dem "?" werden immer die Queryparameter ("@QueryParam") übergeben, in diesem Fall die "id" mit dem Wert 1. Der Parameter "UriInfo" wird benötigt, um im Header der Response den Path zurückzugeben, 
+mit dem man den neu hinzugefügten bzw. modifizierten Datensatz finden kann.
+
+Was bei den Serviceklassen noch auffallend ist, ist dass es zum Beispiel für Read Operationen insgesammt nur einen Endpoint pro Serviceklasse gibt, obwohl es in den Repositoryklassen mehrere Get Methoden gibt (siehe Abbildung "Repositoryklasse").
+Dies wird dadurch gelöst, dass Endpoints auch erfolgreich ausgeführt werden, wenn nicht alle Queryparameter in der URL definiert wurden, diese haben standardmäßig den Wert "null". Mit diesem Prinzib wird erreicht, dass mit dem gleichen URL Path 
+verschiedene Read Operationen durchführen kann.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.5]{pics/service_get_function.png}
+    \caption{get Methode aus TournamentService}
+\end{figure}
+
+Im obigen Beispiel hat man 3 Möglichkeiten:
+
+\begin{itemize}
+    \item keinen Query Parameter anzugeben, um alle Turniere auszulesen
+    \item den "id" Query Parameter anzugeben, um nur das Turnier mit der angegebenen Id auszulesen
+    \item den "competitorId" Query Parameter anzugeben, um alle Turniere auszulesen, in denen der Competitor mit der angegebenen Id dabei war.
+\end{itemize}
+
+
+Die einzige Entitätsklasse, für die es nur READ Endpoints gibt, ist die TournamentMode Klasse, Turniermodi werden beim Start des Backends mithilfe der "InitBean" Klasse 
+automatisch in die Datenbank hinzugefügten, da diese für die Turnierdurchführung jeweils einzeln Implementiert werden müssen.
+
+\subsection{Turnierdurchführung}
+
+
