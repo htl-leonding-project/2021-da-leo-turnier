@@ -338,7 +338,7 @@ der die Veröffentlichung von Packages erleichtert und vollständig in GitHub in
 sodass man zum Suchen und Veröffentlichen von Paketen dieselben Such-, Browsing- und Verwaltungstools verwenden kann wie für Repositories.
 \cite{sysarch-github-5}
 
-\section{Intellij IDEA}
+\subsection{Intellij IDEA}
 \setauthor{Hain Lukas}
 
 IntelliJ IDEA ist eine intelligente, kontextsensitive IDE für Java und andere JVM-Sprachen wie Kotlin, Scala und Groovy, die sich für zahlreiche 
@@ -348,28 +348,32 @@ Quarkus oder Helidon. Darüber hinaus kann IntelliJ IDEA mit Plugins von JetBrai
 Go, Python, SQL, Ruby und PHP einzusetzen. 
 \cite{sysarch-intellij-1}
 
-\subsection{Was ist eine IDE?}
+\subsubsection{Was ist eine IDE?}
 
 Eine IDE (Integrated Development Environment) oder integrierte Entwicklungsumgebung ist Software für die Anwendungsentwicklung, 
 die gängige Entwicklertools in einer zentralen grafischen Oberfläche vereint. Eine typische IDE besteht aus folgenden Komponenten:
 \cite{sysarch-intellij-2}
 
-\subsubsection{Quellcode-Editor }
-Ein Texteditor, der eine Programmierung von Software-Code mit folgenden Features unterstützt: 
-Syntaxhervorhebung mit visuellen Hinweisen, sprachspezifische Autovervollständigung und eine Bug-Prüfung, während der Code geschrieben wird.
+\begin{itemize}
+    \item Quellcode-Editor
+    
+    Ein Texteditor, der eine Programmierung von Software-Code mit folgenden Features unterstützt: 
+    Syntaxhervorhebung mit visuellen Hinweisen, sprachspezifische Autovervollständigung und eine Bug-Prüfung, während der Code geschrieben wird.
+    \cite{sysarch-intellij-2}
+
+    \item Automatisierung lokaler Builds
+    
+    Dienstprogramme, mit denen sich einfache wiederholbare Aufgaben im Rahmen der Entwicklung lokaler Software-Builds zur Nutzung durch 
+    die Entwickler automatisieren lassen, wie beispielsweise die Kompilierung von Quell- in Binärcode, dessen Paketierung und die Ausführung automatischer Tests.
+    \cite{sysarch-intellij-2}
+
+    \item Debugger
+    
+    Ein Programm zur Prüfung anderer Programme, mit dem sich die Position von Bugs im Originalcode grafisch anzeigen lässt.
 \cite{sysarch-intellij-2}
+\end{itemize}
 
-\subsubsection{Automatisierung lokaler Builds}
-Dienstprogramme, mit denen sich einfache wiederholbare Aufgaben im Rahmen der Entwicklung lokaler Software-Builds zur Nutzung durch 
-die Entwickler automatisieren lassen, wie beispielsweise die Kompilierung von Quell- in Binärcode, dessen Paketierung und die Ausführung automatischer Tests.
-\cite{sysarch-intellij-2}
-
-\subsubsection{Debugger}
-Ein Programm zur Prüfung anderer Programme, mit dem sich die Position von Bugs im Originalcode grafisch anzeigen lässt.
-\cite{sysarch-intellij-2}
-
-
-\subsection{Codeanalyse}
+\subsubsection{Codeanalyse}
 
 Intellij bietet intelligente Programmierhilfen an. Durch eine Indizierung des Quellcodes legt die IDE eine virtuelle 
 Karte des Projekts an. Anhand der Informationen in dieser virtuellen Karte kann sie Fehler erkennen, kontextabhängige Completion-Vorschläge anbieten oder
@@ -377,7 +381,7 @@ Refactorings durchführen.
 \cite{sysarch-intellij-1}
 
 
-\subsection{Versionsverwaltung}
+\subsubsection{Versionsverwaltung}
 
 IntelliJ IDEA unterstützt die gängigen Versionsverwaltungen (VCS) wie Git, Subversion, Mercurial und Perforce. 
 Man kann ein VCS-Projekt direkt auf dem Startbildschirm klonen, die Unterschiede zwischen zwei Revisionen untersuchen, Branches verwalten, 
@@ -385,7 +389,7 @@ Commits durchführen und pushen, Konflikte bereinigen oder den Verlauf überprü
 \cite{sysarch-intellij-1}
 
 
-\subsection{JVM-Frameworks}
+\subsubsection{JVM-Frameworks}
 
 IntelliJ IDEA Ultimate bietet Unterstützung für Frameworks und Technologien zur Entwicklung von Anwendungen und Microservices. 
 Die IDE bietet spezielle Unterstützung unter anderem für Quarkus, Spring, Spring Boot, Jakarta EE, JPA und Reactor.
