@@ -1,7 +1,8 @@
-package at.htl.LeoTurnier.repository;
+package at.htl.LeoTurnier.execution;
 
 import at.htl.LeoTurnier.dto.CompetitorDto;
 import at.htl.LeoTurnier.entity.*;
+import at.htl.LeoTurnier.repository.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
-public class RoundRobinRepository {
+public class RoundRobinExecution {
 
     @Inject
     ParticipationRepository participationRepository;

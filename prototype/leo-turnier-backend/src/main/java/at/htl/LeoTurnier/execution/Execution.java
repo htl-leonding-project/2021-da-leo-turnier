@@ -1,13 +1,14 @@
-package at.htl.LeoTurnier.repository;
+package at.htl.LeoTurnier.execution;
 
 import at.htl.LeoTurnier.entity.*;
+import at.htl.LeoTurnier.repository.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
-public class ExecutionRepository {
+public class Execution {
 
     @Inject
     TournamentRepository tournamentRepository;
@@ -25,13 +26,13 @@ public class ExecutionRepository {
     PhaseRepository phaseRepository;
 
     @Inject
-    EliminationRepository eliminationRepository;
+    EliminationExecution eliminationExecution;
 
     @Inject
-    RoundRobinRepository roundRobinRepository;
+    RoundRobinExecution roundRobinExecution;
 
     @Inject
-    CombinationRepository combinationRepository;
+    CombinationExecution combinationExecution;
 
     public Tournament startTournament(Long tournamentId, Integer numOfGroups) {
         Tournament tournament = tournamentRepository.getById(tournamentId);
@@ -41,11 +42,11 @@ public class ExecutionRepository {
         clearTournament(tournamentId);
         List<Competitor> competitors = competitorRepository.getByTournamentId(tournament.getId());
         if (tournament.getTournamentMode().getName().equals("Round Robin")) {
-            tournament = roundRobinRepository.startTournament(tournament, competitors, -1);
+            tournament = roundRobinExecution.startTournament(tournament, competitors, -1);
         } else if (tournament.getTournamentMode().getName().equals("Combination") && numOfGroups != null) {
-            tournament = combinationRepository.startGroupPhase(tournament, competitors, numOfGroups);
+            tournament = combinationExecution.startGroupPhase(tournament, competitors, numOfGroups);
         } else {
-            tournament = eliminationRepository.startTournament(tournament, competitors);
+            tournament = eliminationExecution.startTournament(tournament, competitors);
         }
 
         return tournament;
@@ -57,9 +58,9 @@ public class ExecutionRepository {
             return null;
         }
         if (tournament.getTournamentMode().getName().equals("Round Robin")) {
-            tournament = roundRobinRepository.startTieBreakers(tournament, -1);
+            tournament = roundRobinExecution.startTieBreakers(tournament, -1);
         } else if (tournament.getTournamentMode().getName().equals("Combination")) {
-            tournament = combinationRepository.startTieBreakers(tournament);
+            tournament = combinationExecution.startTieBreakers(tournament);
         }
         return tournament;
     }
@@ -70,7 +71,7 @@ public class ExecutionRepository {
             return null;
         }
         if (tournament.getTournamentMode().getName().equals("Combination") && promotedPerGroup != -1) {
-            return combinationRepository.startKOPhase(tournament, promotedPerGroup);
+            return combinationExecution.startKOPhase(tournament, promotedPerGroup);
         }
         return null;
     }
@@ -81,27 +82,27 @@ public class ExecutionRepository {
         matchRepository.modify(node.getMatch().getId(), node.getMatch());
         Tournament tournament = node.getPhase().getTournament();
         if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
-            roundRobinRepository.rankCompetitors(tournament, -1);
-            roundRobinRepository.setFinished(tournament);
+            roundRobinExecution.rankCompetitors(tournament, -1);
+            roundRobinExecution.setFinished(tournament);
             return node.getMatch();
         } else if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Combination")) {
             if (node.getPhase().getGroupNumber() != -1) {
-                roundRobinRepository.rankCompetitors(tournament, node.getPhase().getGroupNumber());
+                roundRobinExecution.rankCompetitors(tournament, node.getPhase().getGroupNumber());
             } else {
-                eliminationRepository.finishMatch(node, tournament);
+                eliminationExecution.finishMatch(node, tournament);
             }
             return node.getMatch();
         } else {
-            return eliminationRepository.finishMatch(node, tournament);
+            return eliminationExecution.finishMatch(node, tournament);
         }
     }
 
     public void rankCompetitors(Long tournamentId) {
         Tournament tournament = tournamentRepository.getById(tournamentId);
         if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
-            roundRobinRepository.rankCompetitors(tournament, -1);
+            roundRobinExecution.rankCompetitors(tournament, -1);
         } else if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Combination")) {
-             combinationRepository.rankCompetitors(tournament);
+             combinationExecution.rankCompetitors(tournament);
         }
     }
 

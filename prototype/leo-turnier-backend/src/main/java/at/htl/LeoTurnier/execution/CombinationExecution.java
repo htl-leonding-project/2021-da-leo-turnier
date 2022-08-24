@@ -1,9 +1,10 @@
-package at.htl.LeoTurnier.repository;
+package at.htl.LeoTurnier.execution;
 
 
 import at.htl.LeoTurnier.dto.CompetitorDto;
 import at.htl.LeoTurnier.entity.Competitor;
 import at.htl.LeoTurnier.entity.Tournament;
+import at.htl.LeoTurnier.repository.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -11,16 +12,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 @ApplicationScoped
-public class CombinationRepository {
+public class CombinationExecution {
 
     @Inject
     ParticipationRepository participationRepository;
 
     @Inject
-    RoundRobinRepository roundRobinRepository;
+    RoundRobinExecution roundRobinExecution;
 
     @Inject
-    EliminationRepository eliminationRepository;
+    EliminationExecution eliminationExecution;
 
     @Inject
     PhaseRepository phaseRepository;
@@ -30,7 +31,7 @@ public class CombinationRepository {
 
 
     public Tournament startGroupPhase(Tournament tournament, List<Competitor> competitors, int numOfGroups) {
-        eliminationRepository.sortBySeed(tournament, competitors);
+        eliminationExecution.sortBySeed(tournament, competitors);
 
         for (int i = 0; i < numOfGroups; i++) {
             List<Competitor> competitorsInGroup = new LinkedList<>();
@@ -39,7 +40,7 @@ public class CombinationRepository {
                     competitorsInGroup.add(competitors.get(u));
                 }
             }
-            roundRobinRepository.startTournament(tournament, competitorsInGroup, i);
+            roundRobinExecution.startTournament(tournament, competitorsInGroup, i);
         }
 
         return tournament;
@@ -47,7 +48,7 @@ public class CombinationRepository {
 
     public Tournament startTieBreakers(Tournament tournament) {
         for (int i = 0; i < phaseRepository.getNumOfGroups(tournament.getId()); i++) {
-            roundRobinRepository.startTieBreakers(tournament, i);
+            roundRobinExecution.startTieBreakers(tournament, i);
         }
         return tournament;
     }
@@ -55,18 +56,18 @@ public class CombinationRepository {
     public Tournament startKOPhase(Tournament tournament, int promotedPerGroup) {
         List<Competitor> promoted = new LinkedList<>();
         for (int i = 0; i < phaseRepository.getNumOfGroups(tournament.getId()); i++) {
-            List<CompetitorDto> competitorDtos = roundRobinRepository.getCompetitorsSorted(tournament, i);
+            List<CompetitorDto> competitorDtos = roundRobinExecution.getCompetitorsSorted(tournament, i);
             for (int u = 0; u < promotedPerGroup; u++) {
                 promoted.add(competitorRepository.getById(competitorDtos.get(u).getId()));
             }
         }
-        return eliminationRepository.startTournament(tournament, promoted);
+        return eliminationExecution.startTournament(tournament, promoted);
     }
 
     public void rankCompetitors(Tournament tournament) {
         int numOfGroups = phaseRepository.getNumOfGroups(tournament.getId());
         for (int i = 0; i < numOfGroups; i++) {
-            List<CompetitorDto> competitorDtos = roundRobinRepository.getCompetitorsSorted(tournament, i);
+            List<CompetitorDto> competitorDtos = roundRobinExecution.getCompetitorsSorted(tournament, i);
             for (int u = 0; u < competitorDtos.size(); u++) {
                 CompetitorDto competitorDto = competitorDtos.get(u);
                 CompetitorDto previousCompetitorDto = null;

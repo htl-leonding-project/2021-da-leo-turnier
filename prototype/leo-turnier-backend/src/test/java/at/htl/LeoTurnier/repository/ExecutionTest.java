@@ -2,24 +2,21 @@ package at.htl.LeoTurnier.repository;
 
 
 import at.htl.LeoTurnier.entity.*;
+import at.htl.LeoTurnier.execution.Execution;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.*;
 
 import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ExecutionRepositoryTest {
+class ExecutionTest {
 
     @Inject
-    ExecutionRepository repository;
+    Execution repository;
 
     @Inject
     TournamentRepository tournamentRepository;

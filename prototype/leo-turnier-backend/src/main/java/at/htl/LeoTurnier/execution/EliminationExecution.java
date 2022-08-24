@@ -1,6 +1,10 @@
-package at.htl.LeoTurnier.repository;
+package at.htl.LeoTurnier.execution;
 
 import at.htl.LeoTurnier.entity.*;
+import at.htl.LeoTurnier.repository.MatchRepository;
+import at.htl.LeoTurnier.repository.NodeRepository;
+import at.htl.LeoTurnier.repository.ParticipationRepository;
+import at.htl.LeoTurnier.repository.PhaseRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -8,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @ApplicationScoped
-public class EliminationRepository {
+public class EliminationExecution {
 
     @Inject
     ParticipationRepository participationRepository;
