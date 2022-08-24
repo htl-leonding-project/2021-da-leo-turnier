@@ -178,9 +178,16 @@ bzw. im Falle des "Combination" Turniermodus die "startGroupPhase" Methode (mehr
 \subsubsection{Elimination}
 
 Im Elimination Turniermodus scheidet nach einem Match der Verlierer sofort aus dem Turnier aus, und der Gewinner steigt in die nächste Runde auf. 
-Das Ganze wiederholt sich so lange, bis nur noch ein Teilnehmer übrig bleibt, dieser ist dann der Sieger des Turniers.
+Das Ganze wiederholt sich so lange, bis nur noch ein Teilnehmer übrig bleibt, dieser ist dann der Sieger des Turniers. So entsteht dann der klassische Turnierbaum.
 
 \begin{figure}[H]
     \includegraphics[scale=0.5]{pics/elimination_tree.png}
     \caption{Turnierbaum}
+\end{figure}
+
+Wie oben abgebiltet ist das Turnier in Phasen aufgeteilt. Diese werden mit der Folgenden Methode eingefügt:
+
+\begin{figure}[H]
+    \includegraphics[scale=0.7]{pics/elimination_insertPhases.png}
+    \caption{Berechnung der Phasenanzahl}
 \end{figure}
