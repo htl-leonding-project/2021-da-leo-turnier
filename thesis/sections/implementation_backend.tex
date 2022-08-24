@@ -44,11 +44,11 @@ Die Konfigurationen sind aufgeteilt in Datasource (Datenbank), HTTP (Endpoints) 
 
 (Ist der Teil unten zu Basic?) (Der Teil unten gehört noch zur "Quarkus Ordnerstruktur" Abbildung, kann sein dass das etwas unklar ist, wie könnte ich das am besten machen?)
 
-Die Java Klassen im "java" Ordner sind weiters in 4 verschiedene Ordner aufgeteilt. Im "entity" Ordner befinden sich alle Entitätsklassen der Applikation, also jene, die das Datenmodell (siehe Kapitel 6.1 Datenmodell) wiederspiegeln.
+Die Java Klassen im "java" Ordner sind weiters in 5 verschiedene Ordner aufgeteilt. Im "entity" Ordner befinden sich alle Entitätsklassen der Applikation, also jene, die das Datenmodell (siehe Kapitel 6.1 Datenmodell) wiederspiegeln.
 Die Klassen im "repository" sind die Schnittstelle zwischen der Quarkus Applikation und der Datenbank. Sie sind für die CRUD Operationen verantwortlich, also das Speichern, Auslesen, Verändern oder Löschen von Daten nach dem Schema der Entitätsklassen.
 Außerdem befindet sich hier die Logik hinter den Turnieren. Die Klassen im "boundary" sind die Schnittstelle zum Frontend. Sie nehmen Requests, also Anforderungen, von außen an, 
-führen die jeweilige Methode aus den Repository Klassen aus und liefern dann eine Response, also eine Antwort, zurück. Zuletzt gibt es noch die Klassen in "dto" Ordner, diese sind Klassen, 
-in denen Daten gespeichert werden können, die für die Logik in den Repository Klassen benötigt wird, jedoch nicht unbedingt Teil des Datenmodells sind.
+führen die jeweilige Methode aus den Repository Klassen aus und liefern dann eine Response, also eine Antwort, zurück. Als nächstes gibt es die im "execution" Ordner, diese sind für die Durchführung der Turniere zuständig, hier befindet sich auch der Großteil der Logik. 
+Zuletzt gibt es noch die Klassen in "dto" Ordner, diese sind Klassen, in denen Daten gespeichert werden können, die für die Logik in den Repository Klassen benötigt wird, jedoch nicht unbedingt Teil des Datenmodells sind.
 
 \subsection{Entitätsklassen}
 
@@ -159,10 +159,28 @@ Im obigen Beispiel hat man 3 Möglichkeiten:
     \item den "competitorId" Query Parameter anzugeben, um alle Turniere auszulesen, in denen der Competitor mit der angegebenen Id dabei war.
 \end{itemize}
 
-
 Die einzige Entitätsklasse, für die es nur READ Endpoints gibt, ist die TournamentMode Klasse, Turniermodi werden beim Start des Backends mithilfe der "InitBean" Klasse 
 automatisch in die Datenbank hinzugefügten, da diese für die Turnierdurchführung jeweils einzeln Implementiert werden müssen.
 
 \subsection{Turnierdurchführung}
 
-Für die Turnierdurchführung gibt es insgesammt 4 verschiedene Repositoryklassen, eine für jeden Turniermodus (Elimination, Round Robin, Combination), und eine, die dafür zuständig ist, die Methoden aus dem richtig
+Für die Turnierdurchführung gibt es insgesammt 4 verschiedene Durchführungsklassen, eine für jeden Turniermodus (Elimination, Round Robin, Combination), und eine als Schnittstelle zu den Serviceklassen, welche aus den anderen 3 
+die richtigen Methoden ausführen soll, abhängig davon, welchen Turniermodus das Turnier hat. 
+
+\begin{figure}[H]
+    \includegraphics[scale=0.65]{pics/execution_startTournament.png}
+    \caption{"startTournament" Methode der Execution Klasse}
+\end{figure}
+
+In der "startTournament" Methode zum Beispiel wird, nachdem alle vorherigen Matches usw. daraus gelöscht wurden, die "startTournament" Methode aus der dem TurnierModus entsprechenden Durchführungsklasse ausgeführt, 
+bzw. im Falle des "Combination" Turniermodus die "startGroupPhase" Methode (mehr dazu weiter unten).
+
+\subsubsection{Elimination}
+
+Im Elimination Turniermodus scheidet nach einem Match der Verlierer sofort aus dem Turnier aus, und der Gewinner steigt in die nächste Runde auf. 
+Das Ganze wiederholt sich so lange, bis nur noch ein Teilnehmer übrig bleibt, dieser ist dann der Sieger des Turniers.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.5]{pics/elimination_tree.png}
+    \caption{Turnierbaum}
+\end{figure}
