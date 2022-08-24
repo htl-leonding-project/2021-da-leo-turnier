@@ -2,7 +2,7 @@ package at.htl.LeoTurnier.boundary;
 
 import at.htl.LeoTurnier.entity.Match;
 import at.htl.LeoTurnier.entity.Tournament;
-import at.htl.LeoTurnier.repository.ExecutionRepository;
+import at.htl.LeoTurnier.execution.Execution;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 public class ExecutionService {
 
     @Inject
-    ExecutionRepository repository;
+    Execution repository;
 
     @GET
     @RolesAllowed({"tournament-organizer"})
