@@ -90,8 +90,9 @@ Unter den Klassen befinden sich dann standardmäßig noch der Constructor sowie 
     \caption{Repositoryklasse}
 \end{figure}
 
-Wie oben schon erwähnt sind die Repositoryklassen die Schnittstelle zwischen Quarkus Backend und Datenbank. Außer ein paar Ausnahmen befinden sich hier nur die CRUD (Create - Read - Update - Delete) Operationen, 
-als Create Operation fungiert hier die "add" Methode, als Read Operationen die "get" Methoden (getById, getByCompetitorId, getAll), als Update Operation die "modify" Methode und als Delete Operationen die "delete" und "clear". 
+Wie oben schon erwähnt sind die Repositoryklassen die Schnittstelle zwischen Quarkus Backend und Datenbank, dies wird durch die "Hibernate ORM with Panache" Library ermöglicht. 
+Außer ein paar Ausnahmen befinden sich hier nur die CRUD (Create - Read - Update - Delete) Operationen, als Create Operation fungiert hier die "add" Methode, 
+als Read Operationen die "get" Methoden (getById, getByCompetitorId, getAll), als Update Operation die "modify" Methode und als Delete Operationen die "delete" und "clear". 
 Über der Klasse befinden sich die Annotation "@ApplicationScoped" und "@Transactional". "@ApplicationScoped" ermöglicht es anderen Repositoryklassen, mithilfe von "@Inject" eine Instanz dieser Klasse zu injezieren, genau so, 
 wie es diese Klasse weiter unten auch tut. Es wird zum Beispiel in der "add" Methode "TournamentRepository" Klasse (siehe Abbildung "add Methode aus TournamentRepository" unten) die 
 der "SportTypeRepository" Klasse benötigt, da sich in der "Tournament" Klasse ein Fremdschlüssel auf die "SportType" Klasse befindet. Sollte also die Sportart, 
@@ -108,6 +109,10 @@ Das gleiche passiert bei der "modify" Methode, wenn der Fremdschlüssel auf eine
 "@Transactional" wird verwendet, um in jeder Methode dieser Klasse vor den Ausführen eine neue Transaktion zu erstellen, und diese danach zu commiten. 
 Wenn Daten in der Datenbank gespeichert, modifiziert oder gelöscht werden, werden diese Änderungen erst dann wirklich in die Datenbank übernommen, wenn eine Transaktion commitet wurde.
 
+Das PanacheRepository ist eine Erweiterung aus dem "Hibernate ORM \textbf{with Panache}" Library, ohne Panache wäre theoretisch auch alles, was in den Repositoryklassen Implementiert wurde, möglich, jedoch etwas umständlicher.
+Zum Beispiel gibt es ohne Panache die "persist" Methode nicht, in dem Fall müsste man eine "EntityManager" Instanz mithilfe von Dependency Injection injezieren, in davon dann die "persist" Methode hernehmen.
+Auch andere Methoden, wie zum Beispiel "find" oder "listAll" wären ohne Panach nicht verfügbar, und müssten vom Entwickler selbst Implementiert werden.
+
 \subsection{Serviceklassen}
 
 \begin{figure}[H]
@@ -115,7 +120,7 @@ Wenn Daten in der Datenbank gespeichert, modifiziert oder gelöscht werden, werd
     \caption{Serviceklasse}
 \end{figure}
 
-Die Serviceklassen sind die Schnittstelle zum Frontend, diesem stellen sie durch Endpoints, welche von Requests angesprochen werden, Daten aus der Datenbank zur Verfügung. 
+Die Serviceklassen sind die Schnittstelle zum Frontend, diesem stellen sie durch Endpoints, welche von Requests angesprochen werden, Daten aus der Datenbank zur Verfügung, dies wird durch die "RESTEasy" Library ermöglicht.
 Über der Klasse wird mithilfe der Annotation "@Path" der URL Path zu den Endpoints dieser Klasse festgestellt. In der Klasse selbst wird zuerst eine Instanz des dazugehörigen Repositories injeziert. 
 Danach folgt für jede CRUD Operation ein Endpoint. Es gibt verschiedene Arten von Endpoints, in dieser Applikation werden hauptsächlich 4 verwendet:
 
