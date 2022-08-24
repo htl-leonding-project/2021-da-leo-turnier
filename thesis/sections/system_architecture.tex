@@ -2,7 +2,7 @@
 \setauthor{Hain Lukas}
 
 \begin{figure}[H]
-    \includegraphics[scale=0.30]{pics/system_architecture.png}
+    \includegraphics[scale=0.30]{pics/system_architecture_2.png}
     \caption{System Architecture}
 \end{figure}
 
@@ -18,8 +18,14 @@ KeyCloak verwaltet Userdaten in einer weiteren PostgreSQL Datenbank. Die Quarkus
 \subsection{Frontend}
 \setauthor{Ecker Benjamin}
 
-TODO
+Das Frontend besteht aus einer Angular Applikation. Diese wurde in TypeScript als Code-Behind und HTML als Auszeichnungssprache geschrieben. Für ein schönes und konsistentes User Interface
+verwendet sie die Library Angular Material. Mithilfe eines KeyCloak Servers wird eine funktionierende Zugriffverwaltung der verschiedenen Benutzer garantiert.
+Um diesen richtig benützen zu können wird das KeyCloak-Angular Module von Mauricio Vigolo \cite{sysarch-keycloak-angular-1} verwendet. Sonstige Funktionen, wie etwa Routing und ein HttpClient, werden fast zur Gänze von der Library
+Angular Common abdeckt.
+Die gesamte Angular Anwendung wird dazu noch auf einen Nginx Server deployed welcher in einem Docker Container ausgeführt wird. 
 
 \section{Verwirklichung der Anforderungen}
 
 TODO
+
+?
