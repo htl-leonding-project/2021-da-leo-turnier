@@ -28,8 +28,8 @@ Danach werden Sie zur Login-Page(5.3) weitergeleitet werden.
 
 Es gibt 2 Arten von Tournament-View-Pages:
 \begin{itemize}
-    \item Table-View (für den Round Robin Modus)
     \item Tree-View (für den Elimination Modus)
+    \item Table-View (für den Round Robin Modus)
 \end{itemize}
 
 \subsection{Tree-View}
@@ -61,7 +61,77 @@ Hier finden Sie alle Ihnen zugewiesenen Rollen sowie einen Logout-Button der ihr
 
 Nachdem Sie jetzt eingeloggt sind erscheint oben rechts ein Nav-Burger. Per Knopfdruck zeigt dieser Ihnen nun eine Liste aller Pages die zur
 Turnierverwaltung nötig sind.
-\section{Player-Page}
-\section{Team-Page}
+
+\newpage
+\section{Player-Page - Rollen:Admin,Tournament-Organizer}
+\includegraphics[scale=0.425]{pics/user-guide/player-overview-page.PNG}
+\bigskip
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Create-Button \end{LARGE}
+
+Button zum Erstellen neuer Spieler und leitet Sie zur Player-Details-Page(5.4.1).
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Players \end{LARGE}
+
+In dieser Tabelle werden alle Spieler mit ihren Details angezeigt. Zu jedem Spieler werden hier seine Id, Name, Geburtsdatum und zugehöriges Team angezeigt,
+sollten dieser vorhanden sein. (\textit{Nur der Name ist zur Erstellung nötig})
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Actions \end{LARGE}
+
+Diese Spalte beinhaltet zwei Icon-Buttons:
+\begin{itemize}
+    \item \includegraphics[scale=0.3]{pics/user-guide/delete-icon.PNG} Löschen eines Spieler (Sie müssen diese Aktion zwei mal bestätigen)
+    \item\includegraphics[scale=0.3]{pics/user-guide/edit-icon.PNG}Updaten eines Spieler(Sie werden danach zur Player-Details-Page(5.4.1)geleitet)
+\end{itemize}
+
+\bigskip
+\subsection{Player-Details-Page}
+\includegraphics[]{pics/user-guide/player-create-page.PNG}
+
+Diese Page ist zum Erstellen und Updaten von Spielern. Die Mindestanforderungen sind hierbei nur ein Name.
+
+
+\section{Team-Page - Rollen:Admin,Tournament-Organizer}
+\includegraphics[scale=0.44]{pics/user-guide/team-overview-page.PNG}
+\bigskip
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Create-Button \end{LARGE}
+
+Button zum Erstellen neuer Teams und leitet Sie zur Team-Details-Page(5.5.1).
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Teams \end{LARGE}
+
+In dieser Tabelle werden alle Teams mit ihren Details angezeigt. Zu jedem Team werden hier seine Id, Name und zugehörige Spieler angezeigt,
+sollten dieser vorhanden sein. (\textit{Nur der Name ist zur Erstellung nötig})
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Spieler \end{LARGE}
+
+In der Spalte Spieler finden Sie einen Icon-Button zu einem PopUp-Fenster welches eine Liste aller Spieler des Teams anzeigt.
+
+\includegraphics[scale=0.5]{pics/user-guide/teams-player-popup.PNG}
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-4.png} \begin{LARGE} Actions \end{LARGE}
+
+Diese Spalte beinhaltet zwei Icon-Buttons:
+\begin{itemize}
+    \item \includegraphics[scale=0.3]{pics/user-guide/delete-icon.PNG} Löschen eines Teams (Sie müssen diese Aktion zwei mal bestätigen)
+    \item \includegraphics[scale=0.3]{pics/user-guide/edit-icon.PNG}Updaten eines Teams(Sie werden danach zur Team-Details-Page(5.4.1) geleitet)
+\end{itemize}
+
+\bigskip
+\subsection{Team-Details-Page}
+\includegraphics[scale=0.5]{pics/user-guide/team-create-page.PNG}
+
+Diese Page ist zum Erstellen und Updaten von Spielern. Die Mindestanforderungen sind hierbei nur ein Name.
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Add-Player \end{LARGE}
+
+\includegraphics[scale=0.5]{pics/user-guide/add-player.PNG}
 \section{Tournament-Page}
 \section{Match-Overview-Page} 
