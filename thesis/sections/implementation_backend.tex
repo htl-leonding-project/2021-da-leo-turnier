@@ -62,7 +62,7 @@ und das Library dafür eine Tabelle erstellt. Darunter befindet sich die "@Table
 am Anfang steht immer die Abkürzung für den Tabellennamen, in diesem Fall ist das "T", danach kommt ein Unterstrich, gefolgt von dem Namen der Entitätsklasse in Großbuchstaben. 
 In der Klasse selbst befinden sich nun die Klassenvariablen, welche von der Annotation "@Column" ihren Namen in der Datenbank verleiht. Das Schema der Namensgebung ist ähnlich, wie das der Tabellen: 
 Anfangs die Abkürzung des Tabellennamens, dann ein Unterstrich als Trennung, gefolgt vom Namen der Klassenvariable, ebenfalls in Großbuchstaben. Die ID hat eine extra annotation, nämlich "@Id", 
-das bedeutet dass sie der Primärschlüssel der Entitätsklasse ist. Außerdem steht bei den Variablen "tournamentmode" und "sportType" noch die "@ManyToOne" Annotation. 
+das bedeutet dass sie der Primärschlüssel der Entitätsklasse ist. Wie der Wert der Id generiert wird, wird mit "@GeneratedValue" festgelegt. Außerdem steht bei den Variablen "tournamentmode" und "sportType" noch die "@ManyToOne" Annotation. 
 Diese Felder werden dann in der Datenbank zu den Fremdschlüsseln auf andere Tabellen. Hier lautet das Namensschema wie folgt: Zuerst die Abkürzung der eigenen Klasse, 
 dann der Name des Primärschlussels aus der Tabelle, auf die der Fremdschlüssel zeigt, wieder, getrennt durch einen Unterstrich.
 Es gibt 4 Verschiedene Annotationen, die eine Beziehung zu anderen Tabellen herstellen:
@@ -175,19 +175,70 @@ die richtigen Methoden ausführen soll, abhängig davon, welchen Turniermodus da
 In der "startTournament" Methode zum Beispiel wird, nachdem alle vorherigen Matches usw. daraus gelöscht wurden, die "startTournament" Methode aus der dem TurnierModus entsprechenden Durchführungsklasse ausgeführt, 
 bzw. im Falle des "Combination" Turniermodus die "startGroupPhase" Methode (mehr dazu weiter unten).
 
-\subsubsection{Elimination}
+\subsection{Elimination}
 
 Im Elimination Turniermodus scheidet nach einem Match der Verlierer sofort aus dem Turnier aus, und der Gewinner steigt in die nächste Runde auf. 
 Das Ganze wiederholt sich so lange, bis nur noch ein Teilnehmer übrig bleibt, dieser ist dann der Sieger des Turniers. So entsteht dann der klassische Turnierbaum.
 
 \begin{figure}[H]
     \includegraphics[scale=0.5]{pics/elimination_tree.png}
-    \caption{Turnierbaum}
+    \caption{Turnierbaum\cite{implementation-elimination-1}}
 \end{figure}
 
-Wie oben abgebiltet ist das Turnier in Phasen aufgeteilt. Diese werden mit der Folgenden Methode eingefügt:
+\subsubsection{Phases}
+
+Ein Turnier ist in Phasen aufgeteilt, in der Abbildung oben ist jede Spalte von Matches eine Phase. Die Phasen eines Turniers werden mit der folgenden Methode eingefügt.
 
 \begin{figure}[H]
     \includegraphics[scale=0.7]{pics/elimination_insertPhases.png}
-    \caption{Berechnung der Phasenanzahl}
+    \caption{Einfügen der Phasen im Elimination Modus}
 \end{figure}
+
+Zuerst wird die Anzahl der Phasen anhand der Teilnehmeranzahl berechnet. Dies erfolgt mit dem Logarithmus zur Basis 2 von der Teilnehmeranzahl (log\textsubscript{2}(n)). 
+Da es in Java nicht möglich ist, die Basis eines Logarithmus frei zu wählen, wird stattdessen der Logarithmus der Teilnehmeranzahl dividiert durch den 
+Logarithmus der Basis gerechnet, was zum gleichen Ergebnis kommt (log(n)/log(2)). Anschließend werden die Phasen numeriert in die Datenbank gespeichert, von 0 beginnend.
+
+\subsubsection{Nodes}
+
+Als nächstes werden zu jeder Phase Nodes eingefügt, diese bilden zusammen mit den Phasen das Grundgerüst des Turniers. 
+
+\begin{figure}[H]
+    \includegraphics[scale=0.48]{pics/elimination_insertNodes.png}
+    \caption{Einfügen der Nodes im Elimination Modus}
+\end{figure}
+
+Es wird rückwärts durch die Phasen des Turniers iteriert, sodass, die letzte Phase am Ende nur einen Node hat, nämlich das Finale.
+Anschließend wird die Anzahl an Nodes für die momentane Phase berechnet, dies erfolgt mit der Rechnung 2 Hoch die Teilnehmeranzahl (2\textsuperscript{n}). 
+Anschließend wird für jeden Node der "nextNode" gesetzt, das ist jener Node, in den der Sieger des Matches aus dem momentanen Nodes aufsteigen würde, 
+und diese dann in die Datenbank eingefügt.
+
+\subsubsection{Matches}
+
+Zu jedem Node im Turnierbaum gehört ein Match, diese werden mit der folgenden Methode eingefügt.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.48]{pics/elimination_insertMatches.png}
+    \caption{Einfügen der Matches im Elimination Modus}
+\end{figure}
+
+Diese Methode iteriert durch alle Nodes aus der ersten Phase durch, wobei durch "nodes.get(i / 2)" jede Node immer 2 Mal durchlaufen wird. 
+Sollte eine Node noch kein Match haben, wird dieses hinzugefügt. Anschließend werden die Teilnehmer, einer pro Durchlauf, also 2 pro Match, 
+in die Matches eingefügt. 
+
+\subsubsection{Buy-Rounds}
+
+Sollte die Anzahl der Teilnehmer in einem Turnier keine Hochzahl von 2 sein, ist es nicht möglich, in der ersten Phase jedem Teilnehmer einen Gegner zu geben. 
+Um dieses Problem zu lösen, steigen manche Teilnehmer automatisch in die zweite Phase auf, ohne ein Match gewonnen zu haben.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.75]{pics/elimination_buy_rounds.png}
+    \caption{Turnierbaum mit Buy-Rounds\cite{implementation-elimination-1}}
+\end{figure}
+
+Im Code wird das mit diesern Methoden erreicht.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.65]{pics/elimination_setBuyRounds.png}
+    \caption{Buy-Rounds im Elimination Modus}
+\end{figure}
+
