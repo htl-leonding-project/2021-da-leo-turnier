@@ -1,10 +1,7 @@
 package at.htl.LeoTurnier.execution;
 
 import at.htl.LeoTurnier.entity.*;
-import at.htl.LeoTurnier.repository.MatchRepository;
-import at.htl.LeoTurnier.repository.NodeRepository;
-import at.htl.LeoTurnier.repository.ParticipationRepository;
-import at.htl.LeoTurnier.repository.PhaseRepository;
+import at.htl.LeoTurnier.repository.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -25,6 +22,9 @@ public class EliminationExecution {
 
     @Inject
     PhaseRepository phaseRepository;
+
+    @Inject
+    TournamentRepository tournamentRepository;
 
     public Tournament startTournament(Tournament tournament, List<Competitor> competitors) {
         insertPhasesElimination(tournament, competitors);
@@ -72,6 +72,7 @@ public class EliminationExecution {
                     winner.getId(),
                     1);
             tournament.setFinished(true);
+            tournamentRepository.modify(tournament.getId(), tournament);
         }
 
         return match;
