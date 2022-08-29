@@ -248,11 +248,43 @@ Es steckt jedoch noch ein bisschen mehr dahinter. Sollte man es so machen, dass 
 würde bie größeren Turnieren spätestens in der zweiten Phase das selbe Problem nochmal auftreten.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.55]{pics/backend/elimination_tree_seeded_wrong_big.png}
+    \includegraphics[scale=0.25]{pics/backend/elimination_tree_seeded_wrong_big.png}
     \caption{großer Turnierbaum falsch geseedet\cite{implementation-elimination-1}}
 \end{figure}
 
+Um dieses Problem zu beheben, wird beim Anordnen Rekursion verwendet.
 
+\begin{figure}[H]
+    \includegraphics[scale=0.5]{pics/backend/elimination_orderSeededCompetitors.png}
+    \caption{Anordnen der Teilnehmer im Code}
+\end{figure}
+
+In der oberen Methode wird geprüft, ob die Anzahl der Teilnehmer/innen eine Hochzahl von 2 ist.
+Außerdem wird angenommen, dass die Teilnehmer/innen nach Seed aufsteigend sortiert wurden. Nun wird die untere Methode ausgeführt, 
+welche wie schon erwähnt Rekursion beinhaltet. Diese wird mit den folgenden Abbildungen erklärt.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.8]{pics/backend/seeding_1.png}
+    \caption{Anordnen der Teilnehmer 1}
+    \includegraphics[scale=0.8]{pics/backend/seeding_2.png}
+    \caption{Anordnen der Teilnehmer 2}
+    \includegraphics[scale=0.8]{pics/backend/seeding_3.png}
+    \caption{Anordnen der Teilnehmer 3}
+\end{figure}
+
+Im Grunde bewirkt dieser Code das gleiche, wie die Lösung von vorhin, nur mehrmals.
+Angenommen das Turnier hat 8 Teilnehmer.
+Der erste Durchlauf der Methode kümmert sich um die erste Phase, es werden die Seeds 1 und 8 zusammengeführt, 2 und 7, 3 und 6, und 4 und 5.
+Der zweite Durchlauf kümmert sich nun um die zweite Phase. In der ersten Phase wird wie erwähnt davon ausgegangen, dass die Seeds 1 bis 4 in die zweite 
+Phase aufsteigen, also sollten in der Phase die Seeds 1 und 4, und 2 und 3 zusammengeführt werden.
+Dies wird erreicht, indem in der ersten Phase die Seeds 1 und 8 (also in der zweiten Phase nur Seed 1) mit den 
+Seeds 4 und 5 (also in der zweiten Phase nur Seed 4) zusammengeführt werden. Das ganze wird so lange wiederholt, bis für jede zukünftige Phase richtig 
+angeordnet wurde. Im Turnierbaum sieht es dass so aus.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.25]{pics/backend/elimination_tree_seeded_big.png}
+    \caption{großer Turnierbaum geseedet\cite{implementation-elimination-1}}
+\end{figure}
 
 \subsubsection{Buy-Rounds}
 
