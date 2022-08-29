@@ -1,0 +1,252 @@
+\section{Home-Page - Rollen:Alle}
+\includegraphics[scale=0.4]{pics/user-guide/homepage.png}
+\bigskip
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Titel \end{LARGE}
+
+Links oben wird dauerhaft der Titel LeoTurnier gezeigt dieser dient auch gleichzeitig als Homebutton,
+also kommt man per Knopfdruck immer wieder auf diese Seite.
+\bigskip
+
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Laufenden Turniere \end{LARGE}
+
+In dieser Tabelle werden alle laufenden Turniere angezeigt. Zu jedem Turnier werden die Sportart, das Startdatum und das Enddatum angezeigt,
+sollten diese eingetragen sein. (\textit{Nur der Name und der Modus sind zur Erstellung nötig})
+
+Mit dem rechten grünen Pfeil kommen Sie zur Tournament-View-Page(5.2) des jeweiligen Turniers.
+\bigskip
+
+\newpage
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Login Button \end{LARGE}
+
+Um Turniere zu erstellen und verwalten zu können ist es nötig sich vorher einzuloggen. Mit diesem Button sollten Sie direkt zum Keycloak weitergeleitet werden um sich mit ihrem Username und Password zu authorisieren.
+Danach werden Sie zur Login-Page(5.3) weitergeleitet werden.
+
+\newpage
+\section{Tournament-View-Page - Rollen: Alle}
+
+Es gibt 2 Arten von Tournament-View-Pages:
+\begin{itemize}
+    \item Tree-View (für den Elimination Modus)
+    \item Table-View (für den Round Robin Modus)
+\end{itemize}
+
+\subsection{Tree-View}
+\includegraphics[scale=0.4]{pics/user-guide/tree-view.png}
+\bigskip
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Info \end{LARGE}
+
+Hier finden Sie eine kurze Info zum Turniernamen und Sportart
+\bigskip
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Turnierbaum \end{LARGE}
+
+Hier finden Sie den Turnierbaum, dieser zeigt alle Ergebnisse bzw. aktuellen Spielstände eines Turnieres an.
+Im Screenshot sehen Sie eine der einfachsten Formen eines Turnierbaums mit 4 Spielern. Sollte der Turnierbaum bei
+steigender Spieleranzahl zu groß werden um alles auf einen Bildschirm zu sehen verwenden Sie bitte den Slider am unterem Bildschirmrand.
+
+Das Neuladen des Turniers funktioniert auf dieser Seite nicht. Um den aktuellsten Stand des Turniers zu bekommen navigieren Sie zurück auf die Home-Page und wieder auf den grünen Pfeil.
+
+\bigskip
+\subsection{Table-View}
+\includegraphics[scale=0.5]{pics/user-guide/table-view.PNG}
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Info \end{LARGE}
+
+Hier finden Sie eine kurze Info zum Turniernamen und Sportart
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Platzierungen \end{LARGE}
+
+In dieser Tabelle werden alle Spieler, nach Placement aufsteigend sortiert, angezeigt.
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Spiele \end{LARGE}
+
+In dieser Tabelle werden alle Ergebnisse bzw. aktuellen Spielstände eines Turnieres angezeigt.
+Die ersten drei Plätze erhalten dabei auch eine Medaille.
+
+\newpage
+\section{Login-Page - Rollen: Admin,Tournament-Organizer}
+\includegraphics[scale=0.4]{pics/user-guide/login-page.PNG}
+\bigskip
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Rollen und Logout Button \end{LARGE}
+
+Hier finden Sie alle Ihnen zugewiesenen Rollen sowie einen Logout-Button der ihre Session beendet und Sie zurück zur Home-Page leitet.
+\bigskip
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Navigation-Burger \end{LARGE}
+
+Nachdem Sie jetzt eingeloggt sind erscheint oben rechts ein Nav-Burger. Per Knopfdruck zeigt dieser Ihnen nun eine Liste aller Pages die zur
+Turnierverwaltung nötig sind.
+
+\newpage
+\section{Player-Page - Rollen:Admin,Tournament-Organizer}
+\includegraphics[scale=0.425]{pics/user-guide/player-overview-page.PNG}
+\bigskip
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Create-Button \end{LARGE}
+
+Button zum Erstellen neuer Spieler und leitet Sie zur Player-Details-Page(5.4.1).
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Players \end{LARGE}
+
+In dieser Tabelle werden alle Spieler mit ihren Details angezeigt. Zu jedem Spieler werden hier seine Id, Name, Geburtsdatum und zugehöriges Team angezeigt,
+sollten dieser vorhanden sein. (\textit{Nur der Name ist zur Erstellung nötig})
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Actions \end{LARGE}
+
+Diese Spalte beinhaltet zwei Icon-Buttons:
+\begin{itemize}
+    \item \includegraphics[scale=0.3]{pics/user-guide/delete-icon.PNG} Löschen eines Spieler (Sie müssen diese Aktion zwei mal bestätigen)
+    \item\includegraphics[scale=0.3]{pics/user-guide/edit-icon.PNG}Updaten eines Spieler(Sie werden danach zur Player-Details-Page(5.4.1)geleitet)
+\end{itemize}
+\subsection{Player-Details-Page}
+\includegraphics[scale=0.8]{pics/user-guide/player-create-page.PNG}
+
+Diese Page ist zum Erstellen und Updaten von Spielern. Die Mindestanforderungen sind hierbei nur ein Name.
+
+
+\section{Team-Page - Rollen:Admin,Tournament-Organizer}
+\includegraphics[scale=0.44]{pics/user-guide/team-overview-page.PNG}
+\bigskip
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Create-Button \end{LARGE}
+
+Button zum Erstellen neuer Teams und leitet Sie zur Team-Details-Page(5.5.1).
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Teams \end{LARGE}
+
+In dieser Tabelle werden alle Teams mit ihren Details angezeigt. Zu jedem Team werden hier seine Id, Name und zugehörige Spieler angezeigt,
+sollten dieser vorhanden sein. (\textit{Nur der Name ist zur Erstellung nötig})
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Spieler \end{LARGE}
+
+In der Spalte Spieler finden Sie einen Icon-Button zu einem PopUp-Fenster welches eine Liste aller Spieler des Teams anzeigt.
+
+\includegraphics[scale=0.5]{pics/user-guide/teams-player-popup.PNG}
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-4.png} \begin{LARGE} Actions \end{LARGE}
+
+Diese Spalte beinhaltet zwei Icon-Buttons:
+\begin{itemize}
+    \item \includegraphics[scale=0.3]{pics/user-guide/delete-icon.PNG} Löschen eines Teams (Sie müssen diese Aktion zwei mal bestätigen)
+    \item \includegraphics[scale=0.3]{pics/user-guide/edit-icon.PNG}Updaten eines Teams(Sie werden danach zur Team-Details-Page(5.5.1) geleitet)
+\end{itemize}
+
+\bigskip
+\subsection{Team-Details-Page}
+\includegraphics[scale=0.5]{pics/user-guide/team-create-page.PNG}
+
+Diese Page ist zum Erstellen und Updaten von Spielern. Die Mindestanforderungen sind hierbei nur ein Name.
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Add-Player \end{LARGE}
+
+Bei Knopfdruck des Add-Player Button erscheint eine Liste aller Spieler die nicht in dem Team sind.
+(\textit{Keine mehrfach Auswahl}) 
+
+\includegraphics[scale=0.5]{pics/user-guide/add-player.PNG}
+
+\newpage
+\section{Tournament-Page Rollen:Admin,Tournament-Organizer}
+\includegraphics[scale=0.4]{pics/user-guide/tournament-overview-page.PNG}
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Create-Button \end{LARGE}
+
+Button zum Erstellen neuer Tournaments und leitet Sie zur Tournament-Details-Page(5.6.1).
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Tournaments \end{LARGE}
+
+In dieser Tabelle werden alle Tournaments mit ihren Details angezeigt. Zu jedem Tournament werden hier seine Id, Name, Startdatum, Enddatum, Sportart
+und Turniermodus angezeigt, sollten dieser vorhanden sein. (\textit{Nur der Name und der Modus sind zur Erstellung nötig})
+
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Actions \end{LARGE}
+
+Diese Spalte beinhaltet zwei bis drei Icon-Buttons:
+\begin{itemize}
+    \item \includegraphics[scale=0.3]{pics/user-guide/delete-icon.PNG} Löschen eines Tournaments (Sie müssen diese Aktion zwei mal bestätigen)
+    \item \includegraphics[scale=0.3]{pics/user-guide/edit-icon.PNG}Updaten eines Tournaments (Sie werden danach zur Tournaments-Details-Page(5.6.1) geleitet)
+    \item \includegraphics[scale=0.3]{pics/user-guide/submit-icon.PNG} Starten eines Tournaments (Sie müssen diese Aktion zwei mal bestätigen)
+    \item \includegraphics[scale=0.3]{pics/user-guide/go-to-icon.PNG} Leitet Sie zur Match-Overview-Page(5.7) des Tournaments
+\end{itemize}
+
+\subsection{Tournament-Details-Page}
+\includegraphics[scale=0.6]{pics/user-guide/tournament-create-page.PNG}
+
+Diese Page ist zum Erstellen von Turnieren. Die Mindestanforderungen
+sind hierbei nur ein Name und der Turniermodus.
+
+Nachdem Sie ein Turnier erstellt haben erweitert sich die Tournament-Details-Page um die Funktion, Competitor(Spieler, Teams) für ein Turnier einzutragen.
+
+\includegraphics[scale=0.5]{pics/user-guide/tournament-add-player.PNG}
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Add Competitor \end{LARGE}
+
+Bei Knopfdruck des Add-Competitor Button erscheint eine Liste aller Spieler die nicht in dem Team sind.
+(\textit{Keine mehrfach Auswahl})
+
+\includegraphics[scale=0.4]{pics/user-guide/add-competitor.PNG}
+
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Actions \end{LARGE}
+
+Mit dem Icon-Button \includegraphics[scale=0.3]{pics/user-guide/delete-icon.PNG} löschen Sie die Teilnahme eines Competitors für das Turnier. (\textit{Nicht den Competitor})
+
+\newpage
+\section{Match-Overview-Page - Rollen:Admin,Tournament-Organizer}
+\includegraphics[scale=0.4]{pics/user-guide/match-overview-page.PNG} 
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Zurück-Button \end{LARGE}
+
+Dieser Button leitet Sie zurück zur Tournament-Overview-Page.
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Spiele \end{LARGE}
+
+In dieser Tabelle werden alle Matches mit ihren beiden kontrahierenden Competitors und Spielstand angezeigt.  
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Actions \end{LARGE}
+
+Diese Spalte beinhaltet einen Icon-Button oder ein Icon:
+\begin{itemize}
+    \item \includegraphics[scale=0.3]{pics/user-guide/edit-icon.PNG}Updaten eines eines Matches (Sie werden danach zur Match-Submition-Page(5.7.1) geleitet)
+    \item \includegraphics[scale=0.2]{pics/user-guide/finished-icon.PNG} Zeigt an dass, ein Spiel fertig gespielt ist .
+\end{itemize}
+
+\bigskip
+\subsection{Match-Submition-Page}
+
+\includegraphics[scale=0.6]{pics/user-guide/match-submition-page.PNG}
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Score-Tile \end{LARGE}
+
+Die Match-Submition-Page enthaltet zwei Match-Tiles mit denen man den Score eines Spiels eintragen kann.
+Der Punktestand kann entweder über eine Tastatureingabe, oder über die zwei Pfeile rechts neben dem Punktestand eingegeben werden.
+Dabei muss der Spielstand eine Zahl zwischen 0-999 betragen.
+
+(\textit{Mit einer so großen Spanne sollen mehr Sportarten möglich sein, da sich Punktestände von Sportart zu Sportart sehr stark ändern können z.B: Basketball (113-72) und Fußball(2-1)})
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Submit-Score-Button \end{LARGE}
+
+Bei Knopfdruck von Submit-Score wird der Punktestand geupdated und Sie werden zur Match-Overview-Page geleitet.
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Finish-Match-Button \end{LARGE}
+
+Bei Knopfdruck von Finish-Match wird der Punktestand geupdated und das Match beendet. Danach werden Sie zur Match-Overview-Page geleitet.
