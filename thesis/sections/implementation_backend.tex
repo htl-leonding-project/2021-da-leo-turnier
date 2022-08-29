@@ -2,12 +2,12 @@
 \setauthor{Hain Lukas}
 
 \begin{figure}[H]
-    \includegraphics[scale=1]{pics/class_diagram.png}
+    \includegraphics[scale=1]{pics/backend/class_diagram.png}
     \caption{Class Diagram}
 \end{figure}
 
 Oben abgebildet ist das Datenmodell des Quarkus Backends. Anfangs erstellt man ein Turnier (Tournament), neben Namen, Startdatum und Enddatum 
-wird hier noch der Turniermodus (TournamentMode) und die Sportart (SportType) festgelegt. Nun gibt man an, welche Teilnehmer (Competitor) an diesem Turnier teilnehmen (Participation). 
+wird hier noch der Turniermodus (TournamentMode) und die Sportart (SportType) festgelegt. Nun gibt man an, welche Teilnehmer/innen (Competitor) an diesem Turnier teilnehmen (Participation). 
 Ein Competitor kann entweder ein einzelner Spieler (Player) oder ein Team von Spielern (Team) sein.
 Wenn das Turnier gestartet wird, wird das Turnier in Phasen (Phase) unterteilt. In jeder Phase gibt es eine bestimmte Anzahl an Matches (Match), welche jeweils 2 Competitor haben und mithilfe von Nodes (Node) 
 der jeweiligen Phase zugeordnet werden.
@@ -18,14 +18,14 @@ der jeweiligen Phase zugeordnet werden.
 \subsection{Ordnerstruktur}
 
 \begin{figure}[H]
-    \includegraphics[scale=0.8]{pics/quarkus_file_structure.png}
+    \includegraphics[scale=0.8]{pics/backend/quarkus_file_structure.png}
     \caption{Quarkus Ordnerstruktur}
 \end{figure}
 
 Nach dem erstellen eines Quarkus Projektes ist ein Großteil der Ordnerstruktur bereits im vorhinein gegeben. Das wichtigste File im Projekt befindet sich ganz im äußersten Ordner, nämlich das "pom.xml" File. 
 
 \begin{figure}[H]
-    \includegraphics[scale=0.6]{pics/pom.xml.png}
+    \includegraphics[scale=0.6]{pics/backend/pom.xml.png}
     \caption{pom.xml}
 \end{figure}
 
@@ -36,7 +36,7 @@ Im "main" Ordner befindet sich nun ein "docker" Ordner, auf den später noch ein
 auf die der Java Code eventuell zugreifen kann. Außerdem befindet sich im "resources" Ordner das "application.properties" File, in dem verschiedene Quarkus Konfigurationen zu finden sind.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.6]{pics/application.properties.png}
+    \includegraphics[scale=0.6]{pics/backend/application.properties.png}
     \caption{application.properties}
 \end{figure}
 
@@ -53,7 +53,7 @@ Zuletzt gibt es noch die Klassen in "dto" Ordner, diese sind Klassen, in denen D
 \subsection{Entitätsklassen}
 
 \begin{figure}[H]
-    \includegraphics[scale=0.8]{pics/entity_class.png}
+    \includegraphics[scale=0.8]{pics/backend/entity_class.png}
     \caption{Entitätsklasse}
 \end{figure}
 
@@ -86,7 +86,7 @@ Unter den Klassen befinden sich dann standardmäßig noch der Constructor sowie 
 \subsection{Repositoryklassen}
 
 \begin{figure}[H]
-    \includegraphics[scale=0.8]{pics/repository_class.png}
+    \includegraphics[scale=0.8]{pics/backend/repository_class.png}
     \caption{Repositoryklasse}
 \end{figure}
 
@@ -100,7 +100,7 @@ auf die dieser Fremdschlüssel zeigt, in der Datenbank nicht existieren, kommt e
 bevor das Turnier selbst mit "persist" gespeichert wird, nocht die Sportart mithilfe der add Methode der "SportTypeRepository" Klasse in der Datenbank. 
 
 \begin{figure}[H]
-    \includegraphics[scale=0.8]{pics/repository_add_function.png}
+    \includegraphics[scale=0.8]{pics/backend/repository_add_function.png}
     \caption{add Methode aus TournamentRepository}
 \end{figure}
 
@@ -116,7 +116,7 @@ Auch andere Methoden, wie zum Beispiel "find" oder "listAll" wären ohne Panach 
 \subsection{Serviceklassen}
 
 \begin{figure}[H]
-    \includegraphics[scale=0.6]{pics/service_class.png}
+    \includegraphics[scale=0.6]{pics/backend/service_class.png}
     \caption{Serviceklasse}
 \end{figure}
 
@@ -147,7 +147,7 @@ Dies wird dadurch gelöst, dass Endpoints auch erfolgreich ausgeführt werden, w
 verschiedene Read Operationen durchführen kann.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.5]{pics/service_get_function.png}
+    \includegraphics[scale=0.5]{pics/backend/service_get_function.png}
     \caption{get Methode aus TournamentService}
 \end{figure}
 
@@ -168,7 +168,7 @@ Für die Turnierdurchführung gibt es insgesammt 4 verschiedene Durchführungskl
 die richtigen Methoden ausführen soll, abhängig davon, welchen Turniermodus das Turnier hat. 
 
 \begin{figure}[H]
-    \includegraphics[scale=0.65]{pics/execution_startTournament.png}
+    \includegraphics[scale=0.65]{pics/backend/execution_startTournament.png}
     \caption{"startTournament" Methode der Execution Klasse}
 \end{figure}
 
@@ -178,10 +178,10 @@ bzw. im Falle des "Combination" Turniermodus die "startGroupPhase" Methode (mehr
 \subsection{Elimination}
 
 Im Elimination Turniermodus scheidet nach einem Match der Verlierer sofort aus dem Turnier aus, und der Gewinner steigt in die nächste Runde auf. 
-Das Ganze wiederholt sich so lange, bis nur noch ein Teilnehmer übrig bleibt, dieser ist dann der Sieger des Turniers. So entsteht dann der klassische Turnierbaum.
+Das Ganze wiederholt sich so lange, bis nur noch ein/eine Teilnehmer/in übrig bleibt, dieser ist dann der Sieger des Turniers. So entsteht dann der klassische Turnierbaum.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.5]{pics/elimination_tree.png}
+    \includegraphics[scale=0.5]{pics/backend/elimination_tree.png}
     \caption{Turnierbaum\cite{implementation-elimination-1}}
 \end{figure}
 
@@ -190,7 +190,7 @@ Das Ganze wiederholt sich so lange, bis nur noch ein Teilnehmer übrig bleibt, d
 Ein Turnier ist in Phasen aufgeteilt, in der Abbildung oben ist jede Spalte von Matches eine Phase. Die Phasen eines Turniers werden mit der folgenden Methode eingefügt.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.7]{pics/elimination_insertPhases.png}
+    \includegraphics[scale=0.7]{pics/backend/elimination_insertPhases.png}
     \caption{Einfügen der Phasen im Elimination Modus}
 \end{figure}
 
@@ -203,7 +203,7 @@ Logarithmus der Basis gerechnet, was zum gleichen Ergebnis kommt (log(n)/log(2))
 Als nächstes werden zu jeder Phase Nodes eingefügt, diese bilden zusammen mit den Phasen das Grundgerüst des Turniers. 
 
 \begin{figure}[H]
-    \includegraphics[scale=0.48]{pics/elimination_insertNodes.png}
+    \includegraphics[scale=0.48]{pics/backend/elimination_insertNodes.png}
     \caption{Einfügen der Nodes im Elimination Modus}
 \end{figure}
 
@@ -217,28 +217,57 @@ und diese dann in die Datenbank eingefügt.
 Zu jedem Node im Turnierbaum gehört ein Match, diese werden mit der folgenden Methode eingefügt.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.48]{pics/elimination_insertMatches.png}
+    \includegraphics[scale=0.48]{pics/backend/elimination_insertMatches.png}
     \caption{Einfügen der Matches im Elimination Modus}
 \end{figure}
 
 Diese Methode iteriert durch alle Nodes aus der ersten Phase durch, wobei durch "nodes.get(i / 2)" jede Node immer 2 Mal durchlaufen wird. 
-Sollte eine Node noch kein Match haben, wird dieses hinzugefügt. Anschließend werden die Teilnehmer, einer pro Durchlauf, also 2 pro Match, 
+Sollte eine Node noch kein Match haben, wird dieses hinzugefügt. Anschließend werden die Teilnehmer/innen, einer pro Durchlauf, also 2 pro Match, 
 in die Matches eingefügt. 
+
+\subsubsection{Seeding}
+
+Um Turniere so spannend wie möglich zu gestalten, wird das sogenannte "Seeding" angewendet. Der Seed eines/einer Teilnehmers/in ist eine Einschätzung, wie gut dieser/diese Teilnehmer/in im vergleich zu den anderen 
+ist. Somit ist der Seed 1 der/die beste Teilnehmer/in des Turniers, der Seed 2 der/die zweitbeste, usw. Mit Seeding will man erreichen, dass, angenommen der/die Teilnehmer/in mit dem niedrigeren Seed gewinnt immer gegen den/die 
+mit dem höheren Seed, die Seeds 1 und 2, also die besten Teilnehmer/innen im Finale gegeneinander antreten. Würde man die Seeds einfach von oben nach unten in das Turnier einfügen, würde folgendes passieren.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.33]{pics/backend/elimination_tree_seeded_wrong.png}
+    \caption{Turnierbaum falsch geseedet\cite{implementation-elimination-1}}
+\end{figure}
+
+Wie man sieht, treten die ersten beiden Seeds bereits im Halbfinale gegeneinander an, was für ein möglichst spannendes Turnier nicht wirklich wünschenswert ist. Aus diesem Grund werden die Teilnehmer/innen folgendermaßen zusammengeführt.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.515]{pics/backend/elimination_tree_seeded.png}
+    \caption{Turnierbaum richtig geseedet\cite{implementation-elimination-1}}
+\end{figure}
+
+Der erste Seed tretet gegen den letzten an, der zweite gegen den vorletzten, usw. Auf diese weise ist es am wahrscheinlichsten, dass das finale Match so spannend wie möglich wird. 
+Es steckt jedoch noch ein bisschen mehr dahinter. Sollte man es so machen, dass im ersten Match von oben der erste Seed gegen den letzten antritt, im zweiten von oben der zweite gegen den vorletzten, usw., 
+würde bie größeren Turnieren spätestens in der zweiten Phase das selbe Problem nochmal auftreten.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.55]{pics/backend/elimination_tree_seeded_wrong_big.png}
+    \caption{großer Turnierbaum falsch geseedet\cite{implementation-elimination-1}}
+\end{figure}
+
+
 
 \subsubsection{Buy-Rounds}
 
-Sollte die Anzahl der Teilnehmer in einem Turnier keine Hochzahl von 2 sein, ist es nicht möglich, in der ersten Phase jedem Teilnehmer einen Gegner zu geben. 
+Sollte die Anzahl der Teilnehmer/innen in einem Turnier keine Hochzahl von 2 sein, ist es nicht möglich, in der ersten Phase jedem/jeder Teilnehmer/in einen Gegner zu geben. 
 Um dieses Problem zu lösen, steigen manche Teilnehmer automatisch in die zweite Phase auf, ohne ein Match gewonnen zu haben.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.75]{pics/elimination_buy_rounds.png}
+    \includegraphics[scale=0.75]{pics/backend/elimination_buy_rounds.png}
     \caption{Turnierbaum mit Buy-Rounds\cite{implementation-elimination-1}}
 \end{figure}
 
-Im Code wird das mit diesern Methoden erreicht.
+Im Code wird das mit diesen Methoden erreicht.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.65]{pics/elimination_setBuyRounds.png}
+    \includegraphics[scale=0.65]{pics/backend/elimination_setBuyRounds.png}
     \caption{Buy-Rounds im Elimination Modus}
 \end{figure}
 
