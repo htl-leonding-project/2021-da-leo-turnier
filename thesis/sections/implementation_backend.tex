@@ -227,9 +227,10 @@ in die Matches eingefügt.
 
 \subsubsection{Seeding}
 
-Um Turniere so spannend wie möglich zu gestalten, wird das sogenannte "Seeding" angewendet. Der Seed eines/einer Teilnehmers/in ist eine Einschätzung, wie gut dieser/diese Teilnehmer/in im vergleich zu den anderen 
+Um Turniere so spannend wie möglich zu gestalten, wird das sogenannte "Seeding" angewendet. Der Seed eines/einer Teilnehmers/in ist eine Einschätzung, wie gut dieser/diese Teilnehmer/in im vergleich zu den anderen im selben Turnier
 ist. Somit ist der Seed 1 der/die beste Teilnehmer/in des Turniers, der Seed 2 der/die zweitbeste, usw. Mit Seeding will man erreichen, dass, angenommen der/die Teilnehmer/in mit dem niedrigeren Seed gewinnt immer gegen den/die 
 mit dem höheren Seed, die Seeds 1 und 2, also die besten Teilnehmer/innen im Finale gegeneinander antreten. Würde man die Seeds einfach von oben nach unten in das Turnier einfügen, würde folgendes passieren.
+
 
 \begin{figure}[H]
     \includegraphics[scale=0.33]{pics/backend/elimination_tree_seeded_wrong.png}
@@ -286,6 +287,10 @@ angeordnet wurde. Im Turnierbaum sieht es dass so aus.
     \caption{großer Turnierbaum geseedet\cite{implementation-elimination-1}}
 \end{figure}
 
+Im Backend gibt es 2 Möglichkeiten, Seeds and Teilnehmer/innen zu verteilen. Die erste Möglichkeit ist es, die Teilnehmer nach der durchnittlichen Plazierung aus vergangenen Turnieren zu sortieren, 
+jedoch setzt das voraus, dass die Teilnehmer schon an Turniern teilgenommen haben. Sollte dies nicht der Fall sein, ist die zweite Möglichkeit, dass die Teilnehmer manuell vom Turnierorganisator sortiert werden.
+Hier ist es allerdings von großer bedeutung, einen vertrauenswürdigen Turnierorganisator haben, denn, wie man oben sieht, je besser man im Vergleich zu anderen Teilnehmern eingeschätzt wird, desto leichtere Gegner wird man bekommen.
+
 \subsubsection{Buy-Rounds}
 
 Sollte die Anzahl der Teilnehmer/innen in einem Turnier keine Hochzahl von 2 sein, ist es nicht möglich, in der ersten Phase jedem/jeder Teilnehmer/in einen Gegner zu geben. 
@@ -303,3 +308,11 @@ Im Code wird das mit diesen Methoden erreicht.
     \caption{Buy-Rounds im Elimination Modus}
 \end{figure}
 
+Die untere Methode gibt alle Teilnehmer/innen des Turniers zurück, und zwar bereits nach Seed angeordnet. Besonders wichtig ist für Buy-Rounds der mittlere Teil der Methode. Angenommen ein Turnier hat 5 Teilnehmer/innen. 
+Die nächste Hochzahl wäre in dem Fall 8, also befüllt diese Methode die Teilnehmerliste mit 3 "dummy" Teilnehmern, sodass die Teilnehmeranzahl eine Hochzahl von 2 ist. Dies ist notwendig, um die Teilnehmer/innen korrekt 
+nach Seed anzuordnen. 
+
+Nun sind jedoch 3 "dummy" Teilnehmer in der Teilnehmerliste, mit denen man nichts anfangen kann. Um diese kümmert sich nun die obere Methode. Jeder/jede Teilnehmer/in, der einen "dummy" Teilnehmer als Gegner hat, 
+steigt automatisch in die zweite Phase auf, und spielt dort das erste Match.
+
+\subsection{Round Robin}
