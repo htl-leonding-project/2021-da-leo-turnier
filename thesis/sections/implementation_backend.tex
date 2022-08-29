@@ -7,7 +7,7 @@
 \end{figure}
 
 Oben abgebildet ist das Datenmodell des Quarkus Backends. Anfangs erstellt man ein Turnier (Tournament), neben Namen, Startdatum und Enddatum 
-wird hier noch der Turniermodus (TournamentMode) und die Sportart (SportType) festgelegt. Nun gibt man an, welche Teilnehmer (Competitor) an diesem Turnier teilnehmen (Participation). 
+wird hier noch der Turniermodus (TournamentMode) und die Sportart (SportType) festgelegt. Nun gibt man an, welche Teilnehmer/innen (Competitor) an diesem Turnier teilnehmen (Participation). 
 Ein Competitor kann entweder ein einzelner Spieler (Player) oder ein Team von Spielern (Team) sein.
 Wenn das Turnier gestartet wird, wird das Turnier in Phasen (Phase) unterteilt. In jeder Phase gibt es eine bestimmte Anzahl an Matches (Match), welche jeweils 2 Competitor haben und mithilfe von Nodes (Node) 
 der jeweiligen Phase zugeordnet werden.
@@ -178,7 +178,7 @@ bzw. im Falle des "Combination" Turniermodus die "startGroupPhase" Methode (mehr
 \subsection{Elimination}
 
 Im Elimination Turniermodus scheidet nach einem Match der Verlierer sofort aus dem Turnier aus, und der Gewinner steigt in die nächste Runde auf. 
-Das Ganze wiederholt sich so lange, bis nur noch ein Teilnehmer übrig bleibt, dieser ist dann der Sieger des Turniers. So entsteht dann der klassische Turnierbaum.
+Das Ganze wiederholt sich so lange, bis nur noch ein/eine Teilnehmer/in übrig bleibt, dieser ist dann der Sieger des Turniers. So entsteht dann der klassische Turnierbaum.
 
 \begin{figure}[H]
     \includegraphics[scale=0.5]{pics/elimination_tree.png}
@@ -222,12 +222,41 @@ Zu jedem Node im Turnierbaum gehört ein Match, diese werden mit der folgenden M
 \end{figure}
 
 Diese Methode iteriert durch alle Nodes aus der ersten Phase durch, wobei durch "nodes.get(i / 2)" jede Node immer 2 Mal durchlaufen wird. 
-Sollte eine Node noch kein Match haben, wird dieses hinzugefügt. Anschließend werden die Teilnehmer, einer pro Durchlauf, also 2 pro Match, 
+Sollte eine Node noch kein Match haben, wird dieses hinzugefügt. Anschließend werden die Teilnehmer/innen, einer pro Durchlauf, also 2 pro Match, 
 in die Matches eingefügt. 
+
+\subsubsection{Seeding}
+
+Um Turniere so spannend wie möglich zu gestalten, wird das sogenannte "Seeding" angewendet. Der Seed eines/einer Teilnehmers/in ist eine Einschätzung, wie gut dieser/diese Teilnehmer/in im vergleich zu den anderen 
+ist. Somit ist der Seed 1 der/die beste Teilnehmer/in des Turniers, der Seed 2 der/die zweitbeste, usw. Mit Seeding will man erreichen, dass, angenommen der/die Teilnehmer/in mit dem niedrigeren Seed gewinnt immer gegen den/die 
+mit dem höheren Seed, die Seeds 1 und 2, also die besten Teilnehmer/innen im Finale gegeneinander antreten. Würde man die Seeds einfach von oben nach unten in das Turnier einfügen, würde folgendes passieren.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.33]{pics/elimination_tree_seeded_wrong.png}
+    \caption{Turnierbaum falsch geseedet\cite{implementation-elimination-1}}
+\end{figure}
+
+Wie man sieht, treten die ersten beiden Seeds bereits im Halbfinale gegeneinander an, was für ein möglichst spannendes Turnier nicht wirklich wünschenswert ist. Aus diesem Grund werden die Teilnehmer/innen folgendermaßen zusammengeführt.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.515]{pics/elimination_tree_seeded.png}
+    \caption{Turnierbaum richtig geseedet\cite{implementation-elimination-1}}
+\end{figure}
+
+Der erste Seed tretet gegen den letzten an, der zweite gegen den vorletzten, usw. Auf diese weise ist es am wahrscheinlichsten, dass das finale Match so spannend wie möglich wird. 
+Es steckt jedoch noch ein bisschen mehr dahinter. Sollte man es so machen, dass im ersten Match von oben der erste Seed gegen den letzten antritt, im zweiten von oben der zweite gegen den vorletzten, usw., 
+würde bie größeren Turnieren spätestens in der zweiten Phase das selbe Problem nochmal auftreten.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.55]{pics/elimination_tree_seeded_wrong_big.png}
+    \caption{großer Turnierbaum falsch geseedet\cite{implementation-elimination-1}}
+\end{figure}
+
+
 
 \subsubsection{Buy-Rounds}
 
-Sollte die Anzahl der Teilnehmer in einem Turnier keine Hochzahl von 2 sein, ist es nicht möglich, in der ersten Phase jedem Teilnehmer einen Gegner zu geben. 
+Sollte die Anzahl der Teilnehmer/innen in einem Turnier keine Hochzahl von 2 sein, ist es nicht möglich, in der ersten Phase jedem/jeder Teilnehmer/in einen Gegner zu geben. 
 Um dieses Problem zu lösen, steigen manche Teilnehmer automatisch in die zweite Phase auf, ohne ein Match gewonnen zu haben.
 
 \begin{figure}[H]
@@ -235,7 +264,7 @@ Um dieses Problem zu lösen, steigen manche Teilnehmer automatisch in die zweite
     \caption{Turnierbaum mit Buy-Rounds\cite{implementation-elimination-1}}
 \end{figure}
 
-Im Code wird das mit diesern Methoden erreicht.
+Im Code wird das mit diesen Methoden erreicht.
 
 \begin{figure}[H]
     \includegraphics[scale=0.65]{pics/elimination_setBuyRounds.png}
