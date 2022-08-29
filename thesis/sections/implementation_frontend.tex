@@ -169,7 +169,7 @@ Button zum Erstellen neuer Tournaments und leitet Sie zur Tournament-Details-Pag
 \includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Tournaments \end{LARGE}
 
 In dieser Tabelle werden alle Tournaments mit ihren Details angezeigt. Zu jedem Tournament werden hier seine Id, Name, Startdatum, Enddatum, Sportart
-und Turniermodus, sollten dieser vorhanden sein. (\textit{Nur der Name und der Modus sind zur Erstellung nötig})
+und Turniermodus angezeigt, sollten dieser vorhanden sein. (\textit{Nur der Name und der Modus sind zur Erstellung nötig})
 
 
 \bigskip
@@ -180,7 +180,7 @@ Diese Spalte beinhaltet zwei bis drei Icon-Buttons:
     \item \includegraphics[scale=0.3]{pics/user-guide/delete-icon.PNG} Löschen eines Tournaments (Sie müssen diese Aktion zwei mal bestätigen)
     \item \includegraphics[scale=0.3]{pics/user-guide/edit-icon.PNG}Updaten eines Tournaments (Sie werden danach zur Tournaments-Details-Page(5.6.1) geleitet)
     \item \includegraphics[scale=0.3]{pics/user-guide/submit-icon.PNG} Starten eines Tournaments (Sie müssen diese Aktion zwei mal bestätigen)
-    \item \includegraphics[scale=0.3]{pics/user-guide/go-to-icon.PNG} Leitet Sie zur Match-Overview-Page des Tournaments
+    \item \includegraphics[scale=0.3]{pics/user-guide/go-to-icon.PNG} Leitet Sie zur Match-Overview-Page(5.7) des Tournaments
 \end{itemize}
 
 \subsection{Tournament-Details-Page}
@@ -205,4 +205,48 @@ Bei Knopfdruck des Add-Competitor Button erscheint eine Liste aller Spieler die 
 Mit dem Icon-Button \includegraphics[scale=0.3]{pics/user-guide/delete-icon.PNG} löschen Sie die Teilnahme eines Competitors für das Turnier. (\textit{Nicht den Competitor})
 
 \newpage
-\section{Match-Overview-Page} 
+\section{Match-Overview-Page - Rollen:Admin,Tournament-Organizer}
+\includegraphics[scale=0.4]{pics/user-guide/match-overview-page.PNG} 
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Zurück-Button \end{LARGE}
+
+Dieser Button leitet Sie zurück zur Tournament-Overview-Page.
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Spiele \end{LARGE}
+
+In dieser Tabelle werden alle Matches mit ihren beiden kontrahierenden Competitors und Spielstand angezeigt.  
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Actions \end{LARGE}
+
+Diese Spalte beinhaltet einen Icon-Button oder ein Icon:
+\begin{itemize}
+    \item \includegraphics[scale=0.3]{pics/user-guide/edit-icon.PNG}Updaten eines eines Matches (Sie werden danach zur Match-Submition-Page(5.7.1) geleitet)
+    \item \includegraphics[scale=0.2]{pics/user-guide/finished-icon.PNG} Zeigt an dass, ein Spiel fertig gespielt ist .
+\end{itemize}
+
+\bigskip
+\subsection{Match-Submition-Page}
+
+\includegraphics[scale=0.6]{pics/user-guide/match-submition-page.PNG}
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-1.png} \begin{LARGE} Score-Tile \end{LARGE}
+
+Die Match-Submition-Page enthaltet zwei Match-Tiles mit denen man den Score eines Spiels eintragen kann.
+Der Punktestand kann entweder über eine Tastatureingabe, oder über die zwei Pfeile rechts neben dem Punktestand eingegeben werden.
+Dabei muss der Spielstand eine Zahl zwischen 0-999 betragen.
+
+(\textit{Mit einer so großen Spanne sollen mehr Sportarten möglich sein, da sich Punktestände von Sportart zu Sportart sehr stark ändern können z.B: Basketball (113-72) und Fußball(2-1)})
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-2.png} \begin{LARGE} Submit-Score-Button \end{LARGE}
+
+Bei Knopfdruck von Submit-Score wird der Punktestand geupdated und Sie werden zur Match-Overview-Page geleitet.
+
+\bigskip
+\includegraphics[scale=0.05]{pics/user-guide/numbers/number-3.png} \begin{LARGE} Finish-Match-Button \end{LARGE}
+
+Bei Knopfdruck von Finish-Match wird der Punktestand geupdated und das Match beendet. Danach werden Sie zur Match-Overview-Page geleitet.
