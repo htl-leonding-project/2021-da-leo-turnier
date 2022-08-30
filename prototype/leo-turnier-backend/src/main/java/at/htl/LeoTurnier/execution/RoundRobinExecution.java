@@ -59,7 +59,7 @@ public class RoundRobinExecution {
 
     public void insertPhasesRoundRobin(Tournament tournament, List<Competitor> competitors,
                                        int groupNumber, int startingPhaseNumber, boolean isTieBreakerPhase) {
-        double numOfPhases = competitors.size() - 1 + (competitors.size() % 2);
+        int numOfPhases = competitors.size() - 1 + (competitors.size() % 2);
         for (int i = 0; i < numOfPhases; i++) {
             phaseRepository.add(new Phase(i + startingPhaseNumber, groupNumber, isTieBreakerPhase, tournament));
         }
