@@ -1,7 +1,6 @@
 package at.htl.LeoTurnier.repository;
 
 import at.htl.LeoTurnier.entity.SportType;
-import at.htl.LeoTurnier.entity.Tournament;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,7 +17,7 @@ public class SportTypeRepository implements PanacheRepository<SportType> {
     TournamentRepository tournamentRepository;
 
     public SportType add(SportType sportType) {
-        if (sportType == null) {
+        if (sportType == null || sportType.getName().isBlank()) {
             return null;
         }
         Optional<SportType> existing = find("name", sportType.getName()).singleResultOptional();
