@@ -31,13 +31,25 @@ public class CombinationExecution {
 
 
     public Tournament startGroupPhase(Tournament tournament, List<Competitor> competitors, int numOfGroups) {
+        if (numOfGroups > competitors.size()) {
+            return null;
+        }
         eliminationExecution.sortBySeed(tournament, competitors);
-
+        boolean x = false;
         for (int i = 0; i < numOfGroups; i++) {
             List<Competitor> competitorsInGroup = new LinkedList<>();
             for (int u = 0; u < competitors.size(); u++) {
-                if ((u - i) % numOfGroups == 0) {
-                    competitorsInGroup.add(competitors.get(u));
+                if (u % numOfGroups == 0) {
+                    x = !x;
+                }
+                if (x) {
+                    if ((u - i) % numOfGroups == 0) {
+                        competitorsInGroup.add(competitors.get(u));
+                    }
+                } else {
+                    if ((u - (numOfGroups - i - 1)) % numOfGroups == 0) {
+                        competitorsInGroup.add(competitors.get(u));
+                    }
                 }
             }
             roundRobinExecution.startTournament(tournament, competitorsInGroup, i);
