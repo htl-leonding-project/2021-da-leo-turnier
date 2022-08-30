@@ -1,7 +1,6 @@
 package at.htl.LeoTurnier.repository;
 
 import at.htl.LeoTurnier.entity.SportType;
-import at.htl.LeoTurnier.entity.Tournament;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;

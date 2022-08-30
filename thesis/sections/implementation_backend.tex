@@ -181,8 +181,8 @@ Im Elimination Turniermodus scheidet nach einem Match der Verlierer sofort aus d
 Das Ganze wiederholt sich so lange, bis nur noch ein/eine Teilnehmer/in übrig bleibt, dieser ist dann der Sieger des Turniers. So entsteht dann der klassische Turnierbaum.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.5]{pics/backend/elimination_tree.png}
-    \caption{Turnierbaum\cite{implementation-elimination-1}}
+    \includegraphics[scale=0.5]{pics/backend/elimination/elimination_tree.png}
+    \caption{Turnierbaum\cite{implementation-execution-1}}
 \end{figure}
 
 \subsubsection{Phases}
@@ -190,7 +190,7 @@ Das Ganze wiederholt sich so lange, bis nur noch ein/eine Teilnehmer/in übrig b
 Ein Turnier ist in Phasen aufgeteilt, in der Abbildung oben ist jede Spalte von Matches eine Phase. Die Phasen eines Turniers werden mit der folgenden Methode eingefügt.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.7]{pics/backend/elimination_insertPhases.png}
+    \includegraphics[scale=0.7]{pics/backend/elimination/elimination_insertPhases.png}
     \caption{Einfügen der Phasen im Elimination Modus}
 \end{figure}
 
@@ -203,7 +203,7 @@ Logarithmus der Basis gerechnet, was zum gleichen Ergebnis kommt (log(n)/log(2))
 Als nächstes werden zu jeder Phase Nodes eingefügt, diese bilden zusammen mit den Phasen das Grundgerüst des Turniers. 
 
 \begin{figure}[H]
-    \includegraphics[scale=0.48]{pics/backend/elimination_insertNodes.png}
+    \includegraphics[scale=0.48]{pics/backend/elimination/elimination_insertNodes.png}
     \caption{Einfügen der Nodes im Elimination Modus}
 \end{figure}
 
@@ -217,7 +217,7 @@ und diese dann in die Datenbank eingefügt.
 Zu jedem Node im Turnierbaum gehört ein Match, diese werden mit der folgenden Methode eingefügt.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.48]{pics/backend/elimination_insertMatches.png}
+    \includegraphics[scale=0.48]{pics/backend/elimination/elimination_insertMatches.png}
     \caption{Einfügen der Matches im Elimination Modus}
 \end{figure}
 
@@ -233,15 +233,15 @@ mit dem höheren Seed, die Seeds 1 und 2, also die besten Teilnehmer/innen im Fi
 
 
 \begin{figure}[H]
-    \includegraphics[scale=0.33]{pics/backend/elimination_tree_seeded_wrong.png}
-    \caption{Turnierbaum falsch geseedet\cite{implementation-elimination-1}}
+    \includegraphics[scale=0.33]{pics/backend/elimination/elimination_tree_seeded_wrong.png}
+    \caption{Turnierbaum falsch geseedet\cite{implementation-execution-1}}
 \end{figure}
 
 Wie man sieht, treten die ersten beiden Seeds bereits im Halbfinale gegeneinander an, was für ein möglichst spannendes Turnier nicht wirklich wünschenswert ist. Aus diesem Grund werden die Teilnehmer/innen folgendermaßen zusammengeführt.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.515]{pics/backend/elimination_tree_seeded.png}
-    \caption{Turnierbaum richtig geseedet\cite{implementation-elimination-1}}
+    \includegraphics[scale=0.515]{pics/backend/elimination/elimination_tree_seeded.png}
+    \caption{Turnierbaum richtig geseedet\cite{implementation-execution-1}}
 \end{figure}
 
 Der erste Seed tretet gegen den letzten an, der zweite gegen den vorletzten, usw. Auf diese weise ist es am wahrscheinlichsten, dass das finale Match so spannend wie möglich wird. 
@@ -249,14 +249,14 @@ Es steckt jedoch noch ein bisschen mehr dahinter. Sollte man es so machen, dass 
 würde bie größeren Turnieren spätestens in der zweiten Phase das selbe Problem nochmal auftreten.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.25]{pics/backend/elimination_tree_seeded_wrong_big.png}
-    \caption{großer Turnierbaum falsch geseedet\cite{implementation-elimination-1}}
+    \includegraphics[scale=0.25]{pics/backend/elimination/elimination_tree_seeded_wrong_big.png}
+    \caption{großer Turnierbaum falsch geseedet\cite{implementation-execution-1}}
 \end{figure}
 
 Um dieses Problem zu beheben, wird beim Anordnen Rekursion verwendet.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.5]{pics/backend/elimination_orderSeededCompetitors.png}
+    \includegraphics[scale=0.5]{pics/backend/elimination/elimination_orderSeededCompetitors.png}
     \caption{Anordnen der Teilnehmer im Code}
 \end{figure}
 
@@ -265,11 +265,11 @@ Außerdem wird angenommen, dass die Teilnehmer/innen nach Seed aufsteigend sorti
 welche wie schon erwähnt Rekursion beinhaltet. Diese wird mit den folgenden Abbildungen erklärt.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.8]{pics/backend/seeding_1.png}
+    \includegraphics[scale=0.8]{pics/backend/elimination/seeding_1.png}
     \caption{Anordnen der Teilnehmer 1}
-    \includegraphics[scale=0.8]{pics/backend/seeding_2.png}
+    \includegraphics[scale=0.8]{pics/backend/elimination/seeding_2.png}
     \caption{Anordnen der Teilnehmer 2}
-    \includegraphics[scale=0.8]{pics/backend/seeding_3.png}
+    \includegraphics[scale=0.8]{pics/backend/elimination/seeding_3.png}
     \caption{Anordnen der Teilnehmer 3}
 \end{figure}
 
@@ -283,8 +283,8 @@ Seeds 4 und 5 (also in der zweiten Phase nur Seed 4) zusammengeführt werden. Da
 angeordnet wurde. Im Turnierbaum sieht es dass so aus.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.25]{pics/backend/elimination_tree_seeded_big.png}
-    \caption{großer Turnierbaum geseedet\cite{implementation-elimination-1}}
+    \includegraphics[scale=0.25]{pics/backend/elimination/elimination_tree_seeded_big.png}
+    \caption{großer Turnierbaum geseedet\cite{implementation-execution-1}}
 \end{figure}
 
 Im Backend gibt es 2 Möglichkeiten, Seeds and Teilnehmer/innen zu verteilen. Die erste Möglichkeit ist es, die Teilnehmer nach der durchnittlichen Plazierung aus vergangenen Turnieren zu sortieren, 
@@ -297,14 +297,14 @@ Sollte die Anzahl der Teilnehmer/innen in einem Turnier keine Hochzahl von 2 sei
 Um dieses Problem zu lösen, steigen manche Teilnehmer automatisch in die zweite Phase auf, ohne ein Match gewonnen zu haben.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.75]{pics/backend/elimination_buy_rounds.png}
-    \caption{Turnierbaum mit Buy-Rounds\cite{implementation-elimination-1}}
+    \includegraphics[scale=0.75]{pics/backend/elimination/elimination_buy_rounds.png}
+    \caption{Turnierbaum mit Buy-Rounds\cite{implementation-execution-1}}
 \end{figure}
 
 Im Code wird das mit diesen Methoden erreicht.
 
 \begin{figure}[H]
-    \includegraphics[scale=0.65]{pics/backend/elimination_setBuyRounds.png}
+    \includegraphics[scale=0.65]{pics/backend/elimination/elimination_setBuyRounds.png}
     \caption{Buy-Rounds im Elimination Modus}
 \end{figure}
 
@@ -316,3 +316,45 @@ Nun sind jedoch 3 "dummy" Teilnehmer in der Teilnehmerliste, mit denen man nicht
 steigt automatisch in die zweite Phase auf, und spielt dort das erste Match.
 
 \subsection{Round Robin}
+
+Im Round Robin Turniermodus tritt jeder/jede Teilnehmer/in gegen jeden Teilnehmer an, egal, wie oft man gewinnt oder verliert. Somit entsteht hier kein Turnierbaum, sondern eher ein Turnierraster aus Matches.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.5]{pics/backend/roundrobin/roundrobin_grid.png}
+    \caption{Turnierraster\cite{implementation-execution-1}}
+\end{figure}
+
+\subsubsection{Phases}
+
+Die Phasenanzahl im Round Robin Turniermodus ist etwas einfacher zu errechnen, als bei Elimination. Angenommen ein Turnier hat 4 Teilnehmer/innen, somit hat jeder/jede Teilnehmer/in insgesammt 3 Gegner. Da jeder/jede Teilnehmer/in in jeder Phase 
+ein Match spielen kann, gibt es hier 3 Phasen, also die Teilnehmeranzahl - 1. Bei einer ungeraden Teilnehmeranzahl ist es jedoch etwas anders, da in jeder Phase ein/eine Teilnehmer keinen Gegner hat. Daher wäre hier die Phasenanzahl gleich 
+der Teilnehmeranzahl.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.5]{pics/backend/roundrobin/roundrobin_grid_uneven.png}
+    \caption{Turnierraster mit ungerader Teilnehmeranzahl\cite{implementation-execution-1}}
+\end{figure}
+
+Die Rechnung im Code sieht folgendermaßen aus.
+
+\begin{figure}[H]
+    \includegraphics[scale=1]{pics/backend/roundrobin/roundrobin_insertPhases.png}
+    \caption{Einfügen der Phasen im Round Robin Modus}
+\end{figure}
+
+\subsubsection{Nodes und Matches}
+
+Da im Round Robin Turniermodus schon im Vorhinein bekannt ist, wer wann gegen wen antritt, werden hier Nodes und Matches gleichzeitig eingefügt. Dafür ist diese Methode verantwortlich.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.7]{pics/backend/roundrobin/roundrobin_insertNodesAndMatches.png}
+    \caption{Einfügen der Nodes und Matches im Round Robin Modus}
+\end{figure}
+
+Ein/eine Teilnehmer/in muss in jeder Phase gegen verschiedene Teilnehmer/innen antreten. In der ersten Phase nimmt die Methode aus der Teilnehmerliste den/die erste/n Teilnehmer/in, und den/die unmittelbar danach, und fügt sie zusammen, 
+so lange, bis keine Teilnehmer/innen mehr in der Liste sind.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.8]{pics/backend/roundrobin/matching_up_1.png}
+    \caption{Round Robin Algorithmus 1}
+\end{figure}

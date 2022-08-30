@@ -76,7 +76,7 @@ public class MatchRepository implements PanacheRepository<Match> {
                         "and m.competitor1 is not null " +
                         "and m.competitor2 is not null " +
                         "and n.phase.groupNumber = :groupNumber " +
-                        "order by m.isFinished, m.date", Match.class)
+                        "order by n.phase.phaseNumber, m.isFinished, m.date", Match.class)
                 .setParameter("tournamentId", tournamentId)
                 .setParameter("groupNumber", groupNumber)
                 .getResultList();

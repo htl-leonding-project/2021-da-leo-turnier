@@ -85,7 +85,7 @@ public class TournamentRepository implements PanacheRepository<Tournament> {
 
     public Tournament delete(Long id) {
         Tournament tournament = getById(id);
-        phaseRepository.getAll().forEach(t -> phaseRepository.delete(t.getId()));
+        phaseRepository.getByTournamentId(id).forEach(t -> phaseRepository.delete(t.getId()));
         getEntityManager().createQuery("delete from Participation p where p.tournament.id = :id")
                 .setParameter("id", id)
                 .executeUpdate();
