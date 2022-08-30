@@ -41,6 +41,10 @@ public class CompetitorDto {
         this.wins++;
     }
 
+    public void subtractWin() {
+        this.wins--;
+    }
+
     public int getPoints() {
         return points;
     }
@@ -55,6 +59,10 @@ public class CompetitorDto {
 
     public void addTieBreakerWin() {
         this.tieBreakerWins++;
+    }
+
+    public void subtractTieBreakerWin() {
+        this.tieBreakerWins--;
     }
 
     @Override

@@ -17,6 +17,9 @@ public class Phase {
     @Column(name = "P_GROUP_NUMBER")
     int groupNumber;
 
+    @Column(name = "P_IS_TIE_BREAKER_PHASE")
+    boolean isTieBreakerPhase;
+
     @ManyToOne
     @JoinColumn(name = "P_T_ID")
     Tournament tournament;
@@ -38,8 +41,13 @@ public class Phase {
     }
 
     public Phase(int phaseNumber, int groupNumber, Tournament tournament) {
+        this(phaseNumber, groupNumber, false, tournament);
+    }
+
+    public Phase(int phaseNumber, int groupNumber, boolean isTieBreakerPhase, Tournament tournament) {
         this.phaseNumber = phaseNumber;
         this.groupNumber = groupNumber;
+        this.isTieBreakerPhase = isTieBreakerPhase;
         this.tournament = tournament;
     }
 
@@ -65,6 +73,14 @@ public class Phase {
 
     public void setGroupNumber(int groupNumber) {
         this.groupNumber = groupNumber;
+    }
+
+    public boolean isTieBreakerPhase() {
+        return isTieBreakerPhase;
+    }
+
+    public void setTieBreakerPhase(boolean tieBreakerPhase) {
+        isTieBreakerPhase = tieBreakerPhase;
     }
 
     public Tournament getTournament() {

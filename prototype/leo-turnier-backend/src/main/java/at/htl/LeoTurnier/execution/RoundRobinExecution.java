@@ -30,7 +30,7 @@ public class RoundRobinExecution {
     TournamentRepository tournamentRepository;
 
     public Tournament startTournament(Tournament tournament, List<Competitor> competitors, int groupNumber) {
-        insertPhasesRoundRobin(tournament, competitors, groupNumber, 0);
+        insertPhasesRoundRobin(tournament, competitors, groupNumber, 0, false);
         insertNodesAndMatchesRoundRobin(tournament, competitors, groupNumber, 0);
         return tournament;
     }
@@ -51,17 +51,17 @@ public class RoundRobinExecution {
                     .map(c -> competitorRepository.getById(c.getId()))
                     .collect(Collectors.toList());
             int startingPhaseNumber = phaseRepository.getMaxPhaseNumberForGroup(tournament.getId(), groupNumber) + 1;
-            insertPhasesRoundRobin(tournament, tiedCompetitors, groupNumber, startingPhaseNumber);
+            insertPhasesRoundRobin(tournament, tiedCompetitors, groupNumber, startingPhaseNumber, true);
             insertNodesAndMatchesRoundRobin(tournament, tiedCompetitors, groupNumber, startingPhaseNumber);
         }
         return tournament;
     }
 
     public void insertPhasesRoundRobin(Tournament tournament, List<Competitor> competitors,
-                                       int groupNumber, int startingPhaseNumber) {
+                                       int groupNumber, int startingPhaseNumber, boolean isTieBreakerPhase) {
         double numOfPhases = competitors.size() - 1 + (competitors.size() % 2);
         for (int i = 0; i < numOfPhases; i++) {
-            phaseRepository.add(new Phase(i + startingPhaseNumber, groupNumber, tournament));
+            phaseRepository.add(new Phase(i + startingPhaseNumber, groupNumber, isTieBreakerPhase, tournament));
         }
     }
 
@@ -137,10 +137,22 @@ public class RoundRobinExecution {
 
                 competitorDto1.addPoints(match.getScore1());
                 competitorDto2.addPoints(match.getScore2());
-                if (match.getScore1() > match.getScore2()) {
-                    competitorDto1.addWin();
-                } else if (match.getScore1() < match.getScore2()) {
-                    competitorDto2.addWin();
+                if (p.isTieBreakerPhase()) {
+                    if (match.getScore1() > match.getScore2()) {
+                        competitorDto1.addTieBreakerWin();
+                        competitorDto2.subtractTieBreakerWin();
+                    } else if (match.getScore1() < match.getScore2()) {
+                        competitorDto2.addTieBreakerWin();
+                        competitorDto1.subtractTieBreakerWin();
+                    }
+                } else {
+                    if (match.getScore1() > match.getScore2()) {
+                        competitorDto1.addWin();
+                        competitorDto2.subtractWin();
+                    } else if (match.getScore1() < match.getScore2()) {
+                        competitorDto2.addWin();
+                        competitorDto1.subtractWin();
+                    }
                 }
             });
         });
@@ -149,6 +161,10 @@ public class RoundRobinExecution {
             if (c1.getWins() > c2.getWins()) {
                 return -1;
             } else if (c1.getWins() < c2.getWins()) {
+                return 1;
+            } else if (c1.getTieBreakerWins() > c2.getTieBreakerWins()) {
+                return -1;
+            } else if (c1.getTieBreakerWins() < c2.getTieBreakerWins()) {
                 return 1;
             } else if (c1.getPoints() > c2.getPoints()) {
                 return -1;
