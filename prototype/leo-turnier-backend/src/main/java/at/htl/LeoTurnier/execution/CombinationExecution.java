@@ -82,7 +82,7 @@ public class CombinationExecution {
                             participationRepository.getById(tournament.getId(),
                                     previousCompetitorDto.getId()).getPlacement());
                 } else {
-                    participationRepository.modifyPlacement(tournament.getId(), competitorDtos.get(u).getId(), u + numOfGroups + 1);
+                    participationRepository.modifyPlacement(tournament.getId(), competitorDtos.get(u).getId(), (u + 1) * numOfGroups);
                 }
             }
         }
