@@ -83,7 +83,7 @@ public class Execution {
         Tournament tournament = node.getPhase().getTournament();
         if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Round Robin")) {
             roundRobinExecution.rankCompetitors(tournament, -1);
-            //roundRobinExecution.setFinished(tournament);
+            roundRobinExecution.setFinished(tournament);
             return node.getMatch();
         } else if (tournament.getTournamentMode() != null && tournament.getTournamentMode().getName().equals("Combination")) {
             if (node.getPhase().getGroupNumber() != -1) {
