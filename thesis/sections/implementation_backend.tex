@@ -315,6 +315,12 @@ nach Seed anzuordnen.
 Nun sind jedoch 3 "dummy" Teilnehmer in der Teilnehmerliste, mit denen man nichts anfangen kann. Um diese kümmert sich nun die obere Methode. Jeder/jede Teilnehmer/in, der einen "dummy" Teilnehmer als Gegner hat, 
 steigt automatisch in die zweite Phase auf, und spielt dort das erste Match.
 
+\subsubsection{Plazierungen}
+
+Die Plazierung eines/einer Teilnehmer/in in einem Turnier wird im Backend zu dem Zeitpunkt festgelegt, wenn der/die Teilnehmer/in ausgeschieden ist, oder 
+das Turnier gewonnen hat. Berechnet wird die Plazierung durch die Anzahl der Teilnehmer in der nächsten Phase + 1. Sollte also ein/eine Teilnehmer/in 
+in dem Top 8 aus dem Turnier ausscheiden, ist dieser/diese als 5ter plaziert.
+
 \subsection{Round Robin}
 
 Im Round Robin Turniermodus tritt jeder/jede Teilnehmer/in gegen jeden Teilnehmer an, egal, wie oft man gewinnt oder verliert. Somit entsteht hier kein Turnierbaum, sondern eher ein Turnierraster aus Matches.
@@ -381,4 +387,15 @@ Um zu vermeiden, dass am Ende eines Turniers 2 oder mehr Teilnehmer/innen gleich
 wird bei den Plazierungen die Anzahl an Punkten ebenfalls in Betracht gezogen, jedoch besteht immernoch die Chance, dass sie ebenfalls die gleiche Anzahl an 
 Punkten erziehlt haben. Sollte dies der Fall sein, ist es notwendig, sogenannte "Tie Breakers" auszuführen. Tie Breakers sind Matches, die nach den Hauptmatches 
 des Turnier noch extra ins Turnier hinzugefügt werden, um den Punktegleichstand zwischen den Teilnehmer/innen zu beheben. Diese zählen für dei Plazierung nicht 
-so viel wie ein normales Match, es kann also nicht sein, dass ein Teilnehmer 
+so viel wie ein normales Match, es kann also nicht sein, dass ein/eine Teilnehmer/in durch ein Tie Breaker Match noch höher Plaziert wird, als jemand der bei den 
+normalen Matches nur knapp besser abgeschnitten hat als er/sie selbst.
+
+\subsubsection{Plazierung}
+
+Die Plazierung im Round Robin Turniermodus wird festgesetzt, indem Teilnehmer zurest anhand der Differenz der Siege und Niederlagen sortiert werden, dann nach 
+der Gesamtanzahl der Punkte, die von den/der Teilnehmer/in erziehlt wurden, und dann nach Differenz der Siege und Niederlagen aus Tie Breaker Matches.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.6]{pics/backend/roundrobin/roundrobin_rankCompetitors.png}
+    \caption{Plazierung im Round Robin Turniermodus}
+\end{figure}
