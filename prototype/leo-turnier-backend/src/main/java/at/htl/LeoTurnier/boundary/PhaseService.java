@@ -60,6 +60,16 @@ public class PhaseService {
         return Response.ok(repository.getAll()).build();
     }
 
+    @GET
+    @Path("/getNumOfGroups")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Integer getNumOfGroups(@QueryParam("tournamentId") Long tournamentId) {
+        if (repository.getById(tournamentId) == null) {
+            return null;
+        }
+        return repository.getNumOfGroups(tournamentId);
+    }
+
     @DELETE
     @RolesAllowed({"admin"})
     @Produces(MediaType.APPLICATION_JSON)
