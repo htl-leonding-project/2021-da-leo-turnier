@@ -162,13 +162,13 @@ public class RoundRobinExecution {
                 return -1;
             } else if (c1.getWins() < c2.getWins()) {
                 return 1;
+            }  else if (c1.getPoints() > c2.getPoints()) {
+                return -1;
+            } else if (c1.getPoints() < c2.getPoints()) {
+                return 1;
             } else if (c1.getTieBreakerWins() > c2.getTieBreakerWins()) {
                 return -1;
             } else if (c1.getTieBreakerWins() < c2.getTieBreakerWins()) {
-                return 1;
-            } else if (c1.getPoints() > c2.getPoints()) {
-                return -1;
-            } else if (c1.getPoints() < c2.getPoints()) {
                 return 1;
             }
             return 0;
