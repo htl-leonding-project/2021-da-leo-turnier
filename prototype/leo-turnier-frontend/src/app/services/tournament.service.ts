@@ -51,6 +51,10 @@ export class TournamentService {
   }
 
   async addTournament(value: any): Promise<void> {
+    if (value.sportType == null){
+      value.sportType = '';
+    }
+
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
     const tournament = new TournamentDTO(null, value.name, this.datePipe.transform(value.startDate, 'yyyy-MM-dd'), this.datePipe.transform(value.endDate, 'yyyy-MM-dd'), new SportType(value.sportType), value.tournamentMode);
@@ -73,6 +77,9 @@ export class TournamentService {
   }
 
   async updateTournament(id: string, value: any): Promise<void> {
+    if (value.sportType == null){
+      value.sportType = '';
+    }
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
     const tournament = new TournamentDTO(+id, value.name, this.datePipe.transform(value.startDate, 'yyyy-MM-dd'), this.datePipe.transform(value.endDate, 'yyyy-MM-dd'), value.sportType, value.tournamentMode);
