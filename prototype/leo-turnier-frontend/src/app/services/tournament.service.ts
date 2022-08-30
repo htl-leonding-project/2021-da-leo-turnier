@@ -101,12 +101,10 @@ export class TournamentService {
 
   async startTournament(id: string): Promise<void> {
     const authToken = this.keycloakService.getToken();
-
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${authToken}`
     };
-    console.log(headers);
     await this.httpClient.get(this.host + 'execution/startTournament?tournamentId=' + id, {headers}).subscribe(
       data => console.log('success', data),
       error => console.log('oops', error)
