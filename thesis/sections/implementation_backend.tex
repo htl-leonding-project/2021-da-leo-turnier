@@ -318,8 +318,8 @@ steigt automatisch in die zweite Phase auf, und spielt dort das erste Match.
 \subsubsection{Plazierungen}
 
 Die Plazierung eines/einer Teilnehmer/in in einem Turnier wird im Backend zu dem Zeitpunkt festgelegt, wenn der/die Teilnehmer/in ausgeschieden ist, oder 
-das Turnier gewonnen hat. Berechnet wird die Plazierung durch die Anzahl der Teilnehmer in der nächsten Phase + 1. Sollte also ein/eine Teilnehmer/in 
-in dem Top 8 aus dem Turnier ausscheiden, ist dieser/diese als 5ter plaziert.
+das Turnier gewonnen hat. Berechnet wird die Plazierung durch die Anzahl der Teilnehmer in der nächsten Phase + 1, außer es ist das Finale, dann wird einfach entweder Platz 1 oder 2 vergeben. 
+Sollte also ein/eine Teilnehmer/in in dem Top 8 aus dem Turnier ausscheiden, ist dieser/diese als 5ter plaziert.
 
 \subsection{Round Robin}
 
@@ -399,3 +399,27 @@ der Gesamtanzahl der Punkte, die von den/der Teilnehmer/in erziehlt wurden, und 
     \includegraphics[scale=0.6]{pics/backend/roundrobin/roundrobin_rankCompetitors.png}
     \caption{Plazierung im Round Robin Turniermodus}
 \end{figure}
+
+\subsection{Combination}
+
+Der Combination Turniermodus ist eine Kombination aus Round Robin und Elimination. Zuerst werden die Teilnehmer/innen in Gruppen aufgeteilt, diese werden genau so durchgeführt wie im Round Robin Turniermodus, 
+jeder/jede Teilnehmer/in tritt gegen jeden/jede andere/n Teilnehmer/in aus der gleichen Gruppe an. Anschließend steigen die besten Teilnehmer/innen aus der Gruppenphase in die KO-Phase auf, welche genau  so 
+durchgeführt wird, wie im Elimination modus, der Verlierer scheidet aus, der Gewinner steigt auf.
+
+TODO
+
+\subsubsection{Gruppenphase}
+
+In diesem Turniermodus wird größtenteils der Code für die anderen beiden Turniermodi wiederverwendet. Somit kann die Gruppenphase einfach gestartet, 
+indem pro Gruppe einmal die "startTournament" Methode des Round Robin Turniermodus aufgerufen, welcher die momentane Gruppennummer übergeben wird. 
+Die Anzahl der Gruppen kann hier frei gewählt werden.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.4]{pics/backend/combination/combination_startGroupPhase.png}
+    \caption{Start der Gruppenphase im Combination Modus}
+\end{figure}
+
+
+
+Sollten hier 2 oder mehr Teilnehmer/innen einer Gruppe die selbe Plazierung haben, können wieder die Tie Breaker Matches eingefügt werden.
+Wenn dies nicht der Fall ist, geht es weiter zu der KO-Phase.
