@@ -17,7 +17,7 @@ public class SportTypeRepository implements PanacheRepository<SportType> {
     TournamentRepository tournamentRepository;
 
     public SportType add(SportType sportType) {
-        if (sportType == null || sportType.getName().isBlank() || sportType.getName().isEmpty()) {
+        if (sportType == null || sportType.getName().isEmpty()) {
             return null;
         }
         Optional<SportType> existing = find("name", sportType.getName()).singleResultOptional();
