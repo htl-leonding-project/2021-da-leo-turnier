@@ -32,7 +32,7 @@ Nach dem erstellen eines Quarkus Projektes ist ein Großteil der Ordnerstruktur 
 Hier werden nicht nur die Metadaten des Projekts angegeben, sondern auch die Dependencies, also alle externen Libraries, die die Applikation benötigt. 
 
 Im "src" Ordner befinden sich ein "main" und ein "test" Ordner. Im "main" Ordner befindet sich der ganze Quellcode der Applikation, und im "test" Ordner befindet sich der Code, der den Quellcode auf seine richtigkeit prüft.
-Im "main" Ordner befindet sich nun ein "docker" Ordner, auf den später noch eingegangen wird, ein "java" Ordner, in dem sich die Java Klassen der Applikation befindet, und ein "resources" Ordner, in dem weitere Files zu finden sind, 
+Im "main" Ordner befindet sich nun ein "docker" Ordner, auf den später noch eingegangen wird (siehe Kapitel "Deployment"), ein "java" Ordner, in dem sich die Java Klassen der Applikation befindet, und ein "resources" Ordner, in dem weitere Files zu finden sind, 
 auf die der Java Code eventuell zugreifen kann. Außerdem befindet sich im "resources" Ordner das "application.properties" File, in dem verschiedene Quarkus Konfigurationen zu finden sind.
 
 \begin{figure}[H]
@@ -443,3 +443,31 @@ Wie viele Teilnehmer/innen pro Gruppe aufsteigen, ist hier frei wählbar.
 Die Teilnehmer/innen bekommen hier keine Plazierung ausgehend von der eigenen Gruppe, sondern vom gesammten Turnier. Für jene, die in bereits in der Gruppenphase ausgeschieden sind, wird die Plazierung so berechnet, 
 wie im Round Robin Turniermodus, mit dem Unterschied, dass sie noch mit der Gruppenanzahl multipliziert wird. Sollte es also 16 Teilnehmer/innen in 4 Gruppen geben, teilen sich die mit der höchsten Platzierung pro Gruppe den vierten Platz. 
 Die Teilnehmer/innen, die in die KO-Phase aufgestiegen sind, werden genauso wie im Elimination Turniermodus plaziert.
+
+\section{KeyCloak}
+\setauthor{Hain Lukas}
+
+Damit das Backend auf den KeyCloak Server zugreifen kann, wird das "Quarkus OIDC" Library verwendet. Im "application.properties" File werden die URL des KeyCloak Realms 
+sowie die Client Id festgelegt. Das Realm beinhaltet unter anderem die verschiedenen Rollen und User der Applikation, und außerdem den Client, dessen Client Id angegeben wird. 
+Die Konfigurationen für KeyCloak, sowie die Rollen "admin" und "tournament-organizer", und ein "admin" User werden beim Start des Servers automatisch aus dem "realm.json" File importiert.
+Ein User hat eine Rolle, und kann auf alle für diese Rolle freigegebenen Endpoints zugreifen.
+Welche Rollen auf einen Endpoint zugreifen können wird mit der "@RolesAllowed" Annotation festgelegt. 
+
+\begin{figure}[H]
+    \includegraphics[scale=0.6]{pics/backend/rolesAllowed.png}
+    \caption{RolesAllowed}
+\end{figure}
+
+Die Authenifizierung eines Users funktioniert mittels Bearer Token. Diesen bekommt man mit der folgenden Request.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.6]{pics/backend/keycloak_token_request.png}
+    \caption{KeyCloak Token Request}
+\end{figure}
+
+Es ist eine Post Request mit der URL 
+
+http://localhost:8443/realms/leoturnier/protocol/openid-connect/token, 
+
+außerdem steht im Body der Request noch Username, Password sowie der Grant Type, der angibt, dass man Username und Passwort benötigt, und die Client Id. 
+Den Token, den man durch diese Request bekommen hat, muss man nun in den Requests and die Endpoints des Quarkus Backends angeben, um darauf Zugriff zu erlangen.
