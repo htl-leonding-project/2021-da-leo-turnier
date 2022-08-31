@@ -1,7 +1,6 @@
-\section{Angular Frontend}
 \setauthor{Benjamin Ecker}
 
-\subsection{Ordnerstruktur}
+\section{Ordnerstruktur}
 \begin{figure}[H]
     \includegraphics[scale=0.8]{pics/frontend/angular_file_structure.PNG}
     \caption{Angular Ordnerstruktur}
@@ -138,16 +137,14 @@ Daten aber schon zu Begin bereitgestellt werden. Hier kommt die Methode ngOnInit
 Um ngOnInit verwenden zu könenn muss vorher das die Component vorher OnInit implementieren. Im Grunde handelt es sich hierbei nur um eine Lifecycle-Hook, welche Angular selbst verwaltet.
 Die Methode wird dann nur zur Initialisierung der Component aufgerufen, wie uns der Name schon verrät. Somit wird sofort nach dem Konstruktor die Methode aufgerufen. Dabei können Daten können schon vor dem Start der Component beschaffen werden und danach vielleicht Tabelle befüllt werden. \cite{implementation-angular-5}
 
-\bigskip
 \begin{figure}[H]
-    \includegraphics[scale=1]{pics/frontend/example_ngOnInit.PNG}
+    \includegraphics[scale=0.8]{pics/frontend/example_ngOnInit.PNG}
     \caption{Beispiel Router-Call aus player-overview.component.ts}
 \end{figure}
 \subsubsection{Router}
 Will man jetzt in dieser Tabelle die beispielsweise mit Spielern einen bearbeiten, ist eine eigene Component nötig. Um es also für eine Component zu ermöglichen auf eine andere Component zu navigieren, ist ein sogenannter Router nötig. Dieser wird genau wie der Service injiziert und gehört zum RouterModule. 
 Nun kann der Router mithilfe der Routes im "app-routing.module.ts" den Benutzer zu einer anderen Component navigieren und für diese auch Parameter mitgeben.
 
-\bigskip
 \begin{figure}[H]
     \includegraphics[scale=1]{pics/frontend/example_navigation.PNG}
     \caption{Beispiel Router-Call aus player-overview.component.ts}
@@ -155,8 +152,40 @@ Nun kann der Router mithilfe der Routes im "app-routing.module.ts" den Benutzer 
 
 Diese Parameter müssen dann auch von der anderen Component gespeichert werden. Hier schafft der ActivatedRouter abhilfe. Das Prozedere ist hierbei genau gleich wie beim Router und der Auruf kann sofort im Konstruktor stattfinden.
 
-\bigskip
 \begin{figure}[H]
     \includegraphics[scale=1]{pics/frontend/example_activatedRouter.PNG}
     \caption{Beispiel ActivatedRouter-Call aus player.component.ts}
+\end{figure}
+
+\section{Tournament-Tree}
+
+Eine ansprechensden Aufgaben des Frontend ist die Visualisierung der Turniere, vor allem die des Elimination stellen eine große Herausforderung dar. Darum verwendet das Frontend für Erstellung eines optisch ansprechenden Turnierbaums das Module NgTournament was diese Aufgabe massiv erleichtern soll. \cite{implementation-angular-6}
+
+Die hierführ benötigten Components finden sich im Order Match, Tournament-Tree und Home.
+
+\subsubsection{Home}
+Zuallererst braucht NgTournament Information über den gesamten Turnierverlauf. Diese müssen in Form eines NggtTournament vorhanden sein, welches wiederum aus Rounds und Matches besteht. Den Algorithmus hierführ stellt NgTournament bereit, dieser muss nur auf das eigene Datenmodel geändert werden und schon sollte es gehen,
+da NgTournament aber leider nur fertig gespielte Turniere visualisieren kann, musste der Algorithmus noch so ergänzt werden, dass bei noch nicht gespielten Matches als "Austehend" aufgeführt werden. 
+
+\begin{figure}[H]
+    \includegraphics[scale=0.7]{pics/frontend/ausstehende_matches.PNG}
+    \caption{hinzufügen ausstehender Matches in showTree(Home-Component)}
+\end{figure}
+
+\subsubsection{Tournament-Tree \& Home}
+Nachdem das Tournament als NggtTournament vorhanden ist wird dieses an das Tournament-Tree Component geleitet, sie komplett von NgTournament bereitgestellt und muss auch nicht mehr bearbeitet werden. 
+Nun rendert die Tournament-Tree Component mithilfe der Match Component als Template, welche auch vollständig bereitgestellt wird, den kompletten Turnierbaum.
+
+\subsubsection{Styling}
+Das Styling für den Turnierbaum wird bereits beim Laden des NgTournament hinzugefügen. Doch mit da der Baum auf weißen Hintergrund platziert ist passte es besser, wenn der Turnierbaum auch einen weißen Hintergrund besitzt.
+Um das grundlegende Styling zu überschreiben schafft das File "my-tree-configurations.scss" abhilfe, welches nur im "style.scss" vor "ng-tournament-tree/styles/ngtt-styles" imported werden muss.
+
+\begin{figure}[H]
+    \includegraphics[scale=1]{pics/frontend/my_tree_css.PNG}
+    \caption{my-tree-configurations.scss}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[scale=1]{pics/frontend/style_css.PNG}
+    \caption{style.scss}
 \end{figure}
