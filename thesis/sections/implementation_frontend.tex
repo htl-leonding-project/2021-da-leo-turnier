@@ -93,6 +93,7 @@ Standardmäßig trägt Angular hierführ 'root' ein. Wenn ein Dienst auf Root-Eb
 Um Daten auf die Daten des Backends zugreifen zu können wird die Client-HTTP-API verwendet, welcher zugleich noch Features für Error-Handling und Typed Response Objects  bereitstellt. \cite{implementation-angular-4}
 
 Da nicht jeder Nutzer von LeoTurnier Zugriff zu allen Daten haben darf, wird dazu noch ein Keycloak-Service verwendet der für jeden Request einen Authentication-Token zur Verfügung stellt.
+Damit dieser Service funktioniert muss man zuerst den Keycloa-Server mit dem Frontend verbinden.
 
 \begin{figure}[H]
     \includegraphics[scale=0.6]{pics/frontend/service.PNG}
@@ -102,4 +103,24 @@ Da nicht jeder Nutzer von LeoTurnier Zugriff zu allen Daten haben darf, wird daz
 \begin{figure}[H]
     \includegraphics[scale=0.6]{pics/frontend/example_request.PNG}
     \caption{Beispiel Request: startTournament}
+\end{figure}
+
+\subsubsection{Utility - Keycloak}
+
+In diesem Ordner befinden sich alle nötigen Files für  eine funktionierde Verbindung mit Keycloak.
+Für die Initialisierung des KeycloakService ist eine Methode im "app.init.ts" zuständig. Als Vorlage diente hierführ
+das Tutorial des Keycloak-Angular Module von Maurico Vigolo
+\cite{sysarch-keycloak-angular-1}
+
+\begin{figure}[H]
+    \includegraphics[scale=0.6]{pics/frontend/app_init.PNG}
+    \caption{app.init.ts}
+\end{figure}
+
+Wie im Screenshot zusehen befindet sich hier eine Konfiguration für einen Client von Keycloak. Dieser kann dann an Keycloak eine Anforderung stellen, um einen Benutzer zu authentifizieren, Identitätsinformationen einzuholen, oder einen Zugriffstoken anzuforden.
+Der Client muss direkt im Keycloak mit der Administration Console erstellt werden und muss mit der Konfiguration und der Frontend URL genau übereinstimmen.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.7]{pics/frontend/keycloak_client.PNG}
+    \caption{Keycloak-Frontend Client}
 \end{figure}
