@@ -125,4 +125,38 @@ Der Client muss direkt im Keycloak mit der Administration Console erstellt werde
     \caption{Keycloak-Frontend Client}
 \end{figure}
 
-\subsection{section}
+\subsection{Components}
+Components sind die UI-Bausteine einer jeden Angular App. Wie vorher schon erwähnt sind alle anderen Komponenten Child-Components der App-Component und bilden somit Component-Tree.
+LeoTurnier ist hierbei sehr simpel gehalten und besitzt einen fast komplett flachen Baum. 
+Auch wenn jede Component einzigartig ist und ihren eigenen Funktionalitäten hat funktionieren haben sie viele Gemeinsamkeiten:
+
+\subsubsection{Service}
+Um beispielsweise eine Tabelle ein Formular zu füllen braucht jede Component mindestens einen Service. Dieser wird im Konstruktor injiziert, aber kann in ihm noch nicht verwendet werden. In den meisten Fällen wie bei einer Tabelle müssen die 
+Daten aber schon zu Begin bereitgestellt werden. Hier kommt die Methode ngOnInit ins Spiel.
+
+\subsubsection{OnInit}
+Um ngOnInit verwenden zu könenn muss vorher das die Component vorher OnInit implementieren. Im Grunde handelt es sich hierbei nur um eine Lifecycle-Hook, welche Angular selbst verwaltet.
+Die Methode wird dann nur zur Initialisierung der Component aufgerufen, wie uns der Name schon verrät. Somit wird sofort nach dem Konstruktor die Methode aufgerufen. Dabei können Daten können schon vor dem Start der Component beschaffen werden und danach vielleicht Tabelle befüllt werden. 
+
+\bigskip
+\begin{figure}[H]
+    \includegraphics[scale=1]{pics/frontend/example_ngOnInit.PNG}
+    \caption{Beispiel Router-Call aus player-overview.component.ts}
+\end{figure}
+\subsubsection{Router}
+Will man jetzt in dieser Tabelle die beispielsweise mit Spielern einen bearbeiten, ist eine eigene Component nötig. Um es also für eine Component zu ermöglichen auf eine andere Component zu navigieren, ist ein sogenannter Router nötig. Dieser wird genau wie der Service injiziert und gehört zum RouterModule. 
+Nun kann der Router mithilfe der Routes im "app-routing.module.ts" den Benutzer zu einer anderen Component navigieren und für diese auch Parameter mitgeben.
+
+\bigskip
+\begin{figure}[H]
+    \includegraphics[scale=1]{pics/frontend/example_navigation.PNG}
+    \caption{Beispiel Router-Call aus player-overview.component.ts}
+\end{figure}
+
+Diese Parameter müssen dann auch von der anderen Component gespeichert werden. Hier schafft der ActivatedRouter abhilfe. Das Prozedere ist hierbei genau gleich wie beim Router und der Auruf kann sofort im Konstruktor stattfinden.
+
+\bigskip
+\begin{figure}[H]
+    \includegraphics[scale=1]{pics/frontend/example_activatedRouter.PNG}
+    \caption{Beispiel ActivatedRouter-Call aus player.component.ts}
+\end{figure}
