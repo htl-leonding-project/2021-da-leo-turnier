@@ -69,7 +69,7 @@ public class CombinationExecution {
         List<Competitor> promoted = new LinkedList<>();
         for (int i = 0; i < phaseRepository.getNumOfGroups(tournament.getId()); i++) {
             List<CompetitorDto> competitorDtos = roundRobinExecution.getCompetitorsSorted(tournament, i);
-            for (int u = 0; u < promotedPerGroup; u++) {
+            for (int u = 0; u < promotedPerGroup && u < competitorDtos.size(); u++) {
                 promoted.add(competitorRepository.getById(competitorDtos.get(u).getId()));
             }
         }
