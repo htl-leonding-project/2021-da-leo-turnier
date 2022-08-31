@@ -220,7 +220,40 @@ die in Hunderte von Bestandteilen zerlegt sind, können die Verwaltung und Orche
 um Dienste wie Vernetzung, Sicherheit, Telemetrie usw. in den Containern bereitzustellen.
 \cite{sysarch-docker-1}
 
-\section{Entwicklungsinfrastruktur}
+\section{Angular}
+\setauthor{Ecker Benjamin}
+
+Angular ist ein Client-Side JavaScript Framework zur Erstellung von Single-Page-Webapplications. 
+Seine komponentenbasierte Architektur welche View und Logik trennt macht es für den Entwickler leicht 
+Applikationen zu warten und testen. Dabei verwendet Angular TypeScript für den Code-Behind und HTML als Auszeichnungssprache. 
+Die vielen gut integrierten Libraries decken Features wie Routing, Verwaltung von Formulare und Client-Server Kommunikation ab. 
+
+\subsection{Angular Material}
+Angular Material ist eine Library für User Interface Components wie Cards, Inputs und Data Tables welche eine Standard Angular-App sofort aufwerten könnne.
+Die Website bietet dazu noch einen guten Überblick der Vielzahl an Möglichkeiten der Components und mithilfe vom Online Live Editor Stackblitz kann diese sofort im Web testen. 
+\cite{sysarch-angularMaterial-1}
+
+\subsection{TypeScript}
+\setauthor{Ecker Benjamin}
+
+Wie der Name schon verrät setzt TypeScript anders als die übliche Variante JavaScript auf strikte Typen und macht somit den Code lesbarer und verständlicher.
+Wird in JavaScript eine Variable erstellt lässt nur der Name ahnen was im Programm damit passiert, denn es ist nicht notwendig einen Typen zu deklarieren.
+In TypeScript jedoch muss jede Variable vorher mit einem Typ verseht werden und sollte dies nicht passieren schmeißt der Compiler sofort eine Fehlermeldung.
+Anders als bei anderen Programmiersprache kann es trotz Fehlern zu einem lauffähigen Programm kommen da der Compiler zwar auf Fehler aufmerksam macht, aber
+trotzdem eine JavaScript-Datei erstellt. In den Anfängen von TypeScript gab es noch viele weiter Mehrwerte gegenüber JavaScript, allerdings befinden sich heute
+beide Programmiersprachen auf dem selben Stand.
+\cite{sysarch-typeScript-1}
+
+\subsection{Nginx}
+\setauthor{Ecker Benjamin}
+
+Nginx ist ein Open-Source-Webserver, der als Webserver, Reverse-Proxy, HTTP-Cache und Load-Balancer verwendet wird.
+ER zeichnet sich durch seine geringe Speichernutzung und hohe Paralelität aus und verwendet einen asynchronen ereignisgesteuerten
+Ansatz, bei dem Anforderungen in einem Thread verarbeitet werden.
+Dabei steuert ein Master-Prozess mehrere Worker-Prozesse, während diese die eigentliche Verarbeitung durchführen und durch die asynchronität keine anderen Anforderungen blockieren. 
+\cite{sysarch-nginx-1}
+
+\section{Entwicklingsinfrastruktur}
 
 \subsection{Git}
 \setauthor{Hain Lukas}
@@ -396,7 +429,7 @@ Die IDE bietet spezielle Unterstützung unter anderem für Quarkus, Spring, Spri
 \cite{sysarch-intellij-1}
 
 
-\section{WebStorm}
+\subsection{WebStorm}
 \setauthor{Ecker Benjamin}
 
 
@@ -407,39 +440,6 @@ Besitz man jedoch die Ultimate Version von IntelliJ macht der Gebrauch von Webst
 oben genannten Features bereitstellt.
 \cite{sysarch-webstorm-1}
 \cite{sysarch-webstorm-2}
-
-\section{Angular}
-\setauthor{Ecker Benjamin}
-
-Angular ist ein Client-Side JavaScript Framework zur Erstellung von Single-Page-Webapplications. 
-Seine komponentenbasierte Architektur welche View und Logik trennt macht es für den Entwickler leicht 
-Applikationen zu warten und testen. Dabei verwendet Angular TypeScript für den Code-Behind und HTML als Auszeichnungssprache. 
-Die vielen gut integrierten Libraries decken Features wie Routing, Verwaltung von Formulare und Client-Server Kommunikation ab. 
-
-\subsection{Angular Material}
-Angular Material ist eine Library für User Interface Components wie Cards, Inputs und Data Tables welche eine Standard Angular-App sofort aufwerten könnne.
-Die Website bietet dazu noch einen guten Überblick der Vielzahl an Möglichkeiten der Components und mithilfe vom Online Live Editor Stackblitz kann diese sofort im Web testen. 
-\cite{sysarch-angularMaterial-1}
-
-\subsection{TypeScript}
-\setauthor{Ecker Benjamin}
-
-Wie der Name schon verrät setzt TypeScript anders als die übliche Variante JavaScript auf strikte Typen und macht somit den Code lesbarer und verständlicher.
-Wird in JavaScript eine Variable erstellt lässt nur der Name ahnen was im Programm damit passiert, denn es ist nicht notwendig einen Typen zu deklarieren.
-In TypeScript jedoch muss jede Variable vorher mit einem Typ verseht werden und sollte dies nicht passieren schmeißt der Compiler sofort eine Fehlermeldung.
-Anders als bei anderen Programmiersprache kann es trotz Fehlern zu einem lauffähigen Programm kommen da der Compiler zwar auf Fehler aufmerksam macht, aber
-trotzdem eine JavaScript-Datei erstellt. In den Anfängen von TypeScript gab es noch viele weiter Mehrwerte gegenüber JavaScript, allerdings befinden sich heute
-beide Programmiersprachen auf dem selben Stand.
-\cite{sysarch-typeScript-1}
-
-\subsection{Nginx}
-\setauthor{Ecker Benjamin}
-
-Nginx ist ein Open-Source-Webserver, der als Webserver, Reverse-Proxy, HTTP-Cache und Load-Balancer verwendet wird.
-ER zeichnet sich durch seine geringe Speichernutzung und hohe Paralelität aus und verwendet einen asynchronen ereignisgesteuerten
-Ansatz, bei dem Anforderungen in einem Thread verarbeitet werden.
-Dabei steuert ein Master-Prozess mehrere Worker-Prozesse, während diese die eigentliche Verarbeitung durchführen und durch die asynchronität keine anderen Anforderungen blockieren. 
-\cite{sysarch-nginx-1}
 
 \section{MockLab}
 
