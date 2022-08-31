@@ -406,8 +406,6 @@ Der Combination Turniermodus ist eine Kombination aus Round Robin und Eliminatio
 jeder/jede Teilnehmer/in tritt gegen jeden/jede andere/n Teilnehmer/in aus der gleichen Gruppe an. Anschließend steigen die besten Teilnehmer/innen aus der Gruppenphase in die KO-Phase auf, welche genau  so 
 durchgeführt wird, wie im Elimination modus, der Verlierer scheidet aus, der Gewinner steigt auf.
 
-TODO
-
 \subsubsection{Gruppenphase}
 
 In diesem Turniermodus wird größtenteils der Code für die anderen beiden Turniermodi wiederverwendet. Somit kann die Gruppenphase einfach gestartet, 
@@ -419,7 +417,29 @@ Die Anzahl der Gruppen kann hier frei gewählt werden.
     \caption{Start der Gruppenphase im Combination Modus}
 \end{figure}
 
+Um zu vermeiden, dass in einer Gruppe bessere Teilnehmer/innen sind, als in einer anderen, werden Teilnehmer/innen anhand vom Seed gleichmäßig in die Gruppen verteilt. Wie das funktioniert, ist am folgenden Beispiel ersichtlich.
 
+\begin{figure}[H]
+    \includegraphics[scale=0.8]{pics/backend/combination/combination_group_distribution.png}
+    \caption{Verteilung in Gruppen}
+\end{figure}
 
-Sollten hier 2 oder mehr Teilnehmer/innen einer Gruppe die selbe Plazierung haben, können wieder die Tie Breaker Matches eingefügt werden.
+Hier sind in einem Turnier 16 Teilnehmer, welche auf 4 Gruppen aufgeteilt werden. Die ersten 4 werden nach der Reihe aufgeteilt, Seed 1 kommt in Gruppe 1, Seed 2 in Gruppe 2, usw. 
+Die nächsten 4 werden in umgekehrter Reihenfolge aufgeteilt, das heißt, Seed 5 kommt in Gruppe 4, Seed 6 in Gruppe 3, usw. Das Ganze geht abwechselnd so weiter, bis alle Teilnehmer/innen verteilt wurden.
+
+Sollten am Ende der Gruppenphase 2 oder mehr Teilnehmer/innen einer Gruppe die selbe Plazierung haben, können hier wieder die Tie Breaker Matches eingefügt werden.
 Wenn dies nicht der Fall ist, geht es weiter zu der KO-Phase.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.45]{pics/backend/combination/combination_startKOPhase.png}
+    \caption{Start der KO-Phase im Combination Modus}
+\end{figure}
+
+Aus den Gruppen werden die Teilnehmer/innen, die am besten abgeschnitten haben, in einer Liste gespeichert, mit dieser wird dann die "startTournament" Methode des Elimination Turniermodus ausgeführt. 
+Wie viele Teilnehmer/innen pro Gruppe aufsteigen, ist hier frei wählbar.
+
+\subsubsection{Plazierungen}
+
+Die Teilnehmer/innen bekommen hier keine Plazierung ausgehend von der eigenen Gruppe, sondern vom gesammten Turnier. Für jene, die in bereits in der Gruppenphase ausgeschieden sind, wird die Plazierung so berechnet, 
+wie im Round Robin Turniermodus, mit dem Unterschied, dass sie noch mit der Gruppenanzahl multipliziert wird. Sollte es also 16 Teilnehmer/innen in 4 Gruppen geben, teilen sich die mit der höchsten Platzierung pro Gruppe den vierten Platz. 
+Die Teilnehmer/innen, die in die KO-Phase aufgestiegen sind, werden genauso wie im Elimination Turniermodus plaziert.
