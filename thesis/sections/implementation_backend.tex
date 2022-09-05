@@ -22,7 +22,7 @@ der jeweiligen Phase zugeordnet werden.
     \caption{Quarkus Ordnerstruktur}
 \end{figure}
 
-Nach dem erstellen eines Quarkus Projektes ist ein Großteil der Ordnerstruktur bereits im vorhinein gegeben. Das wichtigste File im Projekt befindet sich ganz im äußersten Ordner, nämlich das "pom.xml" File. 
+Nach dem Erstellen eines Quarkus Projektes ist ein Großteil der Ordnerstruktur bereits im vorhinein gegeben. Das wichtigste File im Projekt befindet sich ganz im äußersten Ordner, nämlich das "pom.xml" File. 
 
 \begin{figure}[H]
     \includegraphics[scale=0.6]{pics/backend/pom.xml.png}
@@ -96,7 +96,7 @@ als Read Operationen die "get" Methoden (getById, getByCompetitorId, getAll), al
 Über der Klasse befinden sich die Annotation "@ApplicationScoped" und "@Transactional". "@ApplicationScoped" ermöglicht es anderen Repositoryklassen, mithilfe von "@Inject" eine Instanz dieser Klasse zu injezieren, genau so, 
 wie es diese Klasse weiter unten auch tut. Es wird zum Beispiel in der "add" Methode "TournamentRepository" Klasse (siehe Abbildung "add Methode aus TournamentRepository" unten) die 
 der "SportTypeRepository" Klasse benötigt, da sich in der "Tournament" Klasse ein Fremdschlüssel auf die "SportType" Klasse befindet. Sollte also die Sportart, 
-auf die dieser Fremdschlüssel zeigt, in der Datenbank nicht existieren, kommt es zu einer SQLException, wesshalb in der add Mehode von "TournamentRepository", 
+auf die dieser Fremdschlüssel zeigt, in der Datenbank nicht existieren, kommt es zu einer SQLException, weshalb in der add Mehode von "TournamentRepository", 
 bevor das Turnier selbst mit "persist" gespeichert wird, nocht die Sportart mithilfe der add Methode der "SportTypeRepository" Klasse in der Datenbank. 
 
 \begin{figure}[H]
@@ -110,7 +110,7 @@ Das gleiche passiert bei der "modify" Methode, wenn der Fremdschlüssel auf eine
 Wenn Daten in der Datenbank gespeichert, modifiziert oder gelöscht werden, werden diese Änderungen erst dann wirklich in die Datenbank übernommen, wenn eine Transaktion commitet wurde.
 
 Das PanacheRepository ist eine Erweiterung aus dem "Hibernate ORM \textbf{with Panache}" Library, ohne Panache wäre theoretisch auch alles, was in den Repositoryklassen Implementiert wurde, möglich, jedoch etwas umständlicher.
-Zum Beispiel gibt es ohne Panache die "persist" Methode nicht, in dem Fall müsste man eine "EntityManager" Instanz mithilfe von Dependency Injection injezieren, in davon dann die "persist" Methode hernehmen.
+Zum Beispiel gibt es ohne Panache die "persist" Methode nicht, in dem Fall müsste man eine "EntityManager" Instanz mithilfe von Dependency Injection injizieren, in davon dann die "persist" Methode hernehmen.
 Auch andere Methoden, wie zum Beispiel "find" oder "listAll" wären ohne Panach nicht verfügbar, und müssten vom Entwickler selbst Implementiert werden.
 
 \subsection{Serviceklassen}
@@ -465,7 +465,7 @@ Die Authenifizierung eines Users funktioniert mittels Bearer Token. Diesen bekom
     \caption{KeyCloak Token Request}
 \end{figure}
 
-Es ist eine Post Request mit der URL 
+Es ist ein Post Request mit der URL 
 
 http://localhost:8443/realms/leoturnier/protocol/openid-connect/token, 
 

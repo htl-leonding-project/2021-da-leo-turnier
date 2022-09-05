@@ -19,10 +19,10 @@ Hier werden alle Metadaten, Scripts und Dependencies der App aufgelistet.
 Bei den Dependencies unterscheidet man zwischen Dependencies und DevDependencies.
 \begin{itemize}
     \item Dependencies werden transitiv installiert: Wenn A B benötigt und B C benötigt, wird C installiert, sonst könnte B nicht funktionieren und A auch nicht.
-    \item DevDependencies wird nicht transitiv installiert. Wir brauchen z.B. B nicht zu testen, um A zu testen, also können die Testabhängigkeiten von B weggelassen werden.
+    \item DevDependencies werden nicht transitiv installiert. Wir brauchen z.B. B nicht zu testen, um A zu testen, also können die Testabhängigkeiten von B weggelassen werden.
 \end{itemize}
 
-Um diese Dependencies auch nützen zu können muss bei jedem Angular Projekt "npm install" ausgeführt werden um diese zu Laden.
+Um diese Dependencies auch nützen zu können muss bei jedem Angular Projekt "npm install" ausgeführt werden um diese zu laden.
 Danach werden sie dann im Ordner node\_modules gespeichert.
 Dieser sollte, aber vor jeder Weitergabe gelöscht werden,oder wie zum Beispiel in Git im ".gitignore" inkludiert werden, da dieser mit Abstand am speicherintensivsten ist. 
 
@@ -175,6 +175,12 @@ da NgTournament aber leider nur fertig gespielte Turniere visualisieren kann, mu
 \subsubsection{Tournament-Tree \& Home}
 Nachdem das Tournament als NggtTournament vorhanden ist wird dieses an das Tournament-Tree Component geleitet, sie komplett von NgTournament bereitgestellt und muss auch nicht mehr bearbeitet werden. 
 Nun rendert die Tournament-Tree Component mithilfe der Match Component als Template, welche auch vollständig bereitgestellt wird, den kompletten Turnierbaum.
+
+\bigskip
+\begin{figure}[H]
+    \includegraphics[scale=0.7]{pics/frontend/tournament-tree.PNG}
+    \caption{Turnierbaum}
+\end{figure}
 
 \subsubsection{Styling}
 Das Styling für den Turnierbaum wird bereits beim Laden des NgTournament hinzugefügen. Doch mit da der Baum auf weißen Hintergrund platziert ist passte es besser, wenn der Turnierbaum auch einen weißen Hintergrund besitzt.
