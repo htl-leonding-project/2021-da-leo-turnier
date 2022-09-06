@@ -1,3 +1,6 @@
+In diesem Kapitel wird erklärt, wie das Backend der Applikation implementiert wurde. Es wird zuerst das Datenmodell erläutert, dann die Ordnerstruktur von 
+Quarkus und die verschiedenen Arten von Klassen, die darin zu finden sind, und zuletzt wird die Turnierlogik der verschiedenen Turniermodi erklärt.
+
 \section{Datenmodell}
 \setauthor{Hain Lukas}
 
@@ -41,8 +44,6 @@ auf die der Java Code eventuell zugreifen kann. Außerdem befindet sich im "reso
 \end{figure}
 
 Die Konfigurationen sind aufgeteilt in Datasource (Datenbank), HTTP (Endpoints) und KeyCloak Konfigurationen. 
-
-(Ist der Teil unten zu Basic?) (Der Teil unten gehört noch zur "Quarkus Ordnerstruktur" Abbildung, kann sein dass das etwas unklar ist, wie könnte ich das am besten machen?)
 
 Die Java Klassen im "java" Ordner sind weiters in 5 verschiedene Ordner aufgeteilt. Im "entity" Ordner befinden sich alle Entitätsklassen der Applikation, also jene, die das Datenmodell (siehe Kapitel 6.1 Datenmodell) wiederspiegeln.
 Die Klassen im "repository" sind die Schnittstelle zwischen der Quarkus Applikation und der Datenbank. Sie sind für die CRUD Operationen verantwortlich, also das Speichern, Auslesen, Verändern oder Löschen von Daten nach dem Schema der Entitätsklassen.
@@ -471,3 +472,5 @@ http://localhost:8443/realms/leoturnier/protocol/openid-connect/token,
 
 außerdem steht im Body der Request noch Username, Password sowie der Grant Type, der angibt, dass man Username und Passwort benötigt, und die Client Id. 
 Den Token, den man durch diese Request bekommen hat, muss man nun in den Requests and die Endpoints des Quarkus Backends angeben, um darauf Zugriff zu erlangen.
+
+Nun da die Implementierung der Applikation erklärt wurde, geht es mit dem Deployment der Applikation weiter.
