@@ -1,3 +1,5 @@
+Hier werden die einzelnen Technologien beschrieben, die für die Applikation verwendet wurden, zuerst Softwarekomponenten, danach die Entwicklungsinfrastruktur.
+
 \section{Java}
 \setauthor{Hain Lukas}
 
@@ -15,11 +17,11 @@ sondern auf das Betriebssystem verweisen kann. Auf den neuen Multi-Core-Prozesso
 \section{Quarkus}
 \setauthor{Hain Lukas}
 
-Die Programmiersprache alleine reicht allerdings für eine Web-API noch nicht aus, desshalb wird in der Applikation das Quarkus Framework mit den Libraries RESTEasy und Hibernate ORM verwendet.
+Die Programmiersprache alleine reicht allerdings für eine Web-API noch nicht aus, desshalb wird im Backend das Quarkus Framework mit den Libraries RESTEasy und Hibernate ORM verwendet.
 Quarkus ist ein Kubernetes-natives Full-Stack Java Framework für JVMs (Java Virtual Machines) und native Kompilierung, mit dem Java speziell für Container optimiert wird. 
 Es bietet eine effektive Plattform für Serverless-, Cloud- und Kubernetes-Umgebungen. Quarkus wurde speziell für 
 beliebte Java-Standards, Frameworks und Libraries wie RESTEasy (JAX-RS) und Hibernate ORM (JPA), die wie oben erwähntin der Applikation verwendet werden, 
-sowie für Apache Kafka, Eclipse MicroProfile, Spring, Spring, Infinispan, Camel und viele mehr konzipiert.
+sowie für Apache Kafka, Eclipse MicroProfile, Spring, Infinispan, Camel und viele mehr konzipiert.
 Die Dependency-Injection-Lösung von Quarkus basiert auf CDI (Contexts and Dependency Injection) und bietet ein Framework, mit dessen Hilfe die Funktionalität 
 erweitert und ein Framework konfiguriert, gebootet und in Ihre Anwendung integriert werden kann. 
 
@@ -52,7 +54,8 @@ Function-as-a-Service (FaaS) und Clouds, weil es für all diese Technologien ent
 
 \subsection{RESTEasy}
 
-RESTEasy ist ein JBoss/Red Hat-Projekt, das verschiedene Frameworks zur Verfügung stellt, die bei der Erstellung von RESTful Web Services und RESTful Java-Anwendungen unterstützen. 
+RESTEasy ist ein JBoss/Red Hat-Projekt, das verschiedene Frameworks zur Verfügung stellt, die bei der Erstellung von RESTful Web Services und RESTful Java-Anwendungen unterstützen, 
+und es ist die Schnittstelle zwischen dem Frontend und Backend der Applikation. 
 Es ist eine Implementierung der Jakarta RESTful Web Services, einer Spezifikation der Eclipse Foundation, die eine Java-API für RESTful Web Services über das HTTP-Protokoll bereitstellt.
 Darüber hinaus implementiert RESTEasy auch die MicroProfile REST Client Spezifikation API.
 
@@ -62,10 +65,14 @@ ist ebenfalls verfügbar, um die Benutzerfreundlichkeit in diesen Umgebungen zu 
 
 \subsection{Hibernate ORM with Panache}
 
-Bei Hibernate handelt es sich um ein Framework zur Abbildung von Objekten auf relationalen Datenbanken für die Programmiersprache Java - es wird auch als Object Relational Mapping Tool bezeichnet. 
+Hibernate ORM ist die Schnittstelle zwischen Backend und Datenbank. Bei Hibernate handelt es sich um ein Framework zur Abbildung von Objekten auf relationalen Datenbanken für die Programmiersprache Java - es wird auch als Object Relational Mapping Tool bezeichnet. 
 Hibernate ist in der Programmiersprache Java implementiert und steht als Open Source zur freien Verfügung. Hibernate nutzt das Konzept der Reflexion, um so zur Laufzeit einer Software sogenannte 
 Meta- Informationen über die Struktur von Objekten und die zugrunde liegenden Klassen zu ermitteln, die dann auf die Tabellen einer Datenbank abgebildet werden.
 \cite{sysarch-quarkus-3}
+
+Object Relational Mapping (ORM) ist eine Programmiertechnik zur Konvertierung von Daten zwischen relationalen Datenbanken und objektorientierten Programmiersprachen. 
+Mit der ORM-Technik können Objekte auf die Strukturen einer relationalen Datenbank abgebildet werden.
+\cite{sysarch-quarkus-4}
 
 \subsection{Apache Maven}
 
@@ -254,6 +261,8 @@ Dabei steuert ein Master-Prozess mehrere Worker-Prozesse, während diese die eig
 \cite{sysarch-nginx-1}
 
 \section{Entwicklungsinfrastruktur}
+
+Hier werden alle Technologien beschrieben, die zwar nicht Teil der Applikation sind, jedoch zum entwickeln der Applikation benutzt wurden.
 
 \subsection{Git}
 \setauthor{Hain Lukas}
