@@ -45,6 +45,8 @@ public class EliminationExecution {
             winner = match.getCompetitor2();
             loser = match.getCompetitor1();
         } else {
+            node.getMatch().setFinished(false);
+            matchRepository.modify(node.getMatch().getId(), node.getMatch());
             return null;
         }
 
