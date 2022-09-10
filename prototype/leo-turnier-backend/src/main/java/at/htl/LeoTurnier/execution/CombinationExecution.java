@@ -35,8 +35,8 @@ public class CombinationExecution {
             return null;
         }
         eliminationExecution.sortBySeed(tournament, competitors);
-        boolean x = false;
         for (int i = 0; i < numOfGroups; i++) {
+            boolean x = false;
             List<Competitor> competitorsInGroup = new LinkedList<>();
             for (int u = 0; u < competitors.size(); u++) {
                 if (u % numOfGroups == 0) {
