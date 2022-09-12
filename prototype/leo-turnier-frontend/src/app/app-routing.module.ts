@@ -11,7 +11,7 @@ import {HomeComponent} from './home/home.component';
 import {TournamentTreeComponent} from './tournament-tree/tournament-tree.component';
 import {AuthGuard} from './utility/app.guard';
 import {MatchOverviewComponent} from './match-overview/match-overview.component';
-import {MatchSubmitionComponent} from './match-submition/match-submition.component';
+import {MatchSubmissionComponent} from './match-submission/match-submission.component';
 import {TournamentTableComponent} from './tournament-table/tournament-table.component';
 
 const routes: Routes = [
@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'team', component: TeamOverviewComponent},
   { path: 'team/:id', component: TeamComponent},
   { path: 'matches/:id', component: MatchOverviewComponent},
-  { path: 'match-submition/:id/:tournamentId', component: MatchSubmitionComponent},
+  { path: 'match-submission/:id/:tournamentId', component: MatchSubmissionComponent},
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard]}
 ];
 

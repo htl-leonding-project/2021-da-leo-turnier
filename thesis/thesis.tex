@@ -37,8 +37,6 @@
 
 \pagestyle{plain}
 
-\renewcommand{\lstlistlistingname}{Quellcodeverzeichnis}
-
 \setcounter{tocdepth}{2}
 \tableofcontents
 \newpage
@@ -86,16 +84,15 @@
 \chapter{Deployment}\label{chapter:deployment}
 \end{spacing}
 \input{./sections/deployment}
-
 \begin{spacing}{1}
 \chapter{Zusammenfassung}
 \end{spacing}
 \input{./sections/summary}
-\pagebreak
 
+
+\input{glossary}
 \pagenumbering{Roman}
 \setcounter{page}{\value{RPages}}
-\input{glossary}
 %\setlength{\glsdescwidth}{0.8\linewidth}
 \glsnogroupskiptrue
 \printglossary[title=Glossar,toctitle=Glossar] %,style=long]
@@ -105,10 +102,4 @@
 \bibliography{bib}
 }
 \listoffigures
-\listoftables
-\lstlistoflistings
-\appendix
-\addchap{Anhang}
-\input{./sections/appendix}
 \end{document}
-

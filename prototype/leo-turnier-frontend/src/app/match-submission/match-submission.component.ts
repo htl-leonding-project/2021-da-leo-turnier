@@ -6,11 +6,11 @@ import {Competitor} from '../model/competitor.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
-  selector: 'app-match-submition',
-  templateUrl: './match-submition.component.html',
-  styleUrls: ['./match-submition.component.scss']
+  selector: 'app-match-submission',
+  templateUrl: './match-submission.component.html',
+  styleUrls: ['./match-submission.component.scss']
 })
-export class MatchSubmitionComponent implements OnInit {
+export class MatchSubmissionComponent implements OnInit {
   id = '';
   tournamentId = '';
   match = new Match(0, new Competitor(0, 'comp 1'), new Competitor(0, 'comp 2'), 0, 0, false);

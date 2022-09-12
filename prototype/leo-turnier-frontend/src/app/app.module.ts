@@ -26,7 +26,7 @@ import { TournamentDialogComponent } from './tournament-dialog/tournament-dialog
 import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
 import {initializeKeycloak} from './utility/app.init';
 import { MatchOverviewComponent } from './match-overview/match-overview.component';
-import { MatchSubmitionComponent } from './match-submition/match-submition.component';
+import { MatchSubmissionComponent } from './match-submission/match-submission.component';
 import { TournamentOverviewDialogComponent } from './tournament-overview-dialog/tournament-overview-dialog.component';
 import { TournamentTableComponent } from './tournament-table/tournament-table.component';
 
@@ -47,7 +47,7 @@ import { TournamentTableComponent } from './tournament-table/tournament-table.co
     MatchComponent,
     TournamentDialogComponent,
     MatchOverviewComponent,
-    MatchSubmitionComponent,
+    MatchSubmissionComponent,
     TournamentOverviewDialogComponent,
     TournamentTableComponent,
   ],
