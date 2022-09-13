@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MatchSubmitionComponent } from './match-submition.component';
+import { MatchSubmissionComponent } from './match-submission.component';
 
 describe('MatchSubmitionComponent', () => {
-  let component: MatchSubmitionComponent;
-  let fixture: ComponentFixture<MatchSubmitionComponent>;
+  let component: MatchSubmissionComponent;
+  let fixture: ComponentFixture<MatchSubmissionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MatchSubmitionComponent ]
+      declarations: [ MatchSubmissionComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MatchSubmitionComponent);
+    fixture = TestBed.createComponent(MatchSubmissionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

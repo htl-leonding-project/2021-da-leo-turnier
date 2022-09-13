@@ -47,7 +47,7 @@ export class MatchOverviewComponent implements OnInit {
 
 
   navigateToSubmition(id: number): void {
-    this.router.navigate(['match-submition/' + id + '/' + this.id]);
+    this.router.navigate(['match-submission/' + id + '/' + this.id]);
   }
 
   async startTieBreakers(): Promise<void> {
